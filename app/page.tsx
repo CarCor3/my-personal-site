@@ -1,12 +1,23 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+    const [imgVisible, setImgVisible] = useState(false);
+
+    useEffect(() => {
+        // Delay then fade the image in
+        const t = setTimeout(() => setImgVisible(true), 400);
+        return () => clearTimeout(t);
+    }, []);
+
     return (
         <div style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
 
             {/* Background color */}
             <div style={{ position: 'absolute', inset: 0, zIndex: 0, backgroundColor: '#EAE0CF' }} />
 
-            {/* yo.png — left side */}
+            {/* yo.png — fades in after delay */}
             <img
                 src="/backgrounds/yo.png"
                 alt=""
@@ -19,10 +30,12 @@ export default function Home() {
                     zIndex: 1,
                     pointerEvents: 'none',
                     userSelect: 'none',
+                    opacity: imgVisible ? 1 : 0,
+                    transition: 'opacity 0.6s ease',
                 }}
             />
 
-            {/* Text */}
+            {/* Text — visible immediately */}
             <div style={{
                 position: 'absolute',
                 top: '47%',    /* ← move up/down */

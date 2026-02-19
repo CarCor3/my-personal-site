@@ -58,7 +58,7 @@ export default function Navbar() {
                         left: pillStyle.left,
                         width: pillStyle.width,
                         height: '48px',
-                        backgroundColor: '#8A7650',
+                        backgroundColor: pathname === '/about' ? '#DBCEA5' : '#8A7650',
                         borderRadius: '9999px',
                         opacity: pillStyle.opacity,
                         transition: 'left 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease',
