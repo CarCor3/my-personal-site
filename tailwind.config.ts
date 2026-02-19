@@ -15,6 +15,8 @@ const config: Config = {
             },
             fontFamily: {
                 sans: ["var(--font-inter)", "sans-serif"],
+                daydream: ["Daydream", "Georgia", "serif"],
+                ari: ["Ari", "sans-serif"],
             },
         },
     },

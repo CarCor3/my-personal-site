@@ -31,7 +31,7 @@ export default function Home() {
                 zIndex: 2,
                 textAlign: 'center',
             }}>
-                <p className="text-2x md:text-8xl font-bold mb-8" style={{ color: '#000000' }}>
+                <p className="font-ari text-2x md:text-8xl font-bold mb-8" style={{ color: '#000000' }}>
                     Hi, I'm
                 </p>
                 <h1 className="font-daydream text-4xl md:text-6xl lg:text-9xl font-bold tracking-tight" style={{ color: '#8A7650' }}>

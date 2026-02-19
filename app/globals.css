@@ -27,6 +27,18 @@
   font-family: 'Daydream', Georgia, serif;
 }
 
+@font-face {
+  font-family: 'Ari';
+  src: url('/fonts/ari display.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-ari {
+  font-family: 'Ari', sans-serif;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
