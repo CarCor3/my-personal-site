@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Recoleta';
+  src: url('https://cdn.jsdelivr.net/gh/nicktombeur/Recoleta-font@main/fonts/Recoleta-Regular.woff2') format('woff2'),
+    url('https://cdn.jsdelivr.net/gh/nicktombeur/Recoleta-font@main/fonts/Recoleta-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-recoleta {
+  font-family: 'Recoleta', Georgia, serif;
+}
+
+@font-face {
+  font-family: 'Daydream';
+  src: url('/fonts/Daydream DEMO.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-daydream {
+  font-family: 'Daydream', Georgia, serif;
+}
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background-color: #EAE0CF;
+  overflow: hidden;
+}
+
+html {
+  overflow: hidden;
+}
