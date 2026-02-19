@@ -39,6 +39,18 @@
   font-family: 'Ari', sans-serif;
 }
 
+@font-face {
+  font-family: 'Dogica';
+  src: url('/fonts/dogica/TTF/dogica.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-dogica {
+  font-family: 'Dogica', monospace;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
