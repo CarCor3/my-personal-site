@@ -15,7 +15,7 @@ export default function About() {
                             I love building hardware projects that solve real-world problems.
                         </p>
                         <p className="font-dogica text-xl font-bold" style={{ color: '#FDF8F5' }}>
-                            When I was a kid my dad would take me to help him do some cabling in some houses including ours. He did not know by the way but he feeded my passion for the electricity.
+                            When I was a kid my dad would take me to help him do some cabling in some houses including ours. He didn't know by that time but he feeded my passion for the electricity.
                             Since then, I've been improving my skills in electronics. When I'm not working on something, you can find me making content creation or playing the guitar.
                         </p>
                     </div>
