@@ -6,15 +6,14 @@ import { useEffect, useRef, useState } from 'react';
 const Globe = dynamic(() => import('react-globe.gl'), { ssr: false });
 
 const LIMA = { lat: -12.046, lng: -77.043 };
-const MAX_ALTITUDE = 2;    // zoom-out cap (fits the circle)
+const MAX_ALTITUDE = 2;
 const ZOOM_IN_ALTITUDE = 0.6;
 
 export default function GlobeComponent() {
     const globeRef = useRef<any>(null);
     const [countries, setCountries] = useState<any[]>([]);
-    const [ready, setReady] = useState(false);
+    const [visible, setVisible] = useState(false);
     const [zoomed, setZoomed] = useState(false);
-    const [shadowVisible, setShadowVisible] = useState(false);
 
     useEffect(() => {
         fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson')
@@ -22,26 +21,25 @@ export default function GlobeComponent() {
             .then(data => setCountries(data.features));
     }, []);
 
-    useEffect(() => {
-        const t = setTimeout(() => setReady(true), 100);
-        return () => clearTimeout(t);
-    }, []);
+    const handleGlobeReady = () => {
+        const globe = globeRef.current;
+        if (!globe) return;
 
-    useEffect(() => {
-        if (globeRef.current && ready) {
-            // Start pointed at Lima
-            globeRef.current.pointOfView({ lat: LIMA.lat, lng: LIMA.lng, altitude: MAX_ALTITUDE }, 0);
+        // Instantly position camera (no animation) before revealing
+        globe.pointOfView({ lat: LIMA.lat, lng: LIMA.lng, altitude: MAX_ALTITUDE }, 0);
 
-            // Clamp zoom so user can't zoom out past the circle boundary
-            const controls = globeRef.current.controls();
-            if (controls) {
-                const globeRadius = 79;
-                controls.maxDistance = globeRadius * (1 + MAX_ALTITUDE);   // ~300
-                controls.minDistance = globeRadius * (1 + 0.4);            // ~140
-                controls.enableZoom = false; // disable scroll-wheel zoom entirely
-            }
+        // Clamp zoom
+        const controls = globe.controls();
+        if (controls) {
+            const globeRadius = 79;
+            controls.maxDistance = globeRadius * (1 + MAX_ALTITUDE);
+            controls.minDistance = globeRadius * (1 + 0.4);
+            controls.enableZoom = false;
         }
-    }, [ready]);
+
+        // Fade in after one frame so the transition actually plays
+        requestAnimationFrame(() => setVisible(true));
+    };
 
     const handlePolygonClick = (polygon: any) => {
         if (polygon.properties?.name === 'Peru') {
@@ -61,8 +59,9 @@ export default function GlobeComponent() {
             height: 340,
             borderRadius: '50%',
             overflow: 'hidden',
-            boxShadow: shadowVisible ? '0 8px 40px rgba(0,0,0,0.35)' : '0 8px 40px rgba(0,0,0,0)',
-            transition: 'box-shadow 3.8s ease',
+            opacity: visible ? 1 : 0,
+            transition: 'opacity 2s ease, box-shadow 0.8s ease',
+            boxShadow: visible ? '0 8px 40px rgba(0,0,0,0.35)' : '0 8px 40px rgba(0,0,0,0)',
             cursor: 'grab',
         }}>
             <Globe
@@ -83,7 +82,7 @@ export default function GlobeComponent() {
                 polygonAltitude={(d: any) => d.properties?.name === 'Peru' ? 0.02 : 0}
                 polygonLabel={() => ''}
                 onPolygonClick={handlePolygonClick}
-                onGlobeReady={() => setShadowVisible(true)}
+                onGlobeReady={handleGlobeReady}
                 atmosphereColor="rgba(0,0,0,0)"
                 atmosphereAltitude={0}
                 enablePointerInteraction={true}

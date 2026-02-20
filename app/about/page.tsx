@@ -11,13 +11,12 @@ export default function About() {
                     {/* Bio text */}
                     <div className="flex-1">
                         <p className="font-dogica text-xl font-bold mb-6" style={{ color: '#FDF8F5' }}>
-                            Hello! I'm <span className="font-semibold">Carlos Cordova</span>. I'm a passionate developer from Lima, Peru.
-                            I love building web applications that solve real-world problems. With a background in [Your Background],
-                            I bring a unique perspective to software engineering.
+                            I'm a passionate Electrical Enginner graduated from Georgia Tech. I was born and raised in Lima, Peru.
+                            I love building hardware projects that solve real-world problems.
                         </p>
                         <p className="font-dogica text-xl font-bold" style={{ color: '#FDF8F5' }}>
-                            My journey started when I discovered... [Add your story here]. Since then, I've been honing my skills
-                            in modern web technologies. When I'm not coding, you can find me exploring new coffee shops or hiking.
+                            When I was a kid my dad would take me to help him do some cabling in some houses including ours. He did not know by the way but he feeded my passion for the electricity.
+                            Since then, I've been improving my skills in electronics. When I'm not working on something, you can find me making content creation or playing the guitar.
                         </p>
                     </div>
 

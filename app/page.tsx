@@ -1,12 +1,68 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
+/* Magnetic word — floats toward the cursor while hovered */
+function MagneticWord({
+    children,
+    strength = 0.35,
+    className,
+    style,
+    tag: Tag = 'span',
+}: {
+    children: React.ReactNode;
+    strength?: number;
+    className?: string;
+    style?: React.CSSProperties;
+    tag?: keyof JSX.IntrinsicElements;
+}) {
+    const ref = useRef<HTMLElement>(null);
+    const [offset, setOffset] = useState({ x: 0, y: 0 });
+    const raf = useRef<number>();
+
+    const handleMouseMove = (e: React.MouseEvent) => {
+        const el = ref.current;
+        if (!el) return;
+        const rect = el.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = (e.clientX - cx) * strength;
+        const dy = (e.clientY - cy) * strength;
+        raf.current = requestAnimationFrame(() => setOffset({ x: dx, y: dy }));
+    };
+
+    const handleMouseLeave = () => {
+        cancelAnimationFrame(raf.current!);
+        setOffset({ x: 0, y: 0 });
+    };
+
+    return (
+        // @ts-ignore – dynamic tag
+        <Tag
+            ref={ref}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            className={className}
+            style={{
+                ...style,
+                display: 'inline-block',
+                transform: `translate(${offset.x}px, ${offset.y}px)`,
+                transition: offset.x === 0 && offset.y === 0
+                    ? 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)'  // spring back
+                    : 'transform 0.08s linear',                          // follow cursor
+                willChange: 'transform',
+                cursor: 'default',
+            }}
+        >
+            {children}
+        </Tag>
+    );
+}
 
 export default function Home() {
     const [imgVisible, setImgVisible] = useState(false);
 
     useEffect(() => {
-        // Delay then fade the image in
         const t = setTimeout(() => setImgVisible(true), 400);
         return () => clearTimeout(t);
     }, []);
@@ -31,25 +87,29 @@ export default function Home() {
                     pointerEvents: 'none',
                     userSelect: 'none',
                     opacity: imgVisible ? 1 : 0,
-                    transition: 'opacity 0.6s ease',
+                    transition: 'opacity 2s ease',
                 }}
             />
 
-            {/* Text — visible immediately */}
+            {/* Text */}
             <div style={{
                 position: 'absolute',
-                top: '47%',    /* ← move up/down */
-                left: '67%',   /* ← move left/right */
+                top: '47%',
+                left: '67%',
                 transform: 'translate(-50%, -50%)',
                 zIndex: 2,
                 textAlign: 'center',
             }}>
                 <p className="font-ari text-2x md:text-8xl font-bold mb-8" style={{ color: '#000000' }}>
-                    Hi, I'm
+                    <MagneticWord strength={0.4}>Hi, I'm</MagneticWord>
                 </p>
                 <h1 className="font-daydream text-4xl md:text-6xl lg:text-9xl font-bold tracking-tight" style={{ color: '#8A7650' }}>
-                    <span className="block" style={{ marginBottom: '25px' }}>Carlos</span>
-                    <span className="block">Cordova</span>
+                    <MagneticWord tag="span" strength={0.45} style={{ display: 'block', marginBottom: '25px' }}>
+                        Carlos
+                    </MagneticWord>
+                    <MagneticWord tag="span" strength={0.45} style={{ display: 'block' }}>
+                        Cordova
+                    </MagneticWord>
                 </h1>
             </div>
         </div>
