@@ -8,15 +8,13 @@ function MagneticWord({
     strength = 0.35,
     className,
     style,
-    tag: Tag = 'span',
 }: {
     children: React.ReactNode;
     strength?: number;
     className?: string;
     style?: React.CSSProperties;
-    tag?: keyof JSX.IntrinsicElements;
 }) {
-    const ref = useRef<HTMLElement>(null);
+    const ref = useRef<HTMLSpanElement>(null);
     const [offset, setOffset] = useState({ x: 0, y: 0 });
     const raf = useRef<number>();
 
@@ -37,8 +35,7 @@ function MagneticWord({
     };
 
     return (
-        // @ts-ignore – dynamic tag
-        <Tag
+        <span
             ref={ref}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
@@ -55,7 +52,7 @@ function MagneticWord({
             }}
         >
             {children}
-        </Tag>
+        </span>
     );
 }
 
@@ -104,10 +101,10 @@ export default function Home() {
                     <MagneticWord strength={0.4}>Hi, I'm</MagneticWord>
                 </p>
                 <h1 className="font-daydream text-4xl md:text-6xl lg:text-9xl font-bold tracking-tight" style={{ color: '#8A7650' }}>
-                    <MagneticWord tag="span" strength={0.45} style={{ display: 'block', marginBottom: '25px' }}>
+                    <MagneticWord strength={0.45} style={{ display: 'block', marginBottom: '25px' }}>
                         Carlos
                     </MagneticWord>
-                    <MagneticWord tag="span" strength={0.45} style={{ display: 'block' }}>
+                    <MagneticWord strength={0.45} style={{ display: 'block' }}>
                         Cordova
                     </MagneticWord>
                 </h1>
