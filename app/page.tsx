@@ -76,18 +76,13 @@ const EXP_H = polaroidH(EXP.imgH);
 
 /* ── Home ──────────────────────────────────────────────────────── */
 export default function Home() {
-    const [imgVisible, setImgVisible] = useState(false);
     const [openIdx, setOpenIdx] = useState<number | null>(null);
     const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
     // 'closed' → 'opening' (flying to center) → 'open' → 'closing' (flying back)
     const [phase, setPhase] = useState<'closed' | 'opening' | 'open' | 'closing'>('closed');
     const [originRect, setOriginRect] = useState<{ top: number; left: number; width: number; height: number } | null>(null);
     const thumbRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-    useEffect(() => {
-        const t = setTimeout(() => setImgVisible(true), 400);
-        return () => clearTimeout(t);
-    }, []);
+    const [isFlipped, setIsFlipped] = useState(false);
 
     const openPhoto = (idx: number) => {
         const el = thumbRefs.current[idx];
@@ -147,23 +142,120 @@ export default function Home() {
             {/* Background */}
             <div style={{ position: 'absolute', inset: 0, zIndex: 0, backgroundColor: '#EAE0CF' }} />
 
-            {/* yo.png */}
-            <img
-                src="/backgrounds/yo.png"
-                alt=""
+            {/* ── Cursor Icon ── */}
+            <div style={{
+                position: 'absolute',
+                top: 280,
+                left: '27%',
+                zIndex: 10,
+                pointerEvents: 'none',
+                transform: 'rotate(-110deg)',
+                animation: 'floatCursor 2s ease-in-out infinite'
+            }}>
+                <img
+                    src="/backgrounds/cursor.png"
+                    alt="cursor"
+                    style={{
+                        width: '60px',
+                        height: 'auto',
+                    }}
+                />
+                <style>{`
+                    @keyframes floatCursor {
+                        0%, 100% { transform: rotate(-110deg) translateY(0); }
+                        50% { transform: rotate(-110deg) translateY(-20px); }
+                    }
+                `}</style>
+            </div>
+
+            {/* ── Flip Container (yo.png / fill.png) ── */}
+            <div
+                onClick={() => setIsFlipped(!isFlipped)} /*yo location */
                 style={{
                     position: 'absolute',
                     top: -270,
                     left: '-3%',
                     height: '130vh',
-                    width: 'auto',
+                    width: 'fit-content',
                     zIndex: 1,
-                    pointerEvents: 'none',
-                    userSelect: 'none',
-                    opacity: imgVisible ? 1 : 0,
-                    transition: 'opacity 2s ease',
+                    cursor: 'pointer',
+                    perspective: '2000px',
                 }}
-            />
+            >
+                <div style={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '100%',
+                    transition: 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+                    transformStyle: 'preserve-3d',
+                    transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                }}>
+                    {/* Front Face: yo.png */}
+                    <div style={{
+                        position: 'relative',
+                        height: '100%',
+                        width: 'auto',
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                    }}>
+                        <img
+                            src="/backgrounds/yo.png"
+                            alt="Front"
+                            style={{
+                                height: '100%',
+                                width: 'auto',
+                                display: 'block',
+                                userSelect: 'none',
+                                pointerEvents: 'none',
+                            }}
+                        />
+                    </div>
+
+                    {/* Back Face: fill.png */}
+                    <div style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        height: '100%',
+                        width: 'auto',
+                        backfaceVisibility: 'hidden',
+                        WebkitBackfaceVisibility: 'hidden',
+                        transform: 'rotateY(180deg)',
+                    }}>
+                        <img
+                            src="/backgrounds/fill.png"
+                            alt="Back"
+                            style={{
+                                height: '100%',
+                                width: 'auto',
+                                display: 'block',
+                                userSelect: 'none',
+                                pointerEvents: 'none',
+                            }}
+                        />
+                        {/* Quote Overlay */} /* quote location */
+                        <div style={{
+                            position: 'absolute',
+                            top: '74%',
+                            left: '52%',
+                            transform: 'translate(-50%, -50%)',
+                            width: '70%',
+                            textAlign: 'center',
+                            pointerEvents: 'none',
+                        }}>
+                            <p className="font-dogica" style={{
+                                color: '#000000',
+                                fontSize: '18px',
+                                lineHeight: '1.8',
+                                textShadow: '0 0px 0px rgba(0,0,0,0.1)',
+                                textTransform: 'uppercase'
+                            }}>
+                                I may not have any<br />notable victories,<br />but I can surprise you with<br />the defeats I manage to survive.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             {/* ── Title — never moves ── */}
             <div style={{
