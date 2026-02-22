@@ -11,6 +11,10 @@ export const metadata: Metadata = {
     description: 'A showcase of my work and skills',
 };
 
+export const viewport = {
+    themeColor: '#000000',
+};
+
 export default function RootLayout({
     children,
 }: {
@@ -19,6 +23,10 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
+                {/* Mobile black bars */}
+                <div className="fixed top-0 left-0 right-0 h-8 bg-black z-[300] md:hidden" />
+                <div className="fixed bottom-0 left-0 right-0 h-8 bg-black z-[300] md:hidden" />
+
                 <Navbar />
                 <main>
                     <PageTransitionProvider>
