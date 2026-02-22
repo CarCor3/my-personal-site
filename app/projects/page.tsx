@@ -94,7 +94,7 @@ export default function Projects() {
         <div className="min-h-screen py-20 md:py-48 flex flex-col items-center justify-center bg-[#EAE0CF] transition-colors duration-500">
             <div className="relative w-full max-w-7xl flex flex-col items-center justify-center px-4 md:px-0">
                 {/* Deck/Inpection Area */}
-                <div className={`relative w-full flex flex-col md:flex-row items-center justify-center ${inspectedIndex !== null ? 'h-auto md:h-[600px]' : 'h-[500px] md:h-[580px]'}`}>
+                <div className={`relative w-full flex flex-col md:flex-row items-center justify-center ${isMobile && inspectedIndex !== null ? 'h-[750px]' : 'h-[500px] md:h-[600px]'}`}>
 
                     {/* Left Arrow */}
                     <AnimatePresence>
@@ -117,7 +117,7 @@ export default function Projects() {
                         initial={{ y: 100, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ duration: 0.6, ease: "easeOut" }}
-                        className={`relative flex items-center justify-center ${isMobile && inspectedIndex !== null ? 'w-[240px] h-[340px] mb-8 mt-12' : 'w-full h-full'}`}
+                        className="relative w-full h-full flex items-center justify-center"
                     >
                         {cardOrder.map((originalIndex, displayIndex) => {
                             const img = projectImages[originalIndex];
@@ -131,17 +131,16 @@ export default function Projects() {
                                     key={originalIndex}
                                     animate={{
                                         x: isCardFlying ? (isMobile ? 800 : 1500) : (isBeingInspected ? (isMobile ? 0 : -280) : (isVisible ? img.x : 0)),
-                                        y: isCardFlying ? -200 : (isBeingInspected ? (isMobile ? -20 : 0) : (isVisible ? img.y : 0)),
+                                        y: isCardFlying ? -200 : (isBeingInspected ? (isMobile ? -140 : 0) : (isVisible ? img.y : 0)),
                                         rotate: isCardFlying ? 45 : (isBeingInspected ? 0 : (isVisible ? img.rotation : 0)),
                                         opacity: isCardFlying ? 0 : (isVisible ? 1 : 0),
-                                        zIndex: isCardFlying ? 100 : (isBeingInspected ? 110 : displayIndex),
-                                        scale: isBeingInspected ? (isMobile ? 0.9 : 1.05) : 1
+                                        zIndex: isCardFlying ? 100 : (isBeingInspected ? 150 : displayIndex),
+                                        scale: isBeingInspected ? (isMobile ? 1.05 : 1.05) : 1
                                     }}
                                     transition={{
-                                        type: isCardFlying ? 'tween' : 'spring',
+                                        type: 'spring',
                                         stiffness: 260,
-                                        damping: 25,
-                                        duration: 0.4
+                                        damping: 28,
                                     }}
                                     drag={isTop && !isCardFlying && inspectedIndex === null}
                                     dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
@@ -180,7 +179,7 @@ export default function Projects() {
                                             alt={img.alt}
                                             fill
                                             className="object-cover pointer-events-none"
-                                            priority={isTop}
+                                            priority={isVisible}
                                         />
                                     </div>
                                 </motion.div>
@@ -192,13 +191,13 @@ export default function Projects() {
                     <AnimatePresence>
                         {inspectedIndex !== null && currentProject && (
                             <motion.div
-                                initial={{ opacity: 0, y: isMobile ? 20 : 0, x: isMobile ? 0 : 50 }}
-                                animate={{ opacity: 1, y: 0, x: isMobile ? 0 : 220 }}
-                                exit={{ opacity: 0, y: isMobile ? 20 : 0, x: isMobile ? 0 : 50 }}
+                                initial={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 50 }}
+                                animate={{ opacity: 1, y: isMobile ? -20 : 0, x: isMobile ? 0 : 220 }}
+                                exit={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 50 }}
                                 transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-                                className={`z-[120] ${isMobile ? 'w-full max-w-[320px] px-2 mt-4' : 'absolute w-full max-w-[450px] ml-12'}`}
+                                className={`z-[120] ${isMobile ? 'absolute bottom-10 w-full max-w-[320px]' : 'absolute w-full max-w-[450px] ml-12'}`}
                             >
-                                <div className="bg-white border-4 border-black p-6 md:p-8 shadow-[6px_6px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] relative">
+                                <div className="bg-white border-4 border-black p-6 md:p-8 shadow-[6px_6px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] relative mx-auto">
                                     <button
                                         onClick={() => setInspectedIndex(null)}
                                         className="absolute -top-3 -right-3 md:-top-4 md:-right-4 bg-white border-4 border-black p-1.5 md:p-2 hover:bg-gray-100 transition-colors"

@@ -46,7 +46,7 @@ export default function Navbar() {
     }, [pathname]);
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50">
+        <nav className="fixed top-0 left-0 right-0 z-[200]">
             <div className="max-w-7xl mx-auto pl-0 pr-4 sm:pl-0 sm:pr-6 lg:pl-0 lg:pr-2">
                 {/* justify-between: Home anchors left, Projects anchors right, Contact+About fall evenly between */}
                 <div className="flex justify-between h-32 items-center relative" ref={containerRef}>
@@ -84,10 +84,15 @@ export default function Navbar() {
                     <div className="absolute left-6 top-10 md:hidden" style={{ zIndex: 110 }}>
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className={`flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 focus:outline-none ${isOpen ? 'bg-[#8A7650] border-0 border-[#FDF8F5]' : 'bg-[#8A7650]'}`}
-                            style={{ color: '#FDF8F5' }}
+                            className="flex items-center justify-center focus:outline-none transition-colors duration-300"
+                            style={{ color: isOpen ? '#FDF8F5' : '#000000' }}
                         >
-                            {isOpen ? <X size={32} /> : <Menu size={32} />}
+                            {/* ADJUST SIZE HERE (size={32}) */}
+                            {isOpen ? (
+                                <X size={32} strokeLinecap="butt" />
+                            ) : (
+                                <Menu size={32} strokeLinecap="butt" />
+                            )}
                         </button>
                     </div>
                 </div>
