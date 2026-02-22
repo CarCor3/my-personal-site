@@ -201,7 +201,7 @@ export default function Projects() {
                                 animate={{ opacity: 1, y: isMobile ? -80 : 0, x: isMobile ? 0 : 220 }} /*description box location*/
                                 exit={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 50 }}
                                 transition={{ type: 'spring', stiffness: 200, damping: 25 }}
-                                className={`z-[120] ${isMobile ? 'absolute bottom-10 w-full max-w-[320px]' : 'absolute w-full max-w-[450px] ml-12'}`}
+                                className={`z-[120] ${isMobile ? 'absolute bottom-10 w-full max-w-[90vw]' : 'absolute w-full max-w-[450px] ml-12'}`}
                             >
                                 <div className="bg-white border-4 border-black p-6 md:p-8 shadow-[6px_6px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] relative mx-auto">
                                     <button
@@ -211,7 +211,7 @@ export default function Projects() {
                                         <X className="w-5 h-5 md:w-6 md:h-6 text-black" />
                                     </button>
                                     <h2 className="font-daydream text-xl md:text-2xl mb-4 md:mb-6 text-black uppercase">{currentProject.title}</h2>
-                                    <p className="font-dogica text-[10px] md:text-sm leading-relaxed text-gray-800">
+                                    <p className="font-dogica text-[12px] md:text-sm leading-relaxed text-gray-800">
                                         {currentProject.description}
                                     </p>
                                     <div className="mt-4 md:mt-8 flex gap-3 md:gap-4">
