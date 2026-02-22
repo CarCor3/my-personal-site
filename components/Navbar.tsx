@@ -100,7 +100,8 @@ export default function Navbar() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 h-[100dvh] bg-[#8A7650] z-[100] md:hidden flex flex-col items-center justify-center space-y-12"
+                        transition={{ duration: 0.2, ease: "linear" }}
+                        className="fixed -top-[10%] -bottom-[10%] left-0 right-0 bg-[#8A7650] z-[100] md:hidden flex flex-col items-center justify-center space-y-12 touch-none"
                     >
                         {allLinks.map((link) => (
                             <Link
