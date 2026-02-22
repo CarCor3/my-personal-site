@@ -78,11 +78,20 @@ const EXP_H = polaroidH(EXP.imgH);
 export default function Home() {
     const [openIdx, setOpenIdx] = useState<number | null>(null);
     const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-    // 'closed' → 'opening' (flying to center) → 'open' → 'closing' (flying back)
     const [phase, setPhase] = useState<'closed' | 'opening' | 'open' | 'closing'>('closed');
     const [originRect, setOriginRect] = useState<{ top: number; left: number; width: number; height: number } | null>(null);
+    const [windowWidth, setWindowWidth] = useState(0);
     const thumbRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [isFlipped, setIsFlipped] = useState(false);
+
+    useEffect(() => {
+        setWindowWidth(window.innerWidth);
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const isMobile = windowWidth > 0 && windowWidth < 768;
 
     const openPhoto = (idx: number) => {
         const el = thumbRefs.current[idx];
@@ -143,43 +152,47 @@ export default function Home() {
             <div style={{ position: 'absolute', inset: 0, zIndex: 0, backgroundColor: '#EAE0CF' }} />
 
             {/* ── Cursor Icon ── */}
-            <div style={{
-                position: 'absolute',
-                top: 280,
-                left: '27%',
-                zIndex: 10,
-                pointerEvents: 'none',
-                transform: 'rotate(-110deg)',
-                animation: 'floatCursor 2s ease-in-out infinite'
-            }}>
-                <img
-                    src="/backgrounds/cursor.png"
-                    alt="cursor"
-                    style={{
-                        width: '60px',
-                        height: 'auto',
-                    }}
-                />
-                <style>{`
-                    @keyframes floatCursor {
-                        0%, 100% { transform: rotate(-110deg) translateY(0); }
-                        50% { transform: rotate(-110deg) translateY(-20px); }
-                    }
-                `}</style>
-            </div>
+            {!isMobile && (
+                <div style={{
+                    position: 'absolute',
+                    top: 280,
+                    left: '27%',
+                    zIndex: 10,
+                    pointerEvents: 'none',
+                    transform: 'rotate(-110deg)',
+                    animation: 'floatCursor 2s ease-in-out infinite'
+                }}>
+                    <img
+                        src="/backgrounds/cursor.png"
+                        alt="cursor"
+                        style={{
+                            width: '60px',
+                            height: 'auto',
+                        }}
+                    />
+                    <style>{`
+                        @keyframes floatCursor {
+                            0%, 100% { transform: rotate(-110deg) translateY(0); }
+                            50% { transform: rotate(-110deg) translateY(-20px); }
+                        }
+                    `}</style>
+                </div>
+            )}
 
             {/* ── Flip Container (yo.png / fill.png) ── */}
             <div
-                onClick={() => setIsFlipped(!isFlipped)} /*yo location */
+                onClick={() => setIsFlipped(!isFlipped)}
                 style={{
                     position: 'absolute',
-                    top: -270,
-                    left: '-3%',
-                    height: '130vh',
+                    top: isMobile ? -100 : -270,
+                    left: isMobile ? '-25%' : '-3%',
+                    height: isMobile ? '100vh' : '130vh',
                     width: 'fit-content',
                     zIndex: 1,
                     cursor: 'pointer',
                     perspective: '2000px',
+                    opacity: isMobile && phase === 'open' ? 0 : 1,
+                    transition: 'opacity 0.3s ease',
                 }}
             >
                 <div style={{
@@ -233,7 +246,7 @@ export default function Home() {
                                 pointerEvents: 'none',
                             }}
                         />
-                        {/* Quote Overlay */} /* quote location */
+                        {/* Quote Overlay */}
                         <div style={{
                             position: 'absolute',
                             top: '74%',
@@ -245,7 +258,7 @@ export default function Home() {
                         }}>
                             <p className="font-dogica" style={{
                                 color: '#000000',
-                                fontSize: '18px',
+                                fontSize: isMobile ? '12px' : '18px',
                                 lineHeight: '1.8',
                                 textShadow: '0 0px 0px rgba(0,0,0,0.1)',
                                 textTransform: 'uppercase'
@@ -257,20 +270,21 @@ export default function Home() {
                 </div>
             </div>
 
-            {/* ── Title — never moves ── */}
+            {/* ── Title — adjusted for mobile ── */}
             <div style={{
                 position: 'absolute',
-                top: '47%',
-                left: '67%',
+                top: isMobile ? '35%' : '47%',
+                left: isMobile ? '50%' : '67%',
                 transform: 'translate(-50%, -50%)',
                 zIndex: 2,
                 textAlign: 'center',
+                width: isMobile ? '90%' : 'auto',
             }}>
-                <p className="font-ari text-2x md:text-8xl font-bold mb-8" style={{ color: '#000000' }}>
+                <p className="font-ari text-2xl md:text-8xl font-bold mb-4 md:mb-8" style={{ color: '#000000' }}>
                     <MagneticWord strength={0.4}>Hi, I'm</MagneticWord>
                 </p>
                 <h1 className="font-daydream text-4xl md:text-6xl lg:text-9xl font-bold tracking-tight" style={{ color: '#8A7650' }}>
-                    <MagneticWord strength={0.45} style={{ display: 'block', marginBottom: '30px' }}>
+                    <MagneticWord strength={0.45} style={{ display: 'block', marginBottom: isMobile ? '10px' : '30px' }}>
                         Carlos
                     </MagneticWord>
                     <MagneticWord strength={0.45} style={{ display: 'block' }}>

@@ -82,7 +82,7 @@ export default function Navbar() {
                     {/* Mobile button */}
                     <div className="flex md:hidden" style={{ zIndex: 1 }}>
                         <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none" style={{ color: '#FDF8F5' }}>
-                            {isOpen ? <X size={24} /> : <Menu size={24} />}
+                            {isOpen ? <X size={48} /> : <Menu size={48} />}
                         </button>
                     </div>
                 </div>
