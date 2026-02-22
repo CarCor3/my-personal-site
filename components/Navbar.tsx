@@ -97,10 +97,10 @@ export default function Navbar() {
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="fixed inset-0 bg-[#8A7650] z-[100] md:hidden flex flex-col items-center justify-center space-y-12"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 h-[100dvh] bg-[#8A7650] z-[100] md:hidden flex flex-col items-center justify-center space-y-12"
                     >
                         {allLinks.map((link) => (
                             <Link
