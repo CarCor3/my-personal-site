@@ -4,7 +4,7 @@ import Image from 'next/image';
 export default function Contact() {
     return (
         <div className="py-60 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-            <h1 className="font-daydream text-4xl md:text-5xl font-bold mb-12 text-center" style={{ color: '#000000' }}>
+            <h1 className="font-daydream text-2xl md:text-5xl font-bold mb-12 text-center leading-[2.2] md:leading-normal" style={{ color: '#000000' }}>
                 GET IN TOUCH
             </h1>
             <div className="flex flex-col gap-8">

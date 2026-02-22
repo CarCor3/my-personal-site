@@ -151,33 +151,7 @@ export default function Home() {
             {/* Background */}
             <div style={{ position: 'absolute', inset: 0, zIndex: 0, backgroundColor: '#EAE0CF' }} />
 
-            {/* ── Cursor Icon ── */}
-            {!isMobile && (
-                <div style={{
-                    position: 'absolute',
-                    top: 280,
-                    left: '27%',
-                    zIndex: 10,
-                    pointerEvents: 'none',
-                    transform: 'rotate(-110deg)',
-                    animation: 'floatCursor 2s ease-in-out infinite'
-                }}>
-                    <img
-                        src="/backgrounds/cursor.png"
-                        alt="cursor"
-                        style={{
-                            width: '60px',
-                            height: 'auto',
-                        }}
-                    />
-                    <style>{`
-                        @keyframes floatCursor {
-                            0%, 100% { transform: rotate(-110deg) translateY(0); }
-                            50% { transform: rotate(-110deg) translateY(-20px); }
-                        }
-                    `}</style>
-                </div>
-            )}
+
 
             {/* ── Flip Container (yo.png / fill.png) ── */}
             <div
