@@ -94,7 +94,12 @@ export default function Projects() {
         <div className="min-h-screen py-20 md:py-48 flex flex-col items-center justify-center bg-[#EAE0CF] transition-colors duration-500">
             <div className="relative w-full max-w-7xl flex flex-col items-center justify-center px-4 md:px-0">
                 {/* Deck/Inpection Area */}
-                <div className={`relative w-full flex flex-col md:flex-row items-center justify-center ${isMobile && inspectedIndex !== null ? 'h-[750px]' : 'h-[500px] md:h-[600px]'}`}>
+                {/* Deck/Inpection Area */}
+                <motion.div
+                    animate={{ height: isMobile && inspectedIndex !== null ? 750 : (isMobile ? 500 : 600) }}
+                    transition={{ type: 'spring', stiffness: 260, damping: 28 }}
+                    className="relative w-full flex flex-col md:flex-row items-center justify-center"
+                >
 
                     {/* Left Arrow */}
                     <AnimatePresence>
@@ -188,11 +193,12 @@ export default function Projects() {
                     </motion.div>
 
                     {/* Details Panel */}
-                    <AnimatePresence>
+                    <AnimatePresence mode="wait">
                         {inspectedIndex !== null && currentProject && (
                             <motion.div
+                                key={inspectedIndex}
                                 initial={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 50 }}
-                                animate={{ opacity: 1, y: isMobile ? -20 : 0, x: isMobile ? 0 : 220 }}
+                                animate={{ opacity: 1, y: isMobile ? -80 : 0, x: isMobile ? 0 : 220 }} /*description box location*/
                                 exit={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 50 }}
                                 transition={{ type: 'spring', stiffness: 200, damping: 25 }}
                                 className={`z-[120] ${isMobile ? 'absolute bottom-10 w-full max-w-[320px]' : 'absolute w-full max-w-[450px] ml-12'}`}
@@ -233,7 +239,7 @@ export default function Projects() {
                             </motion.button>
                         )}
                     </AnimatePresence>
-                </div>
+                </motion.div>
             </div>
 
             <div className="mt-12 md:mt-24 text-center px-4">
