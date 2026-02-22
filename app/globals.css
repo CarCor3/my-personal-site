@@ -41,7 +41,7 @@
 
 @font-face {
   font-family: 'Dogica';
-  src: url('/fonts/dogica/TTF/dogica.ttf') format('truetype');
+  src: url('/fonts/dogica.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -68,9 +68,8 @@
 body {
   color: rgb(var(--foreground-rgb));
   background-color: #EAE0CF;
-  overflow: hidden;
 }
 
 html {
-  overflow: hidden;
+  /* Allow scrolling */
 }

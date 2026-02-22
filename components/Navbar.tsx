@@ -45,6 +45,16 @@ export default function Navbar() {
         };
     }, [pathname]);
 
+    // Handle body background color for mobile menu and specific pages
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.backgroundColor = '#8A7650';
+        } else {
+            // Revert to beige for Home/Contact/Projects, or Brown for About
+            document.body.style.backgroundColor = pathname === '/about' ? '#8A7650' : '#EAE0CF';
+        }
+    }, [isOpen, pathname]);
+
     return (
         <nav className="fixed top-0 left-0 right-0 z-[200]">
             <div className="max-w-7xl mx-auto pl-0 pr-4 sm:pl-0 sm:pr-6 lg:pl-0 lg:pr-2">
