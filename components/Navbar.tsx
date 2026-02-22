@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const allLinks = [
     { name: 'Home', path: '/' },
@@ -66,7 +67,7 @@ export default function Navbar() {
                         zIndex: 0,
                     }} />
 
-                    {/* All 4 links — equally spaced by justify-between */}
+                    {/* All 4 links — desktop */}
                     {allLinks.map((link, idx) => (
                         <Link
                             key={link.path}
@@ -80,30 +81,44 @@ export default function Navbar() {
                     ))}
 
                     {/* Mobile button */}
-                    <div className="flex md:hidden" style={{ zIndex: 1 }}>
-                        <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none" style={{ color: '#FDF8F5' }}>
-                            {isOpen ? <X size={48} /> : <Menu size={48} />}
+                    <div className="absolute left-6 top-10 md:hidden" style={{ zIndex: 110 }}>
+                        <button
+                            onClick={() => setIsOpen(!isOpen)}
+                            className={`flex items-center justify-center w-12 h-12 rounded-full transition-all duration-300 focus:outline-none ${isOpen ? 'bg-[#8A7650] border-0 border-[#FDF8F5]' : 'bg-[#8A7650]'}`}
+                            style={{ color: '#FDF8F5' }}
+                        >
+                            {isOpen ? <X size={32} /> : <Menu size={32} />}
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* Mobile menu */}
-            {isOpen && (
-                <div className="md:hidden px-4 pb-4 space-y-2">
-                    {allLinks.map((link) => (
-                        <Link
-                            key={link.path}
-                            href={link.path}
-                            onClick={() => setIsOpen(false)}
-                            className="font-daydream uppercase tracking-wide block px-4 py-1 rounded-full text-[28px] hover:opacity-70"
-                            style={{ color: '#FDF8F5', backgroundColor: pathname === link.path ? '#8A7650' : 'transparent' }}
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
-                </div>
-            )}
+            {/* Mobile menu - Full Screen */}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="fixed inset-0 bg-[#8A7650] z-[100] md:hidden flex flex-col items-center justify-center space-y-12"
+                    >
+                        {allLinks.map((link) => (
+                            <Link
+                                key={link.path}
+                                href={link.path}
+                                onClick={() => setIsOpen(false)}
+                                className="font-daydream uppercase tracking-wide text-4xl text-[#FDF8F5] hover:opacity-70 transition-all"
+                                style={{
+                                    textShadow: pathname === link.path ? '4px 4px 0px rgba(0,0,0,0.2)' : 'none',
+                                    transform: pathname === link.path ? 'scale(1.1)' : 'scale(1)'
+                                }}
+                            >
+                                {link.name}
+                            </Link>
+                        ))}
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </nav>
     );
 }
