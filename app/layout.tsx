@@ -12,7 +12,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-    themeColor: '#000000',
+    themeColor: '#EAE0CF',
+    viewportFit: 'cover',
 };
 
 export default function RootLayout({
@@ -23,10 +24,6 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body className={inter.className}>
-                {/* Mobile black bars */}
-                <div className="fixed top-0 left-0 right-0 h-8 bg-black z-[300] md:hidden" />
-                <div className="fixed bottom-0 left-0 right-0 h-8 bg-black z-[300] md:hidden" />
-
                 <Navbar />
                 <main>
                     <PageTransitionProvider>
