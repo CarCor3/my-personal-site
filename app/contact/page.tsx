@@ -3,7 +3,7 @@ import Image from 'next/image';
 /*contact page title*/
 export default function Contact() {
     return (
-        <div className="py-30 md:py-60 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
+        <div className="py-20 md:py-60 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
             <h1 className="font-daydream text-5xl md:text-5xl font-bold mb-12 text-center leading-[1.5] md:leading-normal" style={{ color: '#000000' }}>
                 GET IN TOUCH
             </h1>
