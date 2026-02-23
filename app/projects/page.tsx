@@ -10,35 +10,35 @@ const projectImages = [
         src: '/backgrounds/project1.jpeg',
         alt: 'Project 1',
         title: 'Project Alpha',
-        description: 'An innovative exploration of electrical engineering principles applied to modern automation systems.',
+        description: 'An innovative exploration of electrical engineering principles applied to modern.',
         rotation: -6, x: -10, y: -15
     },
     {
         src: '/backgrounds/project2.jpeg',
         alt: 'Project 2',
         title: 'System Beta',
-        description: 'A comprehensive study of power distribution networks and their reliability in high-demand environments.',
+        description: 'Study of power distribution networks and their reliability in high-demand environments.',
         rotation: 4, x: 15, y: -10
     },
     {
         src: '/backgrounds/SCPC.jpeg',
         alt: 'SCPC',
         title: 'SCPC Solutions',
-        description: 'Advanced satellite communication project focusing on single channel per carrier distribution technologies.',
+        description: 'Advanced satellite communication project focusing on single channel.',
         rotation: -2, x: -15, y: 10
     },
     {
         src: '/backgrounds/SCPC1.jpeg',
         alt: 'SCPC 1',
-        title: 'Network Gamma',
-        description: 'Optimizing data transmission across isolated electrical grids using proprietary communication protocols.',
+        title: 'SCPC',
+        description: 'Student Center Programs Council former board member. Awarded Committe of the year 2025.',
         rotation: 7, x: 10, y: 15
     },
     {
         src: '/backgrounds/GTPERU.jpeg',
         alt: 'GT Peru',
         title: 'GT Peru',
-        description: 'Large-scale infrastructure development and electrical maintenance strategy for rural regions in Peru.',
+        description: 'Founded the first ever Peruvian Student Organization at Georgia Tech.',
         rotation: 2, x: 0, y: 0
     },
 ];
