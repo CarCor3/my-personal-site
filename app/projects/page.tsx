@@ -198,7 +198,7 @@ export default function Projects() {
                             <motion.div
                                 key={inspectedIndex}
                                 initial={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 50 }}
-                                animate={{ opacity: 1, y: isMobile ? 0 : 0, x: isMobile ? 0 : 220 }} /*description box location*/
+                                animate={{ opacity: 1, y: isMobile ? 40 : 0, x: isMobile ? 0 : 220 }} /*description box location*/
                                 exit={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 50 }}
                                 transition={{ type: 'spring', stiffness: 200, damping: 25 }}
                                 className={`z-[120] ${isMobile ? 'absolute bottom-10 w-full max-w-[90vw]' : 'absolute w-full max-w-[450px] ml-12'}`}
