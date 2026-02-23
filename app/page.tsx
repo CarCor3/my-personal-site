@@ -270,10 +270,10 @@ export default function Home() {
                 </h1>
             </div>
 
-            {/* ── Photos row ── */}
+            {/*Photos slide*/}
             <div style={{
                 position: 'absolute',
-                bottom: isMobile ? -280 : -360,
+                bottom: isMobile ? -360 : -360,
                 left: isMobile ? '0' : '67%',
                 transform: isMobile ? 'none' : 'translateX(-50%)',
                 width: isMobile ? '100%' : 'auto',
