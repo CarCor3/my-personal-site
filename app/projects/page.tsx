@@ -136,7 +136,7 @@ export default function Projects() {
                                     key={originalIndex}
                                     animate={{
                                         x: isCardFlying ? (isMobile ? 800 : 1500) : (isBeingInspected ? (isMobile ? 0 : -280) : (isVisible ? img.x : 0)),
-                                        y: isCardFlying ? -200 : (isBeingInspected ? (isMobile ? -140 : 0) : (isVisible ? img.y : 0)),
+                                        y: isCardFlying ? -200 : (isBeingInspected ? (isMobile ? -100 : 0) : (isVisible ? img.y : 0)), /*inpect pic location*/
                                         rotate: isCardFlying ? 45 : (isBeingInspected ? 0 : (isVisible ? img.rotation : 0)),
                                         opacity: isCardFlying ? 0 : (isVisible ? 1 : 0),
                                         zIndex: isCardFlying ? 100 : (isBeingInspected ? 150 : displayIndex),
