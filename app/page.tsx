@@ -250,7 +250,7 @@ export default function Home() {
             {/* ── Title — adjusted for mobile ── */}
             <div style={{
                 position: 'absolute',
-                top: isMobile ? '15%' : '47%',
+                top: isMobile ? '20%' : '47%',
                 left: isMobile ? '50%' : '67%',
                 transform: 'translate(-50%, -50%)',
                 zIndex: 2,
