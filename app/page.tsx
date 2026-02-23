@@ -171,7 +171,7 @@ export default function Home() {
                     zIndex: 1,
                     cursor: 'pointer',
                     perspective: '2000px',
-                    opacity: isMobile && phase === 'open' ? 0 : 1,
+                    opacity: 1,
                     transition: 'opacity 0.3s ease',
                 }}
             >
