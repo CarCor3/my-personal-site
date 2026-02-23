@@ -159,7 +159,7 @@ export default function Home() {
                 onClick={() => setIsFlipped(!isFlipped)}
                 style={{
                     position: 'absolute',
-                    top: isMobile ? -50 : -270,
+                    top: isMobile ? -10 : -270,
                     left: isMobile ? 0 : '-3%',
                     height: isMobile ? '100vh' : '130vh',
                     width: isMobile ? '100%' : 'fit-content',
