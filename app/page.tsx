@@ -64,7 +64,7 @@ const PHOTOS = [
     { src: 'pic3.jpeg', title: 'Mancora, Peru' },
 ];
 const PAD = { sides: 20, top: 60, bottom: 20 };
-const THUMB = { imgW: 260, imgH: 340 };
+const THUMB = { imgW: 260, imgH: 340 }; /*sliding show position*/
 const EXP = { imgW: 480, imgH: 600 };
 
 function polaroidW(imgW: number) { return imgW + PAD.sides * 2; }
@@ -152,7 +152,7 @@ export default function Home() {
     };
 
     return (
-        <div className="min-h-[100dvh] relative overflow-x-hidden">
+        <div className="h-[100dvh] relative overflow-hidden fixed inset-0">
 
             {/* Background */}
             <div style={{ position: 'absolute', inset: 0, zIndex: 0, backgroundColor: '#EAE0CF' }} />
@@ -380,7 +380,7 @@ export default function Home() {
                 <>
                     <div style={flyStyle} onClick={closePhoto}>
                         {/* Title */}
-                        <p className="font-dogica text-xs text-gray-500 absolute top-0 left-0 w-full text-center pt-6 uppercase tracking-widest">
+                        <p className="font-dogica text-xs text-gray-500 absolute top-0 left-0 w-full text-center pt-4 uppercase tracking-widest"> {/*pt-4 is for mobile sliding show position*/}
                             {PHOTOS[openIdx].title}
                         </p>
 
