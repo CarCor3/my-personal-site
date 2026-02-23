@@ -4,10 +4,10 @@ import Image from 'next/image';
 export default function Contact() {
     return (
         <div className="py-40 md:py-60 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-            <h1 className="font-daydream text-3xl md:text-5xl font-bold mb-12 text-center leading-[1.5] md:leading-normal" style={{ color: '#000000' }}>
+            <h1 className="font-daydream text-4xl md:text-5xl font-bold mb-12 text-center leading-[1.5] md:leading-normal" style={{ color: '#000000' }}>
                 GET IN TOUCH
             </h1>
-            <div className="flex flex-col gap-10 items-start w-full max-w-[320px]">
+            <div className="flex flex-col gap-6 items-start w-full max-w-[320px]">
                 <a
                     href="https://www.instagram.com/carloscordova03"
                     target="_blank"
