@@ -146,7 +146,7 @@ export default function Home() {
     };
 
     return (
-        <div style={{ position: 'relative', height: '100vh', overflow: 'hidden' }}>
+        <div className="min-h-[100dvh] relative overflow-x-hidden">
 
             {/* Background */}
             <div style={{ position: 'absolute', inset: 0, zIndex: 0, backgroundColor: '#EAE0CF' }} />
