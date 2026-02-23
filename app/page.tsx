@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 /* ── Magnetic word ─────────────────────────────────────────────── */
 function MagneticWord({
@@ -158,10 +159,10 @@ export default function Home() {
                 onClick={() => setIsFlipped(!isFlipped)}
                 style={{
                     position: 'absolute',
-                    top: isMobile ? -100 : -270,
-                    left: isMobile ? '-25%' : '-3%',
+                    top: isMobile ? -50 : -270,
+                    left: isMobile ? 0 : '-3%',
                     height: isMobile ? '100vh' : '130vh',
-                    width: 'fit-content',
+                    width: isMobile ? '100%' : 'fit-content',
                     zIndex: 1,
                     cursor: 'pointer',
                     perspective: '2000px',
@@ -181,7 +182,7 @@ export default function Home() {
                     <div style={{
                         position: 'relative',
                         height: '100%',
-                        width: 'auto',
+                        width: isMobile ? '100%' : 'auto',
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',
                     }}>
@@ -190,7 +191,8 @@ export default function Home() {
                             alt="Front"
                             style={{
                                 height: '100%',
-                                width: 'auto',
+                                width: isMobile ? '100%' : 'auto',
+                                objectFit: isMobile ? 'cover' : 'fill',
                                 display: 'block',
                                 userSelect: 'none',
                                 pointerEvents: 'none',
@@ -204,7 +206,7 @@ export default function Home() {
                         top: 0,
                         left: 0,
                         height: '100%',
-                        width: 'auto',
+                        width: isMobile ? '100%' : 'auto',
                         backfaceVisibility: 'hidden',
                         WebkitBackfaceVisibility: 'hidden',
                         transform: 'rotateY(180deg)',
@@ -214,7 +216,8 @@ export default function Home() {
                             alt="Back"
                             style={{
                                 height: '100%',
-                                width: 'auto',
+                                width: isMobile ? '100%' : 'auto',
+                                objectFit: isMobile ? 'cover' : 'fill',
                                 display: 'block',
                                 userSelect: 'none',
                                 pointerEvents: 'none',
@@ -247,17 +250,17 @@ export default function Home() {
             {/* ── Title — adjusted for mobile ── */}
             <div style={{
                 position: 'absolute',
-                top: isMobile ? '35%' : '47%',
+                top: isMobile ? '15%' : '47%',
                 left: isMobile ? '50%' : '67%',
                 transform: 'translate(-50%, -50%)',
                 zIndex: 2,
                 textAlign: 'center',
                 width: isMobile ? '90%' : 'auto',
             }}>
-                <p className="font-ari text-2xl md:text-8xl font-bold mb-4 md:mb-8" style={{ color: '#000000' }}>
+                <p className="font-ari text-4xl md:text-8xl font-bold mb-4 md:mb-8" style={{ color: '#000000' }}>
                     <MagneticWord strength={0.4}>Hi, I'm</MagneticWord>
                 </p>
-                <h1 className="font-daydream text-4xl md:text-6xl lg:text-9xl font-bold tracking-tight" style={{ color: '#8A7650' }}>
+                <h1 className="font-daydream text-5xl md:text-6xl lg:text-9xl font-bold tracking-tight" style={{ color: '#8A7650' }}>
                     <MagneticWord strength={0.45} style={{ display: 'block', marginBottom: isMobile ? '10px' : '30px' }}>
                         Carlos
                     </MagneticWord>
@@ -270,66 +273,86 @@ export default function Home() {
             {/* ── Photos row ── */}
             <div style={{
                 position: 'absolute',
-                bottom: -360,
-                left: '67%',
-                transform: 'translateX(-50%)',
+                bottom: isMobile ? -280 : -360,
+                left: isMobile ? '0' : '67%',
+                transform: isMobile ? 'none' : 'translateX(-50%)',
+                width: isMobile ? '100%' : 'auto',
                 zIndex: 2,
-                display: 'flex',
-                gap: 28,
-                alignItems: 'flex-end',
+                overflow: isMobile ? 'hidden' : 'visible',
             }}>
-                {PHOTOS.map((item, idx) => {
-                    const isOpen = openIdx === idx;
-                    return (
-                        <div
-                            key={item.src}
-                            ref={el => { thumbRefs.current[idx] = el; }}
-                            onClick={() => handleThumbClick(idx)}
-                            onMouseEnter={() => setHoveredIdx(idx)}
-                            onMouseLeave={() => setHoveredIdx(null)}
-                            style={{
-                                width: THUMB_W,
-                                height: THUMB_H,
-                                flexShrink: 0,
-                                backgroundColor: '#ffffff',
-                                padding: `${PAD.top}px ${PAD.sides}px ${PAD.bottom}px`,
-                                boxSizing: 'border-box',
-                                cursor: 'pointer',
-                                boxShadow: hoveredIdx === idx
-                                    ? '0 20px 50px rgba(0,0,0,0.35)'
-                                    : '0 5px 20px rgba(0,0,0,0.22)',
-                                // Hide thumbnail while its flying twin is visible
-                                opacity: isOpen ? 0 : 1,
-                                transform: hoveredIdx === idx && !isOpen
-                                    ? 'translateY(-12px)'
-                                    : 'translateY(0px)',
-                                transition: 'box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.23,1,0.32,1), opacity 0.1s ease',
-                                pointerEvents: phase !== 'closed' ? 'none' : 'auto',
-                                position: 'relative',
-                            }}
-                        >
-                            {/* Title */}
-                            <p className="font-dogica text-[10px] text-gray-500 absolute top-0 left-0 w-full text-center pt-6 uppercase tracking-widest">
-                                {item.title}
-                            </p>
+                <motion.div
+                    animate={isMobile ? {
+                        x: [0, -((THUMB_W + 28) * PHOTOS.length)]
+                    } : {}}
+                    transition={isMobile ? {
+                        x: {
+                            repeat: Infinity,
+                            repeatType: "loop",
+                            duration: PHOTOS.length * 5,
+                            ease: "linear",
+                        }
+                    } : {}}
+                    style={{
+                        display: 'flex',
+                        gap: 28,
+                        alignItems: 'flex-end',
+                        width: 'fit-content',
+                    }}
+                >
+                    {(isMobile ? [...PHOTOS, ...PHOTOS, ...PHOTOS] : PHOTOS).map((item, idx) => {
+                        const originalIdx = idx % PHOTOS.length;
+                        const isOpen = openIdx === originalIdx;
+                        return (
+                            <div
+                                key={`${item.src}-${idx}`}
+                                ref={el => { if (idx < PHOTOS.length) thumbRefs.current[idx] = el; }}
+                                onClick={() => handleThumbClick(originalIdx)}
+                                onMouseEnter={() => setHoveredIdx(idx)}
+                                onMouseLeave={() => setHoveredIdx(null)}
+                                style={{
+                                    width: THUMB_W,
+                                    height: THUMB_H,
+                                    flexShrink: 0,
+                                    backgroundColor: '#ffffff',
+                                    padding: `${PAD.top}px ${PAD.sides}px ${PAD.bottom}px`,
+                                    boxSizing: 'border-box',
+                                    cursor: 'pointer',
+                                    boxShadow: hoveredIdx === idx
+                                        ? '0 20px 50px rgba(0,0,0,0.35)'
+                                        : '0 5px 20px rgba(0,0,0,0.22)',
+                                    // Hide thumbnail while its flying twin is visible
+                                    opacity: isOpen ? 0 : 1,
+                                    transform: hoveredIdx === idx && !isOpen
+                                        ? 'translateY(-12px)'
+                                        : 'translateY(0px)',
+                                    transition: 'box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.23,1,0.32,1), opacity 0.1s ease',
+                                    pointerEvents: phase !== 'closed' ? 'none' : 'auto',
+                                    position: 'relative',
+                                }}
+                            >
+                                {/* Title */}
+                                <p className="font-dogica text-[10px] text-gray-500 absolute top-0 left-0 w-full text-center pt-6 uppercase tracking-widest">
+                                    {item.title}
+                                </p>
 
-                            <div style={{ width: '100%', height: THUMB.imgH, overflow: 'hidden' }}>
-                                <img
-                                    src={`/backgrounds/${item.src}`}
-                                    alt={item.title}
-                                    style={{
-                                        width: '100%',
-                                        height: '100%',
-                                        objectFit: 'cover',
-                                        display: 'block',
-                                        userSelect: 'none',
-                                        pointerEvents: 'none',
-                                    }}
-                                />
+                                <div style={{ width: '100%', height: THUMB.imgH, overflow: 'hidden' }}>
+                                    <img
+                                        src={`/backgrounds/${item.src}`}
+                                        alt={item.title}
+                                        style={{
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: 'cover',
+                                            display: 'block',
+                                            userSelect: 'none',
+                                            pointerEvents: 'none',
+                                        }}
+                                    />
+                                </div>
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </motion.div>
             </div>
 
             {/* ── Dark backdrop ── */}
