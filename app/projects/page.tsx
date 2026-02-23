@@ -37,7 +37,7 @@ const projectImages = [
     {
         src: '/backgrounds/GTPERU.jpeg',
         alt: 'GT Peru',
-        title: 'GT Peru Infrastructure',
+        title: 'GT Peru',
         description: 'Large-scale infrastructure development and electrical maintenance strategy for rural regions in Peru.',
         rotation: 2, x: 0, y: 0
     },
@@ -91,12 +91,12 @@ export default function Projects() {
     const currentProject = inspectedIndex !== null ? projectImages[inspectedIndex] : null;
 
     return (
-        <div className="min-h-screen py-20 md:py-48 flex flex-col items-center justify-center bg-[#EAE0CF] transition-colors duration-500">
+        <div className="h-screen py-10 md:py-48 flex flex-col items-center justify-center bg-[#EAE0CF] transition-colors duration-500 overflow-hidden fixed inset-0">
             <div className="relative w-full max-w-7xl flex flex-col items-center justify-center px-4 md:px-0">
                 {/* Deck/Inpection Area */}
                 {/* Deck/Inpection Area */}
                 <motion.div
-                    animate={{ height: isMobile && inspectedIndex !== null ? 750 : (isMobile ? 500 : 600) }}
+                    animate={{ height: isMobile && inspectedIndex !== null ? 620 : (isMobile ? 450 : 600) }}
                     transition={{ type: 'spring', stiffness: 260, damping: 28 }}
                     className="relative w-full flex flex-col md:flex-row items-center justify-center"
                 >
@@ -136,11 +136,11 @@ export default function Projects() {
                                     key={originalIndex}
                                     animate={{
                                         x: isCardFlying ? (isMobile ? 800 : 1500) : (isBeingInspected ? (isMobile ? 0 : -280) : (isVisible ? img.x : 0)),
-                                        y: isCardFlying ? -200 : (isBeingInspected ? (isMobile ? -200 : 0) : (isVisible ? img.y : 0)),
+                                        y: isCardFlying ? -200 : (isBeingInspected ? (isMobile ? -140 : 0) : (isVisible ? img.y : 0)),
                                         rotate: isCardFlying ? 45 : (isBeingInspected ? 0 : (isVisible ? img.rotation : 0)),
                                         opacity: isCardFlying ? 0 : (isVisible ? 1 : 0),
                                         zIndex: isCardFlying ? 100 : (isBeingInspected ? 150 : displayIndex),
-                                        scale: isBeingInspected ? (isMobile ? 1.05 : 1.05) : 1
+                                        scale: isBeingInspected ? (isMobile ? 0.95 : 1.05) : 1
                                     }}
                                     transition={{
                                         type: 'spring',
@@ -198,7 +198,7 @@ export default function Projects() {
                             <motion.div
                                 key={inspectedIndex}
                                 initial={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 50 }}
-                                animate={{ opacity: 1, y: isMobile ? -80 : 0, x: isMobile ? 0 : 220 }} /*description box location*/
+                                animate={{ opacity: 1, y: isMobile ? -20 : 0, x: isMobile ? 0 : 220 }} /*description box location*/
                                 exit={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 50 }}
                                 transition={{ type: 'spring', stiffness: 200, damping: 25 }}
                                 className={`z-[120] ${isMobile ? 'absolute bottom-10 w-full max-w-[90vw]' : 'absolute w-full max-w-[450px] ml-12'}`}
@@ -242,7 +242,7 @@ export default function Projects() {
                 </motion.div>
             </div>
 
-            <div className="mt-12 md:mt-24 text-center px-4">
+            <div className="mt-6 md:mt-24 text-center px-4">
                 <p className="font-dogica text-[10px] md:text-[12px] text-black font-bold animate-pulse tracking-wide">
                     {inspectedIndex !== null ? 'USE X TO RETURN' : 'CLICK ON THE PICTURE TO INSPECT'}
                 </p>
