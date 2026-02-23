@@ -106,8 +106,8 @@ export default function Projects() {
                         {inspectedIndex === null && (
                             <motion.button
                                 initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0, y: isMobile ? 0 : 110 }}
+                                exit={{ opacity: 0, x: -20, y: isMobile ? 0 : 110 }}
                                 onClick={handlePrev}
                                 className="absolute left-0 md:left-4 lg:left-10 z-[60] p-2 md:p-3 bg-white border-4 border-black hover:bg-gray-100 transition-colors cursor-pointer"
                                 aria-label="Previous project"
@@ -120,7 +120,7 @@ export default function Projects() {
                     {/* The Cards Area */}
                     <motion.div
                         initial={{ y: 100, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
+                        animate={{ y: isMobile ? 0 : 110, opacity: 1 }} /*60 pic deck location for desktop*/
                         transition={{ duration: 0.6, ease: "easeOut" }}
                         className="relative w-full h-full flex items-center justify-center"
                     >
@@ -198,8 +198,8 @@ export default function Projects() {
                             <motion.div
                                 key={inspectedIndex}
                                 initial={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 50 }}
-                                animate={{ opacity: 1, y: isMobile ? 40 : 0, x: isMobile ? 0 : 220 }} /*description box location*/
-                                exit={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 50 }}
+                                animate={{ opacity: 1, y: isMobile ? 40 : 110, x: isMobile ? 0 : 220 }} /*description box location*/
+                                exit={{ opacity: 0, y: isMobile ? 40 : 110, x: isMobile ? 0 : 50 }}
                                 transition={{ type: 'spring', stiffness: 200, damping: 25 }}
                                 className={`z-[120] ${isMobile ? 'absolute bottom-10 w-full max-w-[90vw]' : 'absolute w-full max-w-[450px] ml-12'}`}
                             >
@@ -229,8 +229,8 @@ export default function Projects() {
                         {inspectedIndex === null && (
                             <motion.button
                                 initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0, y: isMobile ? 0 : 110 }}
+                                exit={{ opacity: 0, x: 20, y: isMobile ? 0 : 110 }}
                                 onClick={handleNext}
                                 className="absolute right-0 md:right-4 lg:right-10 z-[60] p-2 md:p-3 bg-white border-4 border-black hover:bg-gray-100 transition-colors cursor-pointer"
                                 aria-label="Next project"
@@ -242,7 +242,7 @@ export default function Projects() {
                 </motion.div>
             </div>
 
-            <div className="mt-6 md:mt-24 text-center px-4">
+            <div className="mt-6 md:mt-48 text-center px-4"> {/*40 is the location of the bottom text*/}
                 <p className="font-dogica text-[10px] md:text-[12px] text-black font-bold animate-pulse tracking-wide">
                     {inspectedIndex !== null ? 'USE X TO RETURN' : 'CLICK ON THE PICTURE TO INSPECT'}
                 </p>
