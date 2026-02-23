@@ -125,7 +125,7 @@ export default function Home() {
     };
 
     // Flying card target: scaled for mobile, fixed for desktop
-    const currentExpW = isMobile ? windowWidth * 0.7 : EXP_W;
+    const currentExpW = isMobile ? windowWidth * 0.8 : EXP_W;
     const currentExpH = isMobile ? (currentExpW * (EXP_H / EXP_W)) : EXP_H;
 
     const targetTop = typeof window !== 'undefined' ? (window.innerHeight - currentExpH) / 2 : 0;
