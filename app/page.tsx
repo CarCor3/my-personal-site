@@ -124,9 +124,12 @@ export default function Home() {
         }
     };
 
-    // Flying card target: centered in viewport
-    const targetTop = typeof window !== 'undefined' ? (window.innerHeight - EXP_H) / 2 : 0;
-    const targetLeft = typeof window !== 'undefined' ? (window.innerWidth - EXP_W) / 2 : 0;
+    // Flying card target: scaled for mobile, fixed for desktop
+    const currentExpW = isMobile ? windowWidth * 0.6 : EXP_W;
+    const currentExpH = isMobile ? (currentExpW * (EXP_H / EXP_W)) : EXP_H;
+
+    const targetTop = typeof window !== 'undefined' ? (window.innerHeight - currentExpH) / 2 : 0;
+    const targetLeft = typeof window !== 'undefined' ? (window.innerWidth - currentExpW) / 2 : 0;
 
     // Is the flying card at thumbnail position or at center?
     const atOrigin = phase === 'opening' || phase === 'closing';
@@ -134,15 +137,17 @@ export default function Home() {
         position: 'fixed',
         top: atOrigin && originRect ? originRect.top : targetTop,
         left: atOrigin && originRect ? originRect.left : targetLeft,
-        width: atOrigin && originRect ? originRect.width : EXP_W,
-        height: atOrigin && originRect ? originRect.height : EXP_H,
+        width: atOrigin && originRect ? originRect.width : currentExpW,
+        height: atOrigin && originRect ? originRect.height : currentExpH,
         backgroundColor: '#ffffff',
         boxShadow: atOrigin ? '0 5px 20px rgba(0,0,0,0.22)' : '0 24px 80px rgba(0,0,0,0.55)',
         zIndex: 200,
         transition: 'top 0.48s cubic-bezier(0.23,1,0.32,1), left 0.48s cubic-bezier(0.23,1,0.32,1), width 0.48s cubic-bezier(0.23,1,0.32,1), height 0.48s cubic-bezier(0.23,1,0.32,1), box-shadow 0.48s ease',
         overflow: 'hidden',
         cursor: 'zoom-out',
-        padding: `${PAD.top}px ${PAD.sides}px ${PAD.bottom}px`,
+        padding: isMobile
+            ? `${(currentExpH * 0.08)}px ${(currentExpW * 0.04)}px ${(currentExpH * 0.03)}px`
+            : `${PAD.top}px ${PAD.sides}px ${PAD.bottom}px`,
         boxSizing: 'border-box',
     };
 
