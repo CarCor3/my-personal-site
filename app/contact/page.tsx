@@ -41,7 +41,7 @@ export default function Contact() {
                     GET IN TOUCH
                 </motion.h1>
 
-                <div className="flex flex-col gap-6 items-center w-full max-w-[360px]">
+                <div className="flex flex-col gap-6 items-center w-full max-w-[400px]">
                     <motion.a
                         variants={itemVariants}
                         transition={{ duration: 0.5, ease: "easeOut" }}
