@@ -27,8 +27,14 @@ export default function Contact() {
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="pt-24 pb-12 md:py-20 flex-grow flex flex-col items-center justify-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-6"
+                /* 
+                  Main Container Alignment:
+                  - mobile: items-center justify-center
+                  - desktop: md:items-center md:justify-center (change these classes below to shift the whole block)
+                */
+                className="pt-24 pb-12 md:py-20 flex-grow flex flex-col items-center justify-center md:items-center md:justify-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-6"
             >
+
                 <motion.h1
                     variants={{
                         hidden: { opacity: 0, y: -20 },
@@ -41,7 +47,13 @@ export default function Contact() {
                     GET IN TOUCH
                 </motion.h1>
 
-                <div className="flex flex-col gap-6 items-center w-full max-w-[400px]">
+                {/* 
+                      Links Container Alignment:
+                      - mobile: items-center (centered)
+                      - desktop: md:items-center (centered)
+                      - Change 'md:items-center' to 'md:items-start' to align links to the left on desktop
+                    */}
+                <div className="flex flex-col gap-6 items-center md:items-center w-full max-w-[350px] md:max-w-[400px]">
                     <motion.a
                         variants={itemVariants}
                         transition={{ duration: 0.5, ease: "easeOut" }}
