@@ -28,7 +28,7 @@ export default function About() {
     return (
         <div className="min-h-screen md:h-screen md:overflow-hidden flex flex-col" style={{ backgroundColor: '#EAE0CF' }}>
             <motion.div
-                className="py-30 md:py-40 flex items-center justify-center flex-grow max-w-5xl mx-auto px-6 sm:px-6 lg:px-0"
+                className="pt-24 pb-12 md:py-40 flex items-center justify-center flex-grow max-w-5xl mx-auto px-6 sm:px-6 lg:px-0"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"

@@ -157,7 +157,7 @@ export default function Home() {
     };
 
     return (
-        <div className="h-[100dvh] relative overflow-hidden fixed inset-0">
+        <div className="min-h-[100dvh] relative md:overflow-hidden md:fixed md:inset-0">
 
             {/* Background */}
             <motion.div

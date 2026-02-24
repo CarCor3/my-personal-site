@@ -27,7 +27,7 @@ export default function Contact() {
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="py-20 flex-grow flex flex-col items-center justify-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-6 mt-[70px]"
+                className="pt-24 pb-12 md:py-20 flex-grow flex flex-col items-center justify-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-6"
             >
                 <motion.h1
                     variants={{
