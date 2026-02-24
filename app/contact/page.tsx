@@ -53,7 +53,7 @@ export default function Contact() {
                       - desktop: md:items-center (centered)
                       - Change 'md:items-center' to 'md:items-start' to align links to the left on desktop
                     */}
-                <div className="flex flex-col gap-6 items-center md:items-center w-full max-w-[350px] md:max-w-[400px]">
+                <div className="flex flex-col gap-6 items-center md:items-center w-full max-w-[300px] md:max-w-[400px]">
                     <motion.a
                         variants={itemVariants}
                         transition={{ duration: 0.5, ease: "easeOut" }}
