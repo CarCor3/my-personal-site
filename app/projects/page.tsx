@@ -7,10 +7,10 @@ import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 const projectImages = [
     {
-        src: '/backgrounds/project1.jpeg',
+        src: '/backgrounds/HH.png',
         alt: 'Project 1',
         title: 'GT HackerHouse',
-        description: 'An innovative exploration of electrical engineering principles applied to modern.',
+        description: 'Helped build a community of unusually ambitious young people who are doing expectional things.',
         rotation: -6, x: -10, y: -15,
         objectFit: 'cover' as const,
         objectPosition: 'center',
@@ -40,7 +40,7 @@ const projectImages = [
         src: '/backgrounds/CAR.jpeg',
         alt: 'SCPC',
         title: 'Buzz Car',
-        description: 'Lead the power systems and motion control subsystems of a selfdriving racecar using a ESP32, MPM3610 buck converter, DRV8833 motor driver, and a custom PCB.',
+        description: 'Made the power systems and motion control subsystems of a selfdriving racecar using a ESP32, MPM3610, DRV8833, and custom PCB.',
         rotation: -2, x: -15, y: 10,
         objectFit: 'cover' as const,
         objectPosition: 'center',
