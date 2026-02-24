@@ -9,21 +9,28 @@ const projectImages = [
     {
         src: '/backgrounds/project1.jpeg',
         alt: 'Project 1',
-        title: 'Project Alpha',
+        title: 'GT HackerHouse',
+        description: 'An innovative exploration of electrical engineering principles applied to modern.',
+        rotation: -6, x: -10, y: -15
+    },
+    {
+        src: '/backgrounds/project1.jpeg',
+        alt: 'Project 1',
+        title: 'Find George',
         description: 'An innovative exploration of electrical engineering principles applied to modern.',
         rotation: -6, x: -10, y: -15
     },
     {
         src: '/backgrounds/project2.jpeg',
         alt: 'Project 2',
-        title: 'System Beta',
+        title: 'Tales of Buzz',
         description: 'Study of power distribution networks and their reliability in high-demand environments.',
         rotation: 4, x: 15, y: -10
     },
     {
         src: '/backgrounds/SCPC.jpeg',
         alt: 'SCPC',
-        title: 'SCPC Solutions',
+        title: 'Buzz Car',
         description: 'Advanced satellite communication project focusing on single channel.',
         rotation: -2, x: -15, y: 10
     },
@@ -44,7 +51,7 @@ const projectImages = [
 ];
 
 export default function Projects() {
-    const [cardOrder, setCardOrder] = useState([0, 1, 2, 3, 4]);
+    const [cardOrder, setCardOrder] = useState([0, 1, 2, 3, 4, 5]);
     const [isFlying, setIsFlying] = useState<number | null>(null);
     const [inspectedIndex, setInspectedIndex] = useState<number | null>(null);
     const [windowWidth, setWindowWidth] = useState(0);
