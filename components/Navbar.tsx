@@ -68,17 +68,29 @@ export default function Navbar() {
                     }} />
 
                     {/* All 4 links — desktop */}
-                    {allLinks.map((link, idx) => (
-                        <Link
-                            key={link.path}
-                            ref={el => { linkRefs.current[idx] = el; }}
-                            href={link.path}
-                            className="hidden md:inline-block font-daydream uppercase tracking-wide text-[28px] hover:opacity-70 px-4 py-1 rounded-full"
-                            style={{ color: '#FDF8F5', position: 'relative', zIndex: 1 }}
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
+                    <div className="hidden md:flex flex-grow justify-between items-center px-4 w-full">
+                        {allLinks.map((link, idx) => (
+                            <motion.div
+                                key={link.path}
+                                initial={{ opacity: 0, y: -50 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{
+                                    duration: 0.8,
+                                    ease: [0.22, 1, 0.36, 1],
+                                    delay: 0.1 * idx + 0.5
+                                }}
+                            >
+                                <Link
+                                    ref={el => { linkRefs.current[idx] = el; }}
+                                    href={link.path}
+                                    className="font-daydream uppercase tracking-wide text-[28px] hover:opacity-70 px-4 py-1 rounded-full inline-block"
+                                    style={{ color: '#FDF8F5', position: 'relative', zIndex: 1 }}
+                                >
+                                    {link.name}
+                                </Link>
+                            </motion.div>
+                        ))}
+                    </div>
 
                     {/* Mobile button */}
                     <div className="absolute left-6 top-10 md:hidden" style={{ zIndex: 110 }}>

@@ -62,6 +62,8 @@ const PHOTOS = [
     { src: 'pic1.jpeg', title: 'Atlanta, GA' },
     { src: 'pic2.jpeg', title: 'Georgia Tech, GA' },
     { src: 'pic3.jpeg', title: 'Mancora, Peru' },
+    { src: 'pic4.jpeg', title: 'Denver, CO' },
+    { src: 'pic5.jpeg', title: 'Machu Picchu, Peru' },
 ];
 const PAD = { sides: 20, top: 60, bottom: 20 };
 const THUMB = { imgW: 260, imgH: 340 }; /*sliding show position*/
@@ -94,11 +96,8 @@ export default function Home() {
 
     const isMobile = windowWidth > 0 && windowWidth < 768;
 
-    const openPhoto = (idx: number) => {
-        const el = thumbRefs.current[idx];
-        if (!el) return;
-        const r = el.getBoundingClientRect();
-        setOriginRect({ top: r.top, left: r.left, width: r.width, height: r.height });
+    const openPhoto = (idx: number, rect: DOMRect) => {
+        setOriginRect({ top: rect.top, left: rect.left, width: rect.width, height: rect.height });
         setOpenIdx(idx);
         setPhase('opening');          // start at thumbnail position
         // next frame: fly to center
@@ -108,31 +107,35 @@ export default function Home() {
     };
 
     const closePhoto = () => {
-        setPhase('closing');          // fly back to thumbnail
+        setPhase('closing');          // Fade out / vanish effect
         setTimeout(() => {
-            setPhase('closed');
             setOpenIdx(null);
+            setPhase('closed');
             setOriginRect(null);
-        }, 480);
+        }, 300); // Shorter duration for the 'disappear' phase
     };
 
-    const handleThumbClick = (idx: number) => {
+    const handleThumbClick = (idx: number, e: React.MouseEvent) => {
         if (phase === 'open' || phase === 'opening') {
             closePhoto();
         } else if (phase === 'closed') {
-            openPhoto(idx);
+            const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+            openPhoto(idx, rect);
         }
     };
 
     // Flying card target: scaled for mobile, fixed for desktop
     const currentExpW = isMobile ? windowWidth * 0.8 : EXP_W;
     const currentExpH = isMobile ? (currentExpW * (EXP_H / EXP_W)) : EXP_H;
+    const currentTopPad = isMobile ? (currentExpH * 0.08) : PAD.top;
 
     const targetTop = typeof window !== 'undefined' ? (window.innerHeight - currentExpH) / 2 : 0;
     const targetLeft = typeof window !== 'undefined' ? (window.innerWidth - currentExpW) / 2 : 0;
 
     // Is the flying card at thumbnail position or at center?
-    const atOrigin = phase === 'opening' || phase === 'closing';
+    const atOrigin = phase === 'opening';
+    const isClosing = phase === 'closing';
+
     const flyStyle: React.CSSProperties = {
         position: 'fixed',
         top: atOrigin && originRect ? originRect.top : targetTop,
@@ -141,8 +144,10 @@ export default function Home() {
         height: atOrigin && originRect ? originRect.height : currentExpH,
         backgroundColor: '#ffffff',
         boxShadow: atOrigin ? '0 5px 20px rgba(0,0,0,0.22)' : '0 24px 80px rgba(0,0,0,0.55)',
-        zIndex: 200,
-        transition: 'top 0.48s cubic-bezier(0.23,1,0.32,1), left 0.48s cubic-bezier(0.23,1,0.32,1), width 0.48s cubic-bezier(0.23,1,0.32,1), height 0.48s cubic-bezier(0.23,1,0.32,1), box-shadow 0.48s ease',
+        zIndex: 600,
+        opacity: isClosing ? 0 : 1,
+        transform: isClosing ? 'scale(0.95) translateY(20px)' : 'scale(1) translateY(0)',
+        transition: 'top 0.48s cubic-bezier(0.23,1,0.32,1), left 0.48s cubic-bezier(0.23,1,0.32,1), width 0.48s cubic-bezier(0.23,1,0.32,1), height 0.48s cubic-bezier(0.23,1,0.32,1), box-shadow 0.48s ease, opacity 0.3s ease, transform 0.3s ease',
         overflow: 'hidden',
         cursor: 'zoom-out',
         padding: isMobile
@@ -155,24 +160,28 @@ export default function Home() {
         <div className="h-[100dvh] relative overflow-hidden fixed inset-0">
 
             {/* Background */}
-            <div style={{ position: 'absolute', inset: 0, zIndex: 0, backgroundColor: '#EAE0CF' }} />
-
-
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1.2 }}
+                style={{ position: 'absolute', inset: 0, zIndex: 0, backgroundColor: '#EAE0CF' }}
+            />
 
             {/* ── Flip Container (yo.png / fill.png) ── */}
-            <div
+            <motion.div
+                initial={{ opacity: 0, x: -100 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
                 onClick={() => setIsFlipped(!isFlipped)}
                 style={{
                     position: 'absolute',
-                    top: isMobile ? -10 : -270,
-                    left: isMobile ? 0 : '-3%',
-                    height: isMobile ? '100vh' : '130vh',
+                    top: isMobile ? -10 : -250,
+                    left: isMobile ? 0 : '0%',
+                    height: isMobile ? '100vh' : '134vh',
                     width: isMobile ? '100%' : 'fit-content',
                     zIndex: 1,
                     cursor: 'pointer',
                     perspective: '2000px',
-                    opacity: 1,
-                    transition: 'opacity 0.3s ease',
                 }}
             >
                 <div style={{
@@ -245,23 +254,27 @@ export default function Home() {
                                 textShadow: '0 0px 0px rgba(0,0,0,0.1)',
                                 textTransform: 'uppercase'
                             }}>
-                                I may not have any<br />notable victories,<br />but I can surprise you with<br />the defeats I manage to survive.
+                                I like cats
                             </p>
                         </div>
                     </div>
                 </div>
-            </div>
+            </motion.div>
 
             {/* ── Title — adjusted for mobile ── */}
-            <div style={{
-                position: 'absolute',
-                top: isMobile ? '20%' : '47%',
-                left: isMobile ? '50%' : '67%',
-                transform: 'translate(-50%, -50%)',
-                zIndex: 2,
-                textAlign: 'center',
-                width: isMobile ? '90%' : 'auto',
-            }}>
+            <motion.div
+                initial={{ opacity: 0, x: "calc(-50% + 50px)", y: "-50%" }}
+                animate={{ opacity: 1, x: "-50%", y: "-50%" }}
+                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
+                style={{
+                    position: 'absolute',
+                    top: isMobile ? '20%' : '47%',
+                    left: isMobile ? '50%' : '67%',
+                    zIndex: 2,
+                    textAlign: 'center',
+                    width: isMobile ? '90%' : 'auto',
+                }}
+            >
                 <p className="font-ari text-4xl md:text-8xl font-bold mb-4 md:mb-8" style={{ color: '#000000' }}>
                     <MagneticWord strength={0.4}>Hi, I'm</MagneticWord>
                 </p>
@@ -273,30 +286,34 @@ export default function Home() {
                         Cordova
                     </MagneticWord>
                 </h1>
-            </div>
+            </motion.div>
 
             {/*Photos slide*/}
-            <div style={{
-                position: 'absolute',
-                bottom: isMobile ? -360 : -360,
-                left: isMobile ? '0' : '67%',
-                transform: isMobile ? 'none' : 'translateX(-50%)',
-                width: isMobile ? '100%' : 'auto',
-                zIndex: 2,
-                overflow: isMobile ? 'hidden' : 'visible',
-            }}>
+            <motion.div
+                initial={{ opacity: 0, x: isMobile ? -50 : "-100%", y: 100 }}
+                animate={{ opacity: 1, x: isMobile ? 0 : "-50%", y: 0 }}
+                transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.9 }}
+                style={{
+                    position: 'absolute',
+                    bottom: isMobile ? -360 : -360,
+                    left: isMobile ? '0' : '50%',
+                    width: isMobile ? '100%' : 'auto',
+                    zIndex: 2,
+                    overflow: isMobile ? 'hidden' : 'visible',
+                }}
+            >
                 <motion.div
-                    animate={isMobile ? {
+                    animate={{
                         x: [0, -((THUMB_W + 28) * PHOTOS.length)]
-                    } : {}}
-                    transition={isMobile ? {
+                    }}
+                    transition={{
                         x: {
                             repeat: Infinity,
                             repeatType: "loop",
-                            duration: PHOTOS.length * 5,
+                            duration: PHOTOS.length * 8, // Slightly slower on desktop for readability
                             ease: "linear",
                         }
-                    } : {}}
+                    }}
                     style={{
                         display: 'flex',
                         gap: 28,
@@ -304,16 +321,30 @@ export default function Home() {
                         width: 'fit-content',
                     }}
                 >
-                    {(isMobile ? [...PHOTOS, ...PHOTOS, ...PHOTOS] : PHOTOS).map((item, idx) => {
+                    {[...PHOTOS, ...PHOTOS, ...PHOTOS].map((item, idx) => {
                         const originalIdx = idx % PHOTOS.length;
                         const isOpen = openIdx === originalIdx;
+
                         return (
-                            <div
+                            <motion.div
                                 key={`${item.src}-${idx}`}
                                 ref={el => { if (idx < PHOTOS.length) thumbRefs.current[idx] = el; }}
-                                onClick={() => handleThumbClick(originalIdx)}
+                                onClick={(e) => handleThumbClick(originalIdx, e)}
                                 onMouseEnter={() => setHoveredIdx(idx)}
                                 onMouseLeave={() => setHoveredIdx(null)}
+                                initial={false}
+                                animate={{
+                                    y: isOpen ? 600 : (hoveredIdx === idx ? -12 : 0),
+                                    opacity: isOpen ? 0 : 1,
+                                    scale: (hoveredIdx === idx && !isOpen) ? 1.05 : 1,
+                                }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 200,
+                                    damping: 25,
+                                    mass: 1,
+                                    opacity: { duration: 0.2 }
+                                }}
                                 style={{
                                     width: THUMB_W,
                                     height: THUMB_H,
@@ -325,14 +356,9 @@ export default function Home() {
                                     boxShadow: hoveredIdx === idx
                                         ? '0 20px 50px rgba(0,0,0,0.35)'
                                         : '0 5px 20px rgba(0,0,0,0.22)',
-                                    // Hide thumbnail while its flying twin is visible
-                                    opacity: isOpen ? 0 : 1,
-                                    transform: hoveredIdx === idx && !isOpen
-                                        ? 'translateY(-12px)'
-                                        : 'translateY(0px)',
-                                    transition: 'box-shadow 0.35s ease, transform 0.35s cubic-bezier(0.23,1,0.32,1), opacity 0.1s ease',
                                     pointerEvents: phase !== 'closed' ? 'none' : 'auto',
                                     position: 'relative',
+                                    zIndex: hoveredIdx === idx ? 10 : 1,
                                 }}
                             >
                                 {/* Title */}
@@ -354,11 +380,11 @@ export default function Home() {
                                         }}
                                     />
                                 </div>
-                            </div>
+                            </motion.div>
                         );
                     })}
                 </motion.div>
-            </div>
+            </motion.div>
 
             {/* ── Dark backdrop ── */}
             {openIdx !== null && (
@@ -367,7 +393,7 @@ export default function Home() {
                     style={{
                         position: 'fixed',
                         inset: 0,
-                        zIndex: 150,
+                        zIndex: 500,
                         backgroundColor: phase === 'open' ? 'rgba(0,0,0,0.72)' : 'rgba(0,0,0,0)',
                         transition: 'background-color 0.48s ease',
                         cursor: 'zoom-out',
@@ -378,16 +404,27 @@ export default function Home() {
             {/* ── Flying polaroid (single card, animates between positions) ── */}
             {openIdx !== null && (
                 <>
-                    <div style={flyStyle} onClick={closePhoto}>
-                        {/* Title */}
-                        <p className="font-dogica text-xs text-gray-500 absolute top-0 left-0 w-full text-center pt-4 uppercase tracking-widest"> {/*pt-4 is for mobile sliding show position*/}
-                            {PHOTOS[openIdx].title}
+                    <motion.div
+                        style={flyStyle}
+                        onClick={closePhoto}
+                        initial={false}
+                        animate={{
+                            scale: phase === 'open' ? 1 : 0.98,
+                        }}
+                        transition={{ duration: 0.48, ease: [0.23, 1, 0.32, 1] }}
+                    >
+                        {/* Title - centered in top padding */}
+                        <p
+                            className="font-dogica text-xs text-gray-500 absolute top-0 left-0 w-full text-center uppercase tracking-widest flex items-center justify-center"
+                            style={{ height: currentTopPad }}
+                        >
+                            {PHOTOS[openIdx as number].title}
                         </p>
 
                         <div style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
                             <img
-                                src={`/backgrounds/${PHOTOS[openIdx].src}`}
-                                alt={PHOTOS[openIdx].title}
+                                src={`/backgrounds/${PHOTOS[openIdx as number].src}`}
+                                alt={PHOTOS[openIdx as number].title}
                                 style={{
                                     width: '100%',
                                     height: '100%',
@@ -398,7 +435,7 @@ export default function Home() {
                                 }}
                             />
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* ✕ close button */}
                     <div
@@ -411,7 +448,7 @@ export default function Home() {
                             fontSize: 32,
                             lineHeight: 1,
                             cursor: 'pointer',
-                            zIndex: 300,
+                            zIndex: 700,
                             opacity: phase === 'open' ? 0.8 : 0,
                             transition: 'opacity 0.4s ease',
                             userSelect: 'none',

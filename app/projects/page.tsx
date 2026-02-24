@@ -120,7 +120,7 @@ export default function Projects() {
                     {/* The Cards Area */}
                     <motion.div
                         initial={{ y: 100, opacity: 0 }}
-                        animate={{ y: isMobile ? 0 : 110, opacity: 1 }} /*60 pic deck location for desktop*/
+                        animate={{ y: isMobile ? 0 : 80, opacity: 1 }} /*60 pic deck location for desktop*/
                         transition={{ duration: 0.6, ease: "easeOut" }}
                         className="relative w-full h-full flex items-center justify-center"
                     >
@@ -172,7 +172,7 @@ export default function Projects() {
                                             setInspectedIndex(originalIndex);
                                         }
                                     }}
-                                    className={`absolute w-[240px] md:w-[420px] aspect-[2.5/3.5] bg-white p-2 md:p-3 border-4 border-black rounded-none touch-none ${isTop && inspectedIndex === null ? 'cursor-pointer' : 'pointer-events-auto'}`}
+                                    className={`absolute w-[240px] md:w-[380px] aspect-[2.5/3.5] bg-white p-2 md:p-3 border-4 border-black rounded-none touch-none ${isTop && inspectedIndex === null ? 'cursor-pointer' : 'pointer-events-auto'}`}
                                     style={{
                                         visibility: isVisible || isCardFlying ? 'visible' : 'hidden',
                                         pointerEvents: isVisible ? 'auto' : 'none'
@@ -242,9 +242,9 @@ export default function Projects() {
                 </motion.div>
             </div>
 
-            <div className="mt-6 md:mt-48 text-center px-4"> {/*40 is the location of the bottom text*/}
+            <div className="mt-6 md:mt-24 text-center px-4"> {/*16 is the location of the bottom text*/}
                 <p className="font-dogica text-[10px] md:text-[12px] text-black font-bold animate-pulse tracking-wide">
-                    {inspectedIndex !== null ? 'USE X TO RETURN' : 'CLICK ON THE PICTURE TO INSPECT'}
+                    {inspectedIndex !== null ? 'USE X TO RETURN' : 'TAP TO INSPECT'}
                 </p>
             </div>
         </div>
