@@ -12,15 +12,19 @@ const projectImages = [
         title: 'GT HackerHouse',
         description: 'An innovative exploration of electrical engineering principles applied to modern.',
         rotation: -6, x: -10, y: -15,
-        objectFit: 'cover' as const
+        objectFit: 'cover' as const,
+        objectPosition: 'center',
+        scale: 1
     },
     {
-        src: '/backgrounds/project1.jpeg',
+        src: '/backgrounds/george1.png',
         alt: 'Project 1',
         title: 'Find George',
-        description: 'An innovative exploration of electrical engineering principles applied to modern.',
+        description: 'Programmed and tested a pattern-matching algorithm in C, then optimized and translated it into MIPS assembly.',
         rotation: -6, x: -10, y: -15,
-        objectFit: 'cover' as const
+        objectFit: 'cover' as const,
+        objectPosition: 'center',
+        scale: 1
     },
     {
         src: '/backgrounds/back.png',
@@ -28,15 +32,19 @@ const projectImages = [
         title: 'Tales of Buzz',
         description: ' Build an RPG game implementing HashTables in a Mbed ARM-based microcontroller system and C++.',
         rotation: 4, x: 15, y: -10,
-        objectFit: 'contain' as const
+        objectFit: 'contain' as const,
+        objectPosition: '0% 120%',
+        scale: 1.2
     },
     {
         src: '/backgrounds/CAR.jpeg',
         alt: 'SCPC',
         title: 'Buzz Car',
-        description: 'Lead the power systems and motion control subsystems of a selfdriving racecar powered by a ESP32.',
+        description: 'Lead the power systems and motion control subsystems of a selfdriving racecar using a ESP32, MPM3610 buck converter, DRV8833 motor driver, and a custom PCB.',
         rotation: -2, x: -15, y: 10,
-        objectFit: 'cover' as const
+        objectFit: 'cover' as const,
+        objectPosition: 'center',
+        scale: 1
     },
     {
         src: '/backgrounds/SCPC1.jpeg',
@@ -44,7 +52,9 @@ const projectImages = [
         title: 'SCPC',
         description: 'Student Center Programs Council former board member. Awarded Committe of the year 2025.',
         rotation: 7, x: 10, y: 15,
-        objectFit: 'cover' as const
+        objectFit: 'cover' as const,
+        objectPosition: 'center',
+        scale: 1
     },
     {
         src: '/backgrounds/GTPERU.jpeg',
@@ -52,7 +62,9 @@ const projectImages = [
         title: 'GT Peru',
         description: 'Founded the first ever Peruvian Student Organization at Georgia Tech.',
         rotation: 2, x: 0, y: 0,
-        objectFit: 'cover' as const
+        objectFit: 'cover' as const,
+        objectPosition: 'center',
+        scale: 1
     },
 ];
 
@@ -199,6 +211,10 @@ export default function Projects() {
                                             alt={img.alt}
                                             fill
                                             className={`${img.objectFit === 'contain' ? 'object-contain' : 'object-cover'} pointer-events-none`}
+                                            style={{
+                                                objectPosition: img.objectPosition,
+                                                transform: `scale(${img.scale})`
+                                            }}
                                             priority={isVisible}
                                         />
                                     </div>
