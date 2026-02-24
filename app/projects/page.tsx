@@ -163,8 +163,10 @@ export default function Projects() {
                                     }}
                                     onDragEnd={(_, info) => {
                                         const threshold = isMobile ? 80 : 120;
-                                        if (Math.abs(info.offset.x) > threshold || Math.abs(info.offset.y) > threshold) {
+                                        if (info.offset.x < -threshold) {
                                             handleNext();
+                                        } else if (info.offset.x > threshold) {
+                                            handlePrev();
                                         }
                                     }}
                                     onTap={() => {

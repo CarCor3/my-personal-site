@@ -303,7 +303,9 @@ export default function Home() {
                 }}
             >
                 <motion.div
-                    animate={{
+                    drag={isMobile ? "x" : false}
+                    dragConstraints={{ left: -((THUMB_W + 28) * PHOTOS.length * 2), right: 0 }}
+                    animate={isMobile ? {} : {
                         x: [0, -((THUMB_W + 28) * PHOTOS.length)]
                     }}
                     transition={{
