@@ -11,42 +11,48 @@ const projectImages = [
         alt: 'Project 1',
         title: 'GT HackerHouse',
         description: 'An innovative exploration of electrical engineering principles applied to modern.',
-        rotation: -6, x: -10, y: -15
+        rotation: -6, x: -10, y: -15,
+        objectFit: 'cover' as const
     },
     {
         src: '/backgrounds/project1.jpeg',
         alt: 'Project 1',
         title: 'Find George',
         description: 'An innovative exploration of electrical engineering principles applied to modern.',
-        rotation: -6, x: -10, y: -15
+        rotation: -6, x: -10, y: -15,
+        objectFit: 'cover' as const
     },
     {
-        src: '/backgrounds/project2.jpeg',
+        src: '/backgrounds/back.png',
         alt: 'Project 2',
         title: 'Tales of Buzz',
-        description: 'Study of power distribution networks and their reliability in high-demand environments.',
-        rotation: 4, x: 15, y: -10
+        description: ' Build an RPG game implementing HashTables in a Mbed ARM-based microcontroller system and C++.',
+        rotation: 4, x: 15, y: -10,
+        objectFit: 'contain' as const
     },
     {
-        src: '/backgrounds/SCPC.jpeg',
+        src: '/backgrounds/CAR.jpeg',
         alt: 'SCPC',
         title: 'Buzz Car',
-        description: 'Advanced satellite communication project focusing on single channel.',
-        rotation: -2, x: -15, y: 10
+        description: 'Lead the power systems and motion control subsystems of a selfdriving racecar powered by a ESP32.',
+        rotation: -2, x: -15, y: 10,
+        objectFit: 'cover' as const
     },
     {
         src: '/backgrounds/SCPC1.jpeg',
         alt: 'SCPC 1',
         title: 'SCPC',
         description: 'Student Center Programs Council former board member. Awarded Committe of the year 2025.',
-        rotation: 7, x: 10, y: 15
+        rotation: 7, x: 10, y: 15,
+        objectFit: 'cover' as const
     },
     {
         src: '/backgrounds/GTPERU.jpeg',
         alt: 'GT Peru',
         title: 'GT Peru',
         description: 'Founded the first ever Peruvian Student Organization at Georgia Tech.',
-        rotation: 2, x: 0, y: 0
+        rotation: 2, x: 0, y: 0,
+        objectFit: 'cover' as const
     },
 ];
 
@@ -192,7 +198,7 @@ export default function Projects() {
                                             src={img.src}
                                             alt={img.alt}
                                             fill
-                                            className="object-cover pointer-events-none"
+                                            className={`${img.objectFit === 'contain' ? 'object-contain' : 'object-cover'} pointer-events-none`}
                                             priority={isVisible}
                                         />
                                     </div>
