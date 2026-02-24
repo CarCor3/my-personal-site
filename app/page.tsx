@@ -269,7 +269,7 @@ export default function Home() {
                 style={{
                     position: 'absolute',
                     top: isMobile ? '20%' : '47%',
-                    left: isMobile ? '50%' : '67%',
+                    left: isMobile ? '49%' : '67%',
                     zIndex: 2,
                     textAlign: 'center',
                     width: isMobile ? '90%' : 'auto',
