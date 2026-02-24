@@ -212,6 +212,15 @@ export default function Home() {
                                 pointerEvents: 'none',
                             }}
                         />
+                        {/* Gradient bottom edge for mobile to blend the "hard cut" */}
+                        {isMobile && (
+                            <div style={{
+                                position: 'absolute',
+                                inset: 0,
+                                background: 'linear-gradient(to bottom, transparent 90%, #EAE0CF 100%)',
+                                pointerEvents: 'none',
+                            }} />
+                        )}
                     </div>
 
                     {/* Back Face: fill.png */}
@@ -305,7 +314,7 @@ export default function Home() {
                 <motion.div
                     drag={isMobile ? "x" : false}
                     dragConstraints={{ left: -((THUMB_W + 28) * PHOTOS.length * 2), right: 0 }}
-                    animate={isMobile ? {} : {
+                    animate={{
                         x: [0, -((THUMB_W + 28) * PHOTOS.length)]
                     }}
                     transition={{
