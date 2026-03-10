@@ -87,7 +87,25 @@ export default function Projects() {
         setWindowWidth(window.innerWidth);
         const handleResize = () => setWindowWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+
+        const currentIsMobile = window.innerWidth > 0 && window.innerWidth < 768;
+        if (currentIsMobile) {
+            document.documentElement.style.backgroundColor = '#8fa6b6';
+            document.body.style.backgroundColor = '#8fa6b6';
+            const meta = document.querySelector("meta[name='theme-color']");
+            if (meta) meta.setAttribute('content', '#8fa6b6');
+        } else {
+            document.documentElement.style.backgroundColor = '#8fa6b6';
+            document.body.style.backgroundColor = '#8fa6b6';
+        }
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            document.documentElement.style.backgroundColor = '';
+            document.body.style.backgroundColor = '';
+            const meta = document.querySelector("meta[name='theme-color']");
+            if (meta) meta.setAttribute('content', '#FFFFFF');
+        };
     }, []);
 
     const isMobile = windowWidth < 768;
