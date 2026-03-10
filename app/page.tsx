@@ -91,8 +91,27 @@ export default function Home() {
         setWindowWidth(window.innerWidth);
         const handleResize = () => setWindowWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+
+        // Update body bg color on mount
+        const currentIsMobile = window.innerWidth > 0 && window.innerWidth < 768;
+        if (currentIsMobile) {
+            document.documentElement.style.backgroundColor = '#2F3E46';
+            document.body.style.backgroundColor = '#2F3E46';
+            const meta = document.querySelector("meta[name='theme-color']");
+            if (meta) meta.setAttribute('content', '#2F3E46');
+        } else {
+            document.documentElement.style.backgroundColor = '#2F3E46';
+            document.body.style.backgroundColor = '#2F3E46';
+        }
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            document.documentElement.style.backgroundColor = '';
+            document.body.style.backgroundColor = '';
+            const meta = document.querySelector("meta[name='theme-color']");
+            if (meta) meta.setAttribute('content', '#FFFFFF'); // revert to default
+        }
+    }, [windowWidth]);
 
     const isMobile = windowWidth > 0 && windowWidth < 768;
 
@@ -169,7 +188,7 @@ export default function Home() {
                         position: 'absolute',
                         inset: 0,
                         zIndex: 0,
-                        backgroundColor: '#2F3E46',
+                        backgroundColor: isMobile ? '#2F3E46' : '#2F3E46',
                         backgroundImage: isMobile ? 'none' : 'url(/backgrounds/M3.png)', //Mountain file
                         backgroundSize: '110% 110%',
                         backgroundPosition: isMobile ? '0px 0px' : '260px -30px', // change 'center center' to adjust mobile position
@@ -223,12 +242,12 @@ export default function Home() {
                                     pointerEvents: 'none',
                                 }}
                             />
-                            {/* Gradient top and bottom edges for mobile to blend the "hard cut" */}
+                            {/* Gradient bottom edge for mobile to blend the "hard cut" */}
                             {isMobile && (
                                 <div style={{
                                     position: 'absolute',
                                     inset: 0,
-                                    background: 'linear-gradient(to bottom, #2F3E46 0%, transparent 10%, transparent 90%, #2F3E46 100%)', //top and bottom of screen mobile color
+                                    background: 'linear-gradient(to bottom, transparent 85%, #2F3E46 100%)', // bottom of screen mobile color blend
                                     pointerEvents: 'none',
                                 }} />
                             )}
@@ -298,10 +317,12 @@ export default function Home() {
                     <p className="font-ari text-4xl md:text-8xl font-bold mb-4 md:mb-12" style={{ color: '#E76F51' }}>
                         <MagneticWord strength={0.4}>Hi, I'm</MagneticWord>
                     </p>
-                    <h1 className="font-daydream text-5xl md:text-6xl lg:text-9xl font-bold tracking-tight" style={{
+                    <h1 className="font-daydream font-bold tracking-tight" style={{
                         color: '#FFF8DC', //CARLOS CORDOVA color
+                        fontSize: isMobile ? '3rem' : '8rem', // ADJUST THESE: Font size for mobile and desktop
                         WebkitTextStroke: '0.0px #081C15', // CARLOS CORDOVA outline color
-                        textShadow: '0px 0px 0px rgba(0,0,0,1)' // Optional: Extra Shadow drop
+                        textShadow: '0px 0px 0px rgba(0,0,0,1)', // Optional: Extra Shadow drop
+                        lineHeight: '1.2'
                     }}>
                         <MagneticWord strength={0.45} style={{ display: 'block', marginBottom: isMobile ? '10px' : '30px' }}>
                             Carlos
