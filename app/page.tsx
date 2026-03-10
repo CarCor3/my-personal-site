@@ -88,18 +88,20 @@ export default function Home() {
     const [isFlipped, setIsFlipped] = useState(false);
 
     // Custom draggable infinite scroll logic
-    const xBase = useMotionValue(0);
-    const isDragging = useRef(false);
     const wrapLen = (THUMB_W + 28) * PHOTOS.length;
+    const xBase = useMotionValue(-wrapLen); // start inside the middle set of photos
+    const isDragging = useRef(false);
 
     useAnimationFrame((t, dt) => {
         if (!isDragging.current && window.innerWidth) {
             const isMob = window.innerWidth < 768;
             const speed = isMob ? (wrapLen / 15000) : (wrapLen / 40000); // 15s per loop mobile, 40s desktop
             let newVal = xBase.get() - (dt * speed);
-            // Infinite wrapping
-            if (newVal <= -wrapLen) newVal += wrapLen;
-            if (newVal > 0) newVal -= wrapLen; // for backward dragging wrap
+            
+            // Seamless infinite wrapping that recenters perfectly after massive swipes
+            while (newVal <= -wrapLen * 2) newVal += wrapLen;
+            while (newVal > -wrapLen) newVal -= wrapLen;
+            
             xBase.set(newVal);
         }
     });
