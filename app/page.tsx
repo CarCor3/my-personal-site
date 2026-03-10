@@ -118,13 +118,13 @@ export default function Home() {
         // Update body bg color on mount
         const currentIsMobile = window.innerWidth > 0 && window.innerWidth < 768;
         if (currentIsMobile) {
-            document.documentElement.style.backgroundColor = '#8fa6b6'; //top and bottom of screen background color
+            document.documentElement.style.backgroundColor = '#2F3E46'; //top and bottom of screen 
             document.body.style.backgroundColor = '#8fa6b6';
             const meta = document.querySelector("meta[name='theme-color']");
             if (meta) meta.setAttribute('content', '#8fa6b6');
         } else {
-            document.documentElement.style.backgroundColor = '#8fa6b6';
-            document.body.style.backgroundColor = '#8fa6b6';
+            document.documentElement.style.backgroundColor = '#2F3E46';
+            document.body.style.backgroundColor = '#2F3E46';
         }
 
         return () => {
