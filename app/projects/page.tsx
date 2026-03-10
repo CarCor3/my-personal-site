@@ -7,71 +7,78 @@ import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 const projectImages = [
     {
-        src: '/backgrounds/HH.png',
+        src: '/backgrounds/DECKS.png',
+        backSrc: '/backgrounds/AP.png',
+        alt: 'PeruAbroad',
+        title: 'PeruAbroad',
+        description: 'Building the biggest Peruvian Student Network in the world.',
+        rotation: 6, x: 0, y: 0,
+        objectFit: 'cover' as 'contain' | 'cover',
+        objectPosition: 'center',
+        scale: 1
+    },
+    {
+        src: '/backgrounds/DECKS.png',
+        backSrc: '/backgrounds/HACKER.png',
         alt: 'Project 1',
         title: 'GT HackerHouse',
         description: 'Helped build a community of unusually ambitious young people who are doing expectional things.',
-        rotation: -6, x: -10, y: -15,
+        rotation: 1, x: -10, y: -15,
         objectFit: 'cover' as const,
         objectPosition: 'center',
         scale: 1
     },
     {
-        src: '/backgrounds/george1.png',
+        src: '/backgrounds/DECKS.png',
+        backSrc: '/backgrounds/G.png',
         alt: 'Project 1',
         title: 'Find George',
         description: 'Programmed and tested a pattern-matching algorithm in C, then optimized and translated it into MIPS assembly.',
-        rotation: -6, x: -10, y: -15,
+        rotation: -8, x: -10, y: -15,
         objectFit: 'cover' as const,
         objectPosition: 'center',
         scale: 1
     },
     {
-        src: '/backgrounds/back.png',
+        src: '/backgrounds/DECKS.png',
+        backSrc: '/backgrounds/BUZZ.png',
         alt: 'Project 2',
         title: 'Tales of Buzz',
         description: 'Build an RPG game implementing HashTables in a Mbed ARM-based microcontroller system and C++.',
-        rotation: 4, x: 15, y: -10,
-        objectFit: 'contain' as const,
-        objectPosition: '0% 120%',
-        scale: 1.2
+        rotation: 2, x: 15, y: -10,
+        objectFit: 'cover' as const,
+        objectPosition: 'center',
+        scale: 1
     },
     {
-        src: '/backgrounds/CAR.jpeg',
+        src: '/backgrounds/DECKS.png',
+        backSrc: '/backgrounds/CARS.png',
         alt: 'SCPC',
         title: 'Buzz Car',
         description: 'Built the power systems and motion control for a selfdriving racecar using a ESP32, MPM3610, DRV8833, and custom PCB.',
-        rotation: -2, x: -15, y: 10,
+        rotation: -1, x: -15, y: 10,
         objectFit: 'cover' as const,
         objectPosition: 'center',
         scale: 1
     },
     {
-        src: '/backgrounds/SCPC1.jpeg',
+        src: '/backgrounds/DECKS.png',
+        backSrc: '/backgrounds/SCPC.png',
         alt: 'SCPC 1',
         title: 'SCPC',
         description: 'Student Center Programs Council former board member. Awarded Committe of the year 2025.',
-        rotation: 7, x: 10, y: 15,
+        rotation: 8, x: 10, y: 15,
         objectFit: 'cover' as const,
         objectPosition: 'center',
         scale: 1
-    },
-    {
-        src: '/backgrounds/GTPERU.jpeg',
-        alt: 'GT Peru',
-        title: 'GT Peru',
-        description: 'Founded the first ever Peruvian Student Organization at Georgia Tech.',
-        rotation: 2, x: 0, y: 0,
-        objectFit: 'cover' as const,
-        objectPosition: 'center',
-        scale: 1
-    },
+    }
 ];
 
 export default function Projects() {
-    const [cardOrder, setCardOrder] = useState([0, 1, 2, 3, 4, 5]);
+    const [cardOrder, setCardOrder] = useState([0, 1, 2, 3, 4, 5]); /*Number of cards on deck*/
     const [isFlying, setIsFlying] = useState<number | null>(null);
     const [inspectedIndex, setInspectedIndex] = useState<number | null>(null);
+    const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
     const [windowWidth, setWindowWidth] = useState(0);
 
     const draggedRef = useRef(false);
@@ -197,26 +204,61 @@ export default function Projects() {
                                     onTap={() => {
                                         if (isTop && inspectedIndex === null && !draggedRef.current) {
                                             setInspectedIndex(originalIndex);
+                                            setFlippedCards(prev => ({
+                                                ...prev,
+                                                [originalIndex]: true
+                                            }));
+                                        } else if (isBeingInspected && !draggedRef.current) {
+                                            setFlippedCards(prev => ({
+                                                ...prev,
+                                                [originalIndex]: !prev[originalIndex]
+                                            }));
+                                        } else if (isTop && !draggedRef.current) {
+                                            setFlippedCards(prev => ({
+                                                ...prev,
+                                                [originalIndex]: !prev[originalIndex]
+                                            }));
                                         }
                                     }}
-                                    className={`absolute w-[240px] md:w-[380px] aspect-[2.5/3.5] bg-white p-2 md:p-3 border-4 border-black rounded-none touch-none ${isTop && inspectedIndex === null ? 'cursor-pointer' : 'pointer-events-auto'}`}
+                                    className={`absolute w-[240px] md:w-[380px] aspect-[2.5/3.5] bg-transparent rounded-xl touch-none ${isTop && inspectedIndex === null ? 'cursor-pointer' : 'pointer-events-auto'}`} /*project deck corners*/
                                     style={{
                                         visibility: isVisible || isCardFlying ? 'visible' : 'hidden',
                                         pointerEvents: isVisible ? 'auto' : 'none'
                                     }}
                                 >
-                                    <div className="relative w-full h-full overflow-hidden bg-gray-50 border-4 border-black rounded-none">
-                                        <Image
-                                            src={img.src}
-                                            alt={img.alt}
-                                            fill
-                                            className={`${img.objectFit === 'contain' ? 'object-contain' : 'object-cover'} pointer-events-none`}
-                                            style={{
-                                                objectPosition: img.objectPosition,
-                                                transform: `scale(${img.scale})`
-                                            }}
-                                            priority={isVisible}
-                                        />
+                                    <div className="relative w-full h-full overflow-hidden bg-transparent rounded-lg" style={{ perspective: '1000px' }}> {/*cards image border*/}
+                                        <motion.div
+                                            className="relative w-full h-full"
+                                            animate={{ rotateY: flippedCards[originalIndex] ? 180 : 0 }}
+                                            transition={{ duration: 0.6, type: 'spring', stiffness: 200, damping: 20 }}
+                                            style={{ transformStyle: 'preserve-3d' }}
+                                        >
+                                            {/* Front Face */}
+                                            <div className="absolute inset-0 backface-none" style={{ backfaceVisibility: 'hidden' }}>
+                                                <Image
+                                                    src={img.src}
+                                                    alt={img.alt}
+                                                    fill
+                                                    className={`${img.objectFit === 'contain' ? 'object-contain' : 'object-cover'} pointer-events-none`}
+                                                    style={{
+                                                        objectPosition: img.objectPosition,
+                                                        transform: `scale(${img.scale})`
+                                                    }}
+                                                    priority={isVisible}
+                                                />
+                                            </div>
+
+                                            {/* Back Face */}
+                                            <div className="absolute inset-0 backface-none" style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}>
+                                                <Image
+                                                    src={img.backSrc}
+                                                    alt={`${img.alt} back`}
+                                                    fill
+                                                    className="object-cover pointer-events-none"
+                                                    priority={isVisible}
+                                                />
+                                            </div>
+                                        </motion.div>
                                     </div>
                                 </motion.div>
                             );
@@ -236,7 +278,10 @@ export default function Projects() {
                             >
                                 <div className="bg-white border-4 border-black p-6 md:p-8 shadow-[6px_6px_0px_0px_black] md:shadow-[8px_8px_0px_0px_black] relative mx-auto">
                                     <button
-                                        onClick={() => setInspectedIndex(null)}
+                                        onClick={() => {
+                                            setInspectedIndex(null);
+                                            setFlippedCards({});
+                                        }}
                                         className="absolute -top-3 -right-3 md:-top-4 md:-right-4 bg-white border-4 border-black p-1.5 md:p-2 hover:bg-gray-100 transition-colors"
                                     >
                                         <X className="w-5 h-5 md:w-6 md:h-6 text-black" />
