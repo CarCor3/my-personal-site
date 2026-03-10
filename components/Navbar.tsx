@@ -97,7 +97,7 @@ export default function Navbar() {
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             className="flex items-center justify-center focus:outline-none transition-colors duration-300"
-                            style={{ color: isOpen ? '#FDF8F5' : '#000000' }}
+                            style={{ color: isOpen ? '#FDF8F5' : '#FFFFFF' }}
                         >
                             {/* ADJUST SIZE HERE (size={32}) */}
                             {isOpen ? (

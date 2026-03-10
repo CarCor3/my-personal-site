@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useAnimationFrame, useMotionValue } from 'framer-motion';
 
 /* ── Magnetic word ─────────────────────────────────────────────── */
 function MagneticWord({
@@ -87,6 +87,23 @@ export default function Home() {
     const thumbRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [isFlipped, setIsFlipped] = useState(false);
 
+    // Custom draggable infinite scroll logic
+    const xBase = useMotionValue(0);
+    const isDragging = useRef(false);
+    const wrapLen = (THUMB_W + 28) * PHOTOS.length;
+
+    useAnimationFrame((t, dt) => {
+        if (!isDragging.current && window.innerWidth) {
+            const isMob = window.innerWidth < 768;
+            const speed = isMob ? (wrapLen / 15000) : (wrapLen / 40000); // 15s per loop mobile, 40s desktop
+            let newVal = xBase.get() - (dt * speed);
+            // Infinite wrapping
+            if (newVal <= -wrapLen) newVal += wrapLen;
+            if (newVal > 0) newVal -= wrapLen; // for backward dragging wrap
+            xBase.set(newVal);
+        }
+    });
+
     useEffect(() => {
         setWindowWidth(window.innerWidth);
         const handleResize = () => setWindowWidth(window.innerWidth);
@@ -135,6 +152,7 @@ export default function Home() {
     };
 
     const handleThumbClick = (idx: number, e: React.MouseEvent) => {
+        if (isDragging.current) return; // Ignore drag clicks
         if (phase === 'open' || phase === 'opening') {
             closePhoto();
         } else if (phase === 'closed') {
@@ -348,23 +366,22 @@ export default function Home() {
                     }}
                 >
                     <motion.div
-                        animate={{
-                            x: [0, -((THUMB_W + 28) * PHOTOS.length)]
-                        }}
-                        transition={{
-                            x: {
-                                repeat: Infinity,
-                                repeatType: "loop",
-                                duration: PHOTOS.length * 8, // Slightly slower on desktop for readability
-                                ease: "linear",
-                            }
+                        drag={isMobile ? "x" : false}
+                        onDragStart={() => isDragging.current = true}
+                        onDragEnd={() => {
+                            setTimeout(() => {
+                                isDragging.current = false;
+                            }, 50);
                         }}
                         style={{
+                            x: xBase,
                             display: 'flex',
                             gap: 28,
                             alignItems: 'flex-end',
                             width: 'fit-content',
+                            cursor: isMobile ? 'grab' : 'default',
                         }}
+                        whileDrag={isMobile ? { cursor: 'grabbing' } : undefined}
                     >
                         {[...PHOTOS, ...PHOTOS, ...PHOTOS].map((item, idx) => {
                             const originalIdx = idx % PHOTOS.length;
