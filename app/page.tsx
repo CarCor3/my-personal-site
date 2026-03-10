@@ -170,9 +170,9 @@ export default function Home() {
                         inset: 0,
                         zIndex: 0,
                         backgroundColor: '#2F3E46',
-                        backgroundImage: 'url(/backgrounds/M3.png)', //Mountain file
+                        backgroundImage: isMobile ? 'none' : 'url(/backgrounds/M3.png)', //Mountain file
                         backgroundSize: '110% 110%',
-                        backgroundPosition: '260px -30px',
+                        backgroundPosition: isMobile ? '0px 0px' : '260px -30px', // change 'center center' to adjust mobile position
                         imageRendering: 'pixelated',
                         backgroundRepeat: 'no-repeat'
                     }}
@@ -186,7 +186,7 @@ export default function Home() {
                     onClick={() => setIsFlipped(!isFlipped)}
                     style={{
                         position: 'absolute',
-                        top: isMobile ? -10 : -250,
+                        top: isMobile ? -0 : -250, // yo mobile position -0
                         left: isMobile ? 0 : '0%',
                         height: isMobile ? '100vh' : '134vh',
                         width: isMobile ? '100%' : 'fit-content',
@@ -223,12 +223,12 @@ export default function Home() {
                                     pointerEvents: 'none',
                                 }}
                             />
-                            {/* Gradient bottom edge for mobile to blend the "hard cut" */}
+                            {/* Gradient top and bottom edges for mobile to blend the "hard cut" */}
                             {isMobile && (
                                 <div style={{
                                     position: 'absolute',
                                     inset: 0,
-                                    background: 'linear-gradient(to bottom, transparent 90%, #EAE0CF 100%)',
+                                    background: 'linear-gradient(to bottom, #2F3E46 0%, transparent 10%, transparent 90%, #2F3E46 100%)', //top and bottom of screen mobile color
                                     pointerEvents: 'none',
                                 }} />
                             )}
