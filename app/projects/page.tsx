@@ -123,7 +123,7 @@ export default function Projects() {
     const currentProject = inspectedIndex !== null ? projectImages[inspectedIndex] : null;
 
     return (
-        <div className="min-h-screen py-10 md:py-48 flex flex-col items-center justify-center bg-[#EAE0CF] transition-colors duration-500 md:overflow-hidden md:fixed md:inset-0">
+        <div className="min-h-screen py-10 md:py-48 flex flex-col items-center justify-center bg-[#2F3E46] /*projects background color*/ transition-colors duration-500 md:overflow-hidden md:fixed md:inset-0">
             <div className="relative w-full max-w-7xl flex flex-col items-center justify-center px-4 md:px-0">
                 {/* Deck/Inpection Area */}
                 {/* Deck/Inpection Area */}
@@ -319,7 +319,7 @@ export default function Projects() {
             </div>
 
             <div className="mt-6 md:mt-24 text-center px-4"> {/*16 is the location of the bottom text*/}
-                <p className="font-dogica text-[10px] md:text-[12px] text-black font-bold animate-pulse tracking-wide">
+                <p className="font-dogica text-[10px] md:text-[12px] text-white font-bold animate-pulse tracking-wide">
                     {inspectedIndex !== null ? 'USE X TO RETURN' : 'TAP TO INSPECT'}
                 </p>
             </div>

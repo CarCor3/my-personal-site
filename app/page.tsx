@@ -93,15 +93,19 @@ export default function Home() {
     const isDragging = useRef(false);
 
     useAnimationFrame((t, dt) => {
-        if (!isDragging.current && window.innerWidth) {
+        if (window.innerWidth) {
             const isMob = window.innerWidth < 768;
             const speed = isMob ? (wrapLen / 15000) : (wrapLen / 40000); // 15s per loop mobile, 40s desktop
-            let newVal = xBase.get() - (dt * speed);
-            
+
+            let newVal = xBase.get();
+            if (!isDragging.current) {
+                newVal -= (dt * speed);
+            }
+
             // Seamless infinite wrapping that recenters perfectly after massive swipes
             while (newVal <= -wrapLen * 2) newVal += wrapLen;
             while (newVal > -wrapLen) newVal -= wrapLen;
-            
+
             xBase.set(newVal);
         }
     });
@@ -208,7 +212,7 @@ export default function Home() {
                         position: 'absolute',
                         inset: 0,
                         zIndex: 0,
-                        backgroundColor: isMobile ? '#2F3E46' : '#2F3E46',
+                        backgroundColor: isMobile ? '#8fa6b6ff' : '#2F3E46',
                         backgroundImage: isMobile ? 'none' : 'url(/backgrounds/M3.png)', //Mountain file
                         backgroundSize: '110% 110%',
                         backgroundPosition: isMobile ? '0px 0px' : '260px -30px', // change 'center center' to adjust mobile position
@@ -334,14 +338,14 @@ export default function Home() {
                         width: isMobile ? '90%' : 'auto',
                     }}
                 >
-                    <p className="font-ari text-4xl md:text-8xl font-bold mb-4 md:mb-12" style={{ color: '#E76F51' }}>
+                    <p className="font-ari text-4xl md:text-8xl font-bold mb-4 md:mb-12" style={{ color: '#fdfdfdff' }}>
                         <MagneticWord strength={0.4}>Hi, I'm</MagneticWord>
                     </p>
                     <h1 className="font-daydream font-bold tracking-tight" style={{
                         color: '#FFF8DC', //CARLOS CORDOVA color
                         fontSize: isMobile ? '3rem' : '8rem', // ADJUST THESE: Font size for mobile and desktop
-                        WebkitTextStroke: '0.0px #081C15', // CARLOS CORDOVA outline color
-                        textShadow: '0px 0px 0px rgba(0,0,0,1)', // Optional: Extra Shadow drop
+                        WebkitTextStroke: '0.0px #E76F51', // CARLOS CORDOVA outline color
+                        textShadow: '0px 0px 0px rgba(3, 2, 2, 1)', // Optional: Extra Shadow drop
                         lineHeight: '1.2'
                     }}>
                         <MagneticWord strength={0.45} style={{ display: 'block', marginBottom: isMobile ? '10px' : '30px' }}>
@@ -385,7 +389,7 @@ export default function Home() {
                         }}
                         whileDrag={isMobile ? { cursor: 'grabbing' } : undefined}
                     >
-                        {[...PHOTOS, ...PHOTOS, ...PHOTOS].map((item, idx) => {
+                        {[...PHOTOS, ...PHOTOS, ...PHOTOS, ...PHOTOS, ...PHOTOS].map((item, idx) => {
                             const originalIdx = idx % PHOTOS.length;
                             const isOpen = openIdx === originalIdx;
 

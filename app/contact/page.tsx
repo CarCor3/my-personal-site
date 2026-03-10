@@ -70,7 +70,7 @@ export default function Contact() {
                                 className="object-contain"
                             />
                         </div>
-                        <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-pink-600 transition-colors" style={{ color: '#000000' }}>
+                        <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-pink-600 transition-colors" style={{ color: '#FFFFFF' }}>
                             carloscordova03
                         </span>
                     </motion.a>
@@ -91,7 +91,7 @@ export default function Contact() {
                                 className="object-contain"
                             />
                         </div>
-                        <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-pink-600 transition-colors" style={{ color: '#000000' }}>
+                        <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-pink-600 transition-colors" style={{ color: '#FFFFFF' }}>
                             GT Peru
                         </span>
                     </motion.a>
@@ -110,7 +110,7 @@ export default function Contact() {
                                 className="object-contain"
                             />
                         </div>
-                        <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-blue-600 transition-colors" style={{ color: '#000000' }}>
+                        <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-blue-600 transition-colors" style={{ color: '#FFFFFF' }}>
                             carlos.cordova.03
                         </span>
                     </motion.a>
@@ -131,7 +131,7 @@ export default function Contact() {
                                 className="object-contain"
                             />
                         </div>
-                        <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-blue-700 transition-colors" style={{ color: '#000000' }}>
+                        <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-blue-700 transition-colors" style={{ color: '#FFFFFF' }}>
                             carloscordova3
                         </span>
                     </motion.a>

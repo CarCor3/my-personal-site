@@ -26,7 +26,7 @@ export default function About() {
     };
 
     return (
-        <div className="min-h-screen md:h-screen md:overflow-hidden flex flex-col" style={{ backgroundColor: '#2F3E46' }}> {/*about background color*/}
+        <div className="min-h-screen md:h-screen md:overflow-hidden flex flex-col" style={{ backgroundColor: '#2F3E46' }}>
             <motion.div
                 className="pt-24 pb-12 md:py-40 flex items-center justify-center flex-grow max-w-5xl mx-auto px-6 sm:px-6 lg:px-0"
                 variants={containerVariants}
