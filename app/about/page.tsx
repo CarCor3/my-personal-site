@@ -26,7 +26,7 @@ export default function About() {
     };
 
     return (
-        <div className="min-h-screen md:h-screen md:overflow-hidden flex flex-col" style={{ backgroundColor: '#2F3E46' }}>
+        <div className="min-h-screen md:h-screen md:overflow-hidden flex flex-col" style={{ backgroundColor: '#8fa6b6ff' }}>
             <motion.div
                 className="pt-24 pb-12 md:py-40 flex items-center justify-center flex-grow max-w-5xl mx-auto px-6 sm:px-6 lg:px-0"
                 variants={containerVariants}
@@ -42,7 +42,7 @@ export default function About() {
                             variants={textVariants}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             className="font-dogica text-lg md:text-xl font-bold mb-8"
-                            style={{ color: '#FFFFFF' }}
+                            style={{ color: '#000000' }}
                         >
                             I'm a passionate Electrical Enginner about to graduated from Georgia Tech. I was born and raised in Lima, Peru.
                         </motion.p>
@@ -50,7 +50,7 @@ export default function About() {
                             variants={textVariants}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             className="font-dogica text-lg md:text-xl font-bold mb-8"
-                            style={{ color: '#FFFFFF' }}
+                            style={{ color: '#000000' }}
                         >
                             When I was a kid my dad would take me to help him do some cabling in some houses including ours. He didn't know by that time but he feeded my passion for the electricity.
                         </motion.p>
@@ -58,7 +58,7 @@ export default function About() {
                             variants={textVariants}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             className="font-dogica text-lg md:text-xl font-bold"
-                            style={{ color: '#FFFFFF' }}
+                            style={{ color: '#000000' }}
                         >
                             Since then, I've been improving my skills in electronics. When I'm not working on something, you can find me making content creation or playing the guitar.
                         </motion.p>

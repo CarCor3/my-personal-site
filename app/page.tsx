@@ -212,7 +212,7 @@ export default function Home() {
                         position: 'absolute',
                         inset: 0,
                         zIndex: 0,
-                        backgroundColor: isMobile ? '#8fa6b6ff' : '#2F3E46',
+                        backgroundColor: isMobile ? '#8fa6b6ff' : '#8fa6b6ff',
                         backgroundImage: isMobile ? 'none' : 'url(/backgrounds/M3.png)', //Mountain file
                         backgroundSize: '110% 110%',
                         backgroundPosition: isMobile ? '0px 0px' : '260px -30px', // change 'center center' to adjust mobile position

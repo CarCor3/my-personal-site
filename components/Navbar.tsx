@@ -59,7 +59,7 @@ export default function Navbar() {
                         left: pillStyle.left,
                         width: pillStyle.width,
                         height: '48px',
-                        backgroundColor: '#8fa6b6ff', //navbar cylinder background color
+                        backgroundColor: '#2F3E46', //navbar cylinder background color
                         borderRadius: '9999px',
                         opacity: pillStyle.opacity,
                         transition: 'left 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease',
@@ -118,7 +118,7 @@ export default function Navbar() {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.2, ease: "linear" }}
-                        className="fixed inset-0 bg-[#8fa6b6ff] z-[100] md:hidden flex flex-col items-center justify-center space-y-12 touch-none" /*mobile menu background color*/
+                        className="fixed inset-0 bg-[#2F3E46] z-[100] md:hidden flex flex-col items-center justify-center space-y-12 touch-none" /*mobile menu background color*/
                     >
                         {allLinks.map((link) => (
                             <Link

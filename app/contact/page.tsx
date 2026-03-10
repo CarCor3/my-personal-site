@@ -22,7 +22,7 @@ export default function Contact() {
     };
 
     return (
-        <div className="min-h-screen md:h-screen md:overflow-hidden flex flex-col" style={{ backgroundColor: '#2F3E46' }}>
+        <div className="min-h-screen md:h-screen md:overflow-hidden flex flex-col" style={{ backgroundColor: '#8fa6b6ff' }}>
             <motion.div
                 variants={containerVariants}
                 initial="hidden"

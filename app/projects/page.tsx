@@ -123,7 +123,7 @@ export default function Projects() {
     const currentProject = inspectedIndex !== null ? projectImages[inspectedIndex] : null;
 
     return (
-        <div className="min-h-screen py-10 md:py-48 flex flex-col items-center justify-center bg-[#2F3E46] /*projects background color*/ transition-colors duration-500 md:overflow-hidden md:fixed md:inset-0">
+        <div className="min-h-screen py-10 md:py-48 flex flex-col items-center justify-center bg-[#8fa6b6ff] /*projects background color*/ transition-colors duration-500 md:overflow-hidden md:fixed md:inset-0">
             <div className="relative w-full max-w-7xl flex flex-col items-center justify-center px-4 md:px-0">
                 {/* Deck/Inpection Area */}
                 {/* Deck/Inpection Area */}
