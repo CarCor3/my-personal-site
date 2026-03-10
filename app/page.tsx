@@ -123,8 +123,8 @@ export default function Home() {
             const meta = document.querySelector("meta[name='theme-color']");
             if (meta) meta.setAttribute('content', '#8fa6b6');
         } else {
-            document.documentElement.style.backgroundColor = '#2F3E46';
-            document.body.style.backgroundColor = '#2F3E46';
+            document.documentElement.style.backgroundColor = '#8fa6b6';
+            document.body.style.backgroundColor = '#8fa6b6';
         }
 
         return () => {
