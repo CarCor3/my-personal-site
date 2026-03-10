@@ -165,7 +165,17 @@ export default function Home() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1.2 }}
-                    style={{ position: 'absolute', inset: 0, zIndex: 0, backgroundColor: '#EAE0CF' }}
+                    style={{
+                        position: 'absolute',
+                        inset: 0,
+                        zIndex: 0,
+                        backgroundColor: '#EAE0CF',
+                        backgroundImage: 'url(/backgrounds/MOUNT.png)',
+                        backgroundSize: '100% 100%',
+                        backgroundPosition: '200px 1px',
+                        imageRendering: 'pixelated',
+                        backgroundRepeat: 'no-repeat'
+                    }}
                 />
 
                 {/* ── Flip Container (yo.png / fill.png) ── */}
