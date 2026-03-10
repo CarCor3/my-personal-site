@@ -169,10 +169,10 @@ export default function Home() {
                         position: 'absolute',
                         inset: 0,
                         zIndex: 0,
-                        backgroundColor: '#EAE0CF',
-                        backgroundImage: 'url(/backgrounds/MOUNT.png)',
-                        backgroundSize: '100% 100%',
-                        backgroundPosition: '200px 1px',
+                        backgroundColor: '#2F3E46',
+                        backgroundImage: 'url(/backgrounds/M3.png)', //Mountain file
+                        backgroundSize: '110% 110%',
+                        backgroundPosition: '260px -30px',
                         imageRendering: 'pixelated',
                         backgroundRepeat: 'no-repeat'
                     }}
@@ -288,17 +288,21 @@ export default function Home() {
                     transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
                     style={{
                         position: 'absolute',
-                        top: isMobile ? '20%' : '47%',
-                        left: isMobile ? '48%' : '67%',
+                        top: isMobile ? '20%' : '56%',
+                        left: isMobile ? '48%' : '68%',
                         zIndex: 2,
                         textAlign: 'center',
                         width: isMobile ? '90%' : 'auto',
                     }}
                 >
-                    <p className="font-ari text-4xl md:text-8xl font-bold mb-4 md:mb-8" style={{ color: '#000000' }}>
+                    <p className="font-ari text-4xl md:text-8xl font-bold mb-4 md:mb-12" style={{ color: '#E76F51' }}>
                         <MagneticWord strength={0.4}>Hi, I'm</MagneticWord>
                     </p>
-                    <h1 className="font-daydream text-5xl md:text-6xl lg:text-9xl font-bold tracking-tight" style={{ color: '#8A7650' }}>
+                    <h1 className="font-daydream text-5xl md:text-6xl lg:text-9xl font-bold tracking-tight" style={{
+                        color: '#FFF8DC', //CARLOS CORDOVA color
+                        WebkitTextStroke: '0.0px #081C15', // CARLOS CORDOVA outline color
+                        textShadow: '0px 0px 0px rgba(0,0,0,1)' // Optional: Extra Shadow drop
+                    }}>
                         <MagneticWord strength={0.45} style={{ display: 'block', marginBottom: isMobile ? '10px' : '30px' }}>
                             Carlos
                         </MagneticWord>
