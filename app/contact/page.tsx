@@ -29,18 +29,7 @@ export default function Contact() {
 
     useEffect(() => {
         const handleResize = () => {
-            const currentIsMobile = window.innerWidth > 0 && window.innerWidth < 768;
-            setIsMobile(currentIsMobile);
-
-            if (currentIsMobile) {
-                document.documentElement.style.backgroundColor = '#8fa6b6';
-                document.body.style.backgroundColor = '#8fa6b6';
-                const meta = document.querySelector("meta[name='theme-color']");
-                if (meta) meta.setAttribute('content', '#8fa6b6');
-            } else {
-                document.documentElement.style.backgroundColor = '#8fa6b6';
-                document.body.style.backgroundColor = '#8fa6b6';
-            }
+            setIsMobile(window.innerWidth > 0 && window.innerWidth < 768);
         };
 
         handleResize();
@@ -54,10 +43,6 @@ export default function Contact() {
         return () => {
             window.removeEventListener('resize', handleResize);
             clearTimeout(dragTimeout);
-            document.documentElement.style.backgroundColor = '';
-            document.body.style.backgroundColor = '';
-            const meta = document.querySelector("meta[name='theme-color']");
-            if (meta) meta.setAttribute('content', '#FFFFFF');
         };
     }, []);
 
@@ -78,8 +63,8 @@ export default function Contact() {
     };
 
     return (
-        <div 
-            className="min-h-screen md:h-screen md:overflow-hidden flex flex-col" 
+        <section id="contact"
+            className="min-h-screen md:h-screen overflow-hidden flex flex-col relative w-full" 
             style={{ 
                 backgroundColor: '#8fa6b6ff',
                 backgroundImage: 'url("/backgrounds/DESK4.jpg")',
@@ -114,9 +99,9 @@ export default function Contact() {
                         position: 'absolute',
                         top: '50%',
                         left: '50%',
-                        transform: 'translate(-360px, -350px) rotate(0deg)',
-                        width: isMobile ? '360px' : '700px',
-                        height: isMobile ? '450px' : '800px',
+                        transform: isMobile ? 'translate(-250px, -300px) rotate(0deg)' : 'translate(-360px, -350px) rotate(0deg)',
+                        width: isMobile ? '490px' : '700px',
+                        height: isMobile ? '550px' : '800px',
                         backgroundImage: 'url("/backgrounds/PAPER.png")',
                         backgroundSize: '100% 100%',
                         backgroundPosition: 'center',
@@ -134,7 +119,7 @@ export default function Contact() {
                     }} //GET IN TOUCH location
                 >
                     <h1
-                        className="font-daydream text-4xl md:text-5xl font-bold mb-12 text-center leading-[1.5] md:leading-normal"
+                        className="font-daydream text-3xl md:text-5xl font-bold mb-8 text-center leading-[1.5] md:leading-normal"
                         style={{ color: '#000000' }}
                     >
                         <TypewriterText text="GET IN TOUCH" delay={0.5} />
@@ -154,7 +139,7 @@ export default function Contact() {
                         ...(isMobile ? {} : { transform: 'translate(0px, 40px)' })
                     }} //Social Media location
                 >
-                    <div className="flex flex-col gap-6 items-center md:items-center w-full max-w-[300px] md:max-w-[400px]">
+                    <div className="flex flex-col gap-4 items-center md:items-center w-full max-w-[300px] md:max-w-[400px]">
                         <motion.a
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
@@ -244,6 +229,6 @@ export default function Contact() {
                 </div>
                 </motion.div>
             </motion.div>
-        </div>
+        </section>
     );
 }

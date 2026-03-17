@@ -88,23 +88,8 @@ export default function Projects() {
         const handleResize = () => setWindowWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
 
-        const currentIsMobile = window.innerWidth > 0 && window.innerWidth < 768;
-        if (currentIsMobile) {
-            document.documentElement.style.backgroundColor = '#8fa6b6';
-            document.body.style.backgroundColor = '#8fa6b6';
-            const meta = document.querySelector("meta[name='theme-color']");
-            if (meta) meta.setAttribute('content', '#8fa6b6');
-        } else {
-            document.documentElement.style.backgroundColor = '#8fa6b6';
-            document.body.style.backgroundColor = '#8fa6b6';
-        }
-
         return () => {
             window.removeEventListener('resize', handleResize);
-            document.documentElement.style.backgroundColor = '';
-            document.body.style.backgroundColor = '';
-            const meta = document.querySelector("meta[name='theme-color']");
-            if (meta) meta.setAttribute('content', '#FFFFFF');
         };
     }, []);
 
@@ -141,7 +126,7 @@ export default function Projects() {
     const currentProject = inspectedIndex !== null ? projectImages[inspectedIndex] : null;
 
     return (
-        <div className="min-h-screen py-10 md:py-48 flex flex-col items-center justify-center bg-[#8fa6b6ff] /*projects background color*/ transition-colors duration-500 md:overflow-hidden md:fixed md:inset-0">
+        <section id="projects" className="min-h-screen py-10 md:py-48 flex flex-col items-center justify-center bg-[#8fa6b6ff] /*projects background color*/ transition-colors duration-500 overflow-hidden relative w-full">
             <div className="relative w-full max-w-7xl flex flex-col items-center justify-center px-4 md:px-0">
                 {/* Deck/Inpection Area */}
                 {/* Deck/Inpection Area */}
@@ -341,6 +326,6 @@ export default function Projects() {
                     {inspectedIndex !== null ? 'USE X TO RETURN' : 'TAP TO INSPECT'}
                 </p>
             </div>
-        </div>
+        </section>
     );
 }

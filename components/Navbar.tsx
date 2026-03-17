@@ -7,24 +7,56 @@ import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const allLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Projects', path: '/projects' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Home', path: '#home' },
+    { name: 'About', path: '#about' },
+    { name: 'Projects', path: '#projects' },
+    { name: 'Contact', path: '#contact' },
 ];
 
 export default function Navbar() {
     const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 });
+    const [activeHash, setActiveHash] = useState('#home');
 
     const containerRef = useRef<HTMLDivElement>(null);
     const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
     const isFirstRender = useRef(true);
 
+    const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+        e.preventDefault();
+        const element = document.getElementById(path.substring(1));
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            setIsOpen(false);
+            window.history.pushState(null, '', path);
+        }
+    };
+
+    useEffect(() => {
+        const handleScroll = () => {
+            let current = '#home';
+            for (const link of allLinks) {
+                const element = document.getElementById(link.path.substring(1));
+                if (element) {
+                    const rect = element.getBoundingClientRect();
+                    // Active if top is near viewport top.
+                    if (rect.top <= window.innerHeight / 3) {
+                        current = link.path;
+                    }
+                }
+            }
+            setActiveHash(current);
+        };
+        window.addEventListener('scroll', handleScroll);
+        // Initial setup
+        handleScroll();
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     useEffect(() => {
         const updatePill = () => {
-            const idx = allLinks.findIndex(l => l.path === pathname);
+            const idx = allLinks.findIndex(l => l.path === activeHash);
             const activeEl = idx !== -1 ? linkRefs.current[idx] : null;
 
             if (activeEl && containerRef.current) {
@@ -41,15 +73,14 @@ export default function Navbar() {
         let timeoutId: NodeJS.Timeout;
 
         if (isFirstRender.current) {
-            // Call updating after Framer Motion scale animations complete on first load
+            // Wait for framer-motion scale animations to complete on initial load
             timeoutId = setTimeout(() => {
                 updatePill();
                 isFirstRender.current = false;
             }, 900);
         } else {
-            // Update immediately on subsequent navigations
             updatePill();
-            timeoutId = setTimeout(updatePill, 50); // Small safety buffer for any minor layout shifts
+            timeoutId = setTimeout(updatePill, 50); // Minor safety buffer
         }
 
         window.addEventListener('resize', updatePill);
@@ -57,7 +88,7 @@ export default function Navbar() {
             clearTimeout(timeoutId);
             window.removeEventListener('resize', updatePill);
         };
-    }, [pathname]);
+    }, [activeHash]);
 
     return (
         <nav className="fixed top-2 md:top-6 left-0 right-0 z-[200] flex justify-center px-4 md:px-8 pointer-events-none">
@@ -99,6 +130,7 @@ export default function Navbar() {
                                 <Link
                                     ref={el => { linkRefs.current[idx] = el; }}
                                     href={link.path}
+                                    onClick={(e) => handleLinkClick(e, link.path)}
                                     className="font-daydream uppercase tracking-wide text-[22px] md:text-[26px] hover:opacity-70 px-6 py-2 rounded-full inline-block flex items-center justify-center"
                                     style={{ color: '#000000', position: 'relative', zIndex: 1 }} //navbar titles color
                                 >
@@ -113,7 +145,7 @@ export default function Navbar() {
                         <button
                             onClick={() => setIsOpen(!isOpen)}
                             className="flex items-center justify-center focus:outline-none transition-colors duration-300"
-                            style={{ color: isOpen ? '#FDF8F5' : '#FFFFFF' }}
+                            style={{ color: isOpen ? '#FDF8F5' : '#000000' }} //navbat mobile color
                         >
                             {/* ADJUST SIZE HERE (size={32}) */}
                             {isOpen ? (
@@ -140,11 +172,11 @@ export default function Navbar() {
                             <Link
                                 key={link.path}
                                 href={link.path}
-                                onClick={() => setIsOpen(false)}
+                                onClick={(e) => handleLinkClick(e, link.path)}
                                 className="font-daydream uppercase tracking-wide text-4xl text-[#FDF8F5] hover:opacity-70 transition-all"
                                 style={{
-                                    textShadow: pathname === link.path ? '4px 4px 0px rgba(0,0,0,0.2)' : 'none',
-                                    transform: pathname === link.path ? 'scale(1.1)' : 'scale(1)'
+                                    textShadow: activeHash === link.path ? '4px 4px 0px rgba(0,0,0,0.2)' : 'none',
+                                    transform: activeHash === link.path ? 'scale(1.1)' : 'scale(1)'
                                 }}
                             >
                                 {link.name}

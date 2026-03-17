@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import AboutPage from './about/page';
+import ProjectsPage from './projects/page';
+import ContactPage from './contact/page';
 
 /* ── Magnetic word ─────────────────────────────────────────────── */
 function MagneticWord({
@@ -66,32 +69,19 @@ export default function Home() {
         const handleResize = () => setWindowWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
 
-        // Update body bg color on mount
-        const currentIsMobile = window.innerWidth > 0 && window.innerWidth < 768;
-        if (currentIsMobile) {
-            document.documentElement.style.backgroundColor = '#8fa6b6'; //top and bottom of screen 
-            document.body.style.backgroundColor = '#8fa6b6';
-            const meta = document.querySelector("meta[name='theme-color']");
-            if (meta) meta.setAttribute('content', '#8fa6b6');
-        } else {
-            document.documentElement.style.backgroundColor = '#2F3E46';
-            document.body.style.backgroundColor = '#2F3E46';
-        }
+        document.documentElement.style.backgroundColor = '#8fa6b6';
+        document.body.style.backgroundColor = '#8fa6b6';
 
         return () => {
             window.removeEventListener('resize', handleResize);
-            document.documentElement.style.backgroundColor = '';
-            document.body.style.backgroundColor = '';
-            const meta = document.querySelector("meta[name='theme-color']");
-            if (meta) meta.setAttribute('content', '#FFFFFF'); // revert to default
         }
-    }, [windowWidth]);
+    }, []);
 
     const isMobile = windowWidth > 0 && windowWidth < 768;
 
     return (
-        <>
-            <div className="min-h-[100dvh] relative md:overflow-hidden md:fixed md:inset-0">
+        <main className="w-full relative bg-[#8fa6b6] overflow-x-hidden">
+            <section id="home" className="h-[100dvh] w-full relative overflow-hidden">
 
                 {/* Background */}
                 <motion.div
@@ -154,7 +144,12 @@ export default function Home() {
                     </h1>
                 </motion.div>
 
-            </div>
-        </>
+            </section>
+
+            <AboutPage />
+            <ProjectsPage />
+            <ContactPage />
+
+        </main>
     );
 }

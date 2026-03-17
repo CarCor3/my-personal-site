@@ -8,18 +8,7 @@ export default function About() {
 
     useEffect(() => {
         const handleResize = () => {
-            const currentIsMobile = window.innerWidth > 0 && window.innerWidth < 768;
-            setIsMobile(currentIsMobile);
-
-            if (currentIsMobile) {
-                document.documentElement.style.backgroundColor = '#8fa6b6';
-                document.body.style.backgroundColor = '#8fa6b6';
-                const meta = document.querySelector("meta[name='theme-color']");
-                if (meta) meta.setAttribute('content', '#8fa6b6');
-            } else {
-                document.documentElement.style.backgroundColor = '#8fa6b6';
-                document.body.style.backgroundColor = '#8fa6b6';
-            }
+            setIsMobile(window.innerWidth > 0 && window.innerWidth < 768);
         };
 
         // Set initial value
@@ -29,10 +18,6 @@ export default function About() {
 
         return () => {
             window.removeEventListener('resize', handleResize);
-            document.documentElement.style.backgroundColor = '';
-            document.body.style.backgroundColor = '';
-            const meta = document.querySelector("meta[name='theme-color']");
-            if (meta) meta.setAttribute('content', '#FFFFFF');
         };
     }, []);
 
@@ -53,11 +38,11 @@ export default function About() {
     };
 
     return (
-        <div 
-            className="min-h-screen md:h-screen md:overflow-hidden flex flex-col relative" 
+        <section id="about"
+            className="min-h-screen md:h-screen overflow-hidden flex flex-col relative w-full" 
             style={{ 
                 background: isMobile 
-                    ? 'linear-gradient(to bottom, #375a7f 40%, #ffffff 33.33%)' 
+                    ? '#ffffff' 
                     : 'linear-gradient(to right, #375a7f 40%, #ffffff 33.33%)' 
             }}
         > {/*About background color*/}
@@ -142,6 +127,6 @@ export default function About() {
                     </div>
                 </div>
             </motion.div>
-        </div>
+        </section>
     );
 }
