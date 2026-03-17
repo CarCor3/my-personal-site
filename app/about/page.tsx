@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import GlobeComponent from '../../components/GlobeComponent';
 
 export default function About() {
     const [isMobile, setIsMobile] = useState(false);
@@ -53,29 +52,31 @@ export default function About() {
         visible: { opacity: 1, x: 0 }
     };
 
-    const globeVariants = {
-        hidden: { opacity: 0, scale: 0.8, x: 50 },
-        visible: { opacity: 1, scale: 1, x: 0 }
-    };
-
     return (
-        <div className="min-h-screen md:h-screen md:overflow-hidden flex flex-col relative" style={{ backgroundColor: '#8fa6b6ff' }}>
-            {/* ── LLAMA Pic ── */}
+        <div 
+            className="min-h-screen md:h-screen md:overflow-hidden flex flex-col relative" 
+            style={{ 
+                background: isMobile 
+                    ? 'linear-gradient(to bottom, #375a7f 40%, #ffffff 33.33%)' 
+                    : 'linear-gradient(to right, #375a7f 40%, #ffffff 33.33%)' 
+            }}
+        > {/*About background color*/}
+            {/* ── YO Pic ── */}
             <div
                 style={{
                     display: isMobile ? 'none' : 'block',
                     position: 'absolute',
-                    top: isMobile ? '20%' : '56%',
-                    left: isMobile ? '5%' : '0%',
+                    top: isMobile ? '20%' : '35%', //Yo pic position
+                    left: isMobile ? '5%' : '-4%',
                     zIndex: 5,
-                    width: isMobile ? '120px' : '380px',
+                    width: isMobile ? '120px' : '900px', //Yo pic size
                     transform: 'translateY(-50%)',
                     pointerEvents: 'none',
                 }}
             >
                 <img
-                    src="/backgrounds/LLAMA.png"
-                    alt="Llama"
+                    src="/backgrounds/yo.png"
+                    alt="Yo"
                     style={{
                         width: '100%',
                         height: 'auto',
@@ -85,7 +86,6 @@ export default function About() {
                     }}
                 />
             </div>
-
             <motion.div
                 className="pt-12 pb-12 md:py-40 flex items-center justify-center flex-grow max-w-5xl mx-auto px-6 sm:px-6 lg:px-0 relative z-10"
                 variants={containerVariants}
@@ -98,8 +98,7 @@ export default function About() {
                     {/* Bio text */}
                     <div
                         className="flex-1 text-center md:text-left"
-                        // 👉 Edit the 'translate' values below to move the TEXT (X, Y). E.g: 'translate(-20px, 50px)'
-                        style={isMobile ? {} : { transform: 'translate(150px, 60px)' }}
+                        style={isMobile ? {} : { transform: 'translate(420px, 50px)' }} //Text position
                     >
                         <motion.p
                             variants={textVariants}
@@ -107,8 +106,8 @@ export default function About() {
                             className="font-dogica font-bold mb-12"
                             style={{ 
                                 color: '#000000', 
-                                fontSize: isMobile ? '16px' : '21px',//Edit 'fontSize' here to personalize the text size! E.g: '20px' or '1.5rem'
-                                maxWidth: isMobile ? '100%' : '900px',// Edit 'maxWidth' here to limit how many words fit per line! E.g: '400px'
+                                fontSize: isMobile ? '16px' : '22px',//Font Size
+                                maxWidth: isMobile ? '100%' : '900px',// Words per line
                                 marginInline: isMobile ? 'auto' : '0'// Centers the text block gracefully on mobile when limited
                             }}
                         >
@@ -120,7 +119,7 @@ export default function About() {
                             className="font-dogica font-bold mb-12"
                             style={{ 
                                 color: '#000000',
-                                fontSize: isMobile ? '16px' : '21px',//Edit 'fontSize' here to personalize the text size! E.g: '20px' or '1.5rem'
+                                fontSize: isMobile ? '16px' : '22px',//Edit 'fontSize' here to personalize the text size! E.g: '20px' or '1.5rem'
                                 maxWidth: isMobile ? '100%' : '900px',// Edit 'maxWidth' here to limit how many words fit per line! E.g: '400px'
                                 marginInline: isMobile ? 'auto' : '0'// Centers the text block gracefully on mobile when limited
                             }}
@@ -133,7 +132,7 @@ export default function About() {
                             className="font-dogica font-bold"
                             style={{ 
                                 color: '#000000',
-                                fontSize: isMobile ? '16px' : '21px',//Edit 'fontSize' here to personalize the text size! E.g: '20px' or '1.5rem'
+                                fontSize: isMobile ? '16px' : '22px',//Edit 'fontSize' here to personalize the text size! E.g: '20px' or '1.5rem'
                                 maxWidth: isMobile ? '100%' : '900px',// Edit 'maxWidth' here to limit how many words fit per line! E.g: '400px'
                                 marginInline: isMobile ? 'auto' : '0'// Centers the text block gracefully on mobile when limited
                             }}
@@ -141,24 +140,6 @@ export default function About() {
                             Since then, I've been improving my skills in electronics. When I'm not working on something, you can find me making content creation or playing the guitar.
                         </motion.p>
                     </div>
-
-                    {/* Interactive Globe */}
-                    <div
-                        // 👉 Edit the 'translate' values below to move the GLOBE (X, Y). E.g: 'translate(40px, -30px)'
-                        style={isMobile ? {} : { transform: 'translate(280px, 0px)' }}
-                    >
-                        <motion.div
-                            variants={globeVariants}
-                            transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
-                            className="flex-shrink-0 flex flex-col items-center gap-4"
-                        >
-                            <GlobeComponent />
-                            <p className="font-dogica text-sm" style={{ color: '#FFFFFF', opacity: 0.8 }}>
-                                📍 Lima, Peru
-                            </p>
-                        </motion.div>
-                    </div>
-
                 </div>
             </motion.div>
         </div>

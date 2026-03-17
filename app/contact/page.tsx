@@ -4,15 +4,34 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
+function TypewriterText({ text, delay = 0, className = "" }: { text: string, delay?: number, className?: string }) {
+    const letters = text.split("");
+    return (
+        <span className={className}>
+            {letters.map((char, index) => (
+                <motion.span
+                    key={index}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.05, delay: delay + index * 0.04 }}
+                >
+                    {char === " " ? "\u00A0" : char}
+                </motion.span>
+            ))}
+        </span>
+    );
+}
+
 /*contact page title*/
 export default function Contact() {
     const [isMobile, setIsMobile] = useState(false);
+    const [isDraggable, setIsDraggable] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
             const currentIsMobile = window.innerWidth > 0 && window.innerWidth < 768;
             setIsMobile(currentIsMobile);
-            
+
             if (currentIsMobile) {
                 document.documentElement.style.backgroundColor = '#8fa6b6';
                 document.body.style.backgroundColor = '#8fa6b6';
@@ -27,8 +46,14 @@ export default function Contact() {
         handleResize();
         window.addEventListener('resize', handleResize);
 
+        // PAPER grabbing delay
+        const dragTimeout = setTimeout(() => {
+            setIsDraggable(true);
+        }, 1000); 
+
         return () => {
             window.removeEventListener('resize', handleResize);
+            clearTimeout(dragTimeout);
             document.documentElement.style.backgroundColor = '';
             document.body.style.backgroundColor = '';
             const meta = document.querySelector("meta[name='theme-color']");
@@ -53,7 +78,16 @@ export default function Contact() {
     };
 
     return (
-        <div className="min-h-screen md:h-screen md:overflow-hidden flex flex-col" style={{ backgroundColor: '#8fa6b6ff' }}>
+        <div 
+            className="min-h-screen md:h-screen md:overflow-hidden flex flex-col" 
+            style={{ 
+                backgroundColor: '#8fa6b6ff',
+                backgroundImage: 'url("/backgrounds/DESK4.jpg")',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+            }}
+        >
             <motion.div
                 variants={containerVariants}
                 initial="hidden"
@@ -63,23 +97,48 @@ export default function Contact() {
                   - mobile: items-center justify-center
                   - desktop: md:items-center md:justify-center (change these classes below to shift the whole block)
                 */
-                className="pt-24 pb-12 md:py-20 flex-grow flex flex-col items-center justify-center md:items-center md:justify-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-6"
+                className="relative pt-24 pb-12 md:py-20 flex-grow flex flex-col items-center justify-center md:items-center md:justify-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-6"
             >
+                {/* ── DRAGGABLE WRAPPER ── */}
+                <motion.div
+                    drag={isDraggable}
+                    dragMomentum={false}
+                    className="relative flex flex-col items-center justify-center w-full"
+                    style={{ cursor: isDraggable ? 'grab' : 'default' }}
+                    whileDrag={{ cursor: 'grabbing', scale: 1.02 }}
+                >
+                    {/* ── PAPER Background ── */}
+                    <div
+                    // 👉 Edit the width, height, or transform values below to scale or move the PAPER on desktop/mobile
+                    style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-360px, -350px) rotate(0deg)',
+                        width: isMobile ? '360px' : '700px',
+                        height: isMobile ? '450px' : '800px',
+                        backgroundImage: 'url("/backgrounds/PAPER.png")',
+                        backgroundSize: '100% 100%',
+                        backgroundPosition: 'center',
+                        backgroundRepeat: 'no-repeat',
+                        zIndex: 0,
+                        // pointerEvents: 'none' Removed so the entire paper can be grabbed!
+                    }}
+                />
 
                 <div
-                    style={isMobile ? {} : { transform: 'translate(0px, 60px)' }} //GET IN TOUCH location
+                    style={{
+                        zIndex: 10,
+                        position: 'relative',
+                        ...(isMobile ? {} : { transform: 'translate(0px, 40px)' })
+                    }} //GET IN TOUCH location
                 >
-                    <motion.h1
-                        variants={{
-                            hidden: { opacity: 0, y: -20 },
-                            visible: { opacity: 1, y: 0 }
-                        }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
+                    <h1
                         className="font-daydream text-4xl md:text-5xl font-bold mb-12 text-center leading-[1.5] md:leading-normal"
                         style={{ color: '#000000' }}
                     >
-                        GET IN TOUCH
-                    </motion.h1>
+                        <TypewriterText text="GET IN TOUCH" delay={0.5} />
+                    </h1>
                 </div>
 
                 {/* 
@@ -88,125 +147,103 @@ export default function Contact() {
                       - desktop: md:items-center (centered)
                       - Change 'md:items-center' to 'md:items-start' to align links to the left on desktop
                     */}
-                <div 
-                    style={isMobile ? {} : { transform: 'translate(0px, 60px)' }} //Social Media location
+                <div
+                    style={{
+                        zIndex: 10,
+                        position: 'relative',
+                        ...(isMobile ? {} : { transform: 'translate(0px, 40px)' })
+                    }} //Social Media location
                 >
                     <div className="flex flex-col gap-6 items-center md:items-center w-full max-w-[300px] md:max-w-[400px]">
-                    <motion.a
-                        variants={itemVariants}
-                        transition={{ duration: 0.5, ease: "easeOut" }}
-                        href="https://www.instagram.com/carloscordova03"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-4 hover:scale-105 transition-transform duration-300 group w-full justify-start"
-                    >
-                        <div className="relative w-12 h-12 flex-shrink-0">
-                            <Image
-                                src="/backgrounds/IG2.png" /*IG logo*/
-                                alt="Instagram"
-                                fill
-                                className="object-contain"
-                            />
-                        </div>
-                        <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-pink-600 transition-colors" style={{ color: '#FFFFFF' }}>
-                            carloscordova03
-                        </span>
-                    </motion.a>
+                        <motion.a
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5, delay: 1.1, ease: "easeOut" }}
+                            href="https://www.instagram.com/carloscordova03"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-4 hover:scale-105 transition-transform duration-300 group w-full justify-start"
+                        >
+                            <div className="relative w-12 h-12 flex-shrink-0">
+                                <Image
+                                    src="/backgrounds/IG2.png" /*IG logo*/
+                                    alt="Instagram"
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
+                            <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-pink-600 transition-colors" style={{ color: '#000000' }}>
+                                <TypewriterText text="carloscordova03" delay={1.1} />
+                            </span>
+                        </motion.a>
 
-                    <motion.a
-                        variants={itemVariants}
-                        transition={{ duration: 0.5, ease: "easeOut" }}
-                        href="https://www.instagram.com/gtxperu"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-4 hover:scale-105 transition-transform duration-300 group w-full justify-start"
-                    >
-                        <div className="relative w-12 h-12 flex-shrink-0">
-                            <Image
-                                src="/backgrounds/IG2.png"
-                                alt="Instagram GT Peru"
-                                fill
-                                className="object-contain"
-                            />
-                        </div>
-                        <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-pink-600 transition-colors" style={{ color: '#FFFFFF' }}>
-                            GT Peru
-                        </span>
-                    </motion.a>
+                        <motion.a
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5, delay: 1.1, ease: "easeOut" }}
+                            href="https://www.instagram.com/gtxperu"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-4 hover:scale-105 transition-transform duration-300 group w-full justify-start"
+                        >
+                            <div className="relative w-12 h-12 flex-shrink-0">
+                                <Image
+                                    src="/backgrounds/IG2.png"
+                                    alt="Instagram GT Peru"
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
+                            <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-pink-600 transition-colors" style={{ color: '#000000' }}>
+                                <TypewriterText text="GT Peru" delay={1.1} />
+                            </span>
+                        </motion.a>
 
-                    <motion.a
-                        variants={itemVariants}
-                        transition={{ duration: 0.5, ease: "easeOut" }}
-                        href="mailto:carlos.cordova.03@outlook.com"
-                        className="flex items-center gap-4 hover:scale-105 transition-transform duration-300 group w-full justify-start"
-                    >
-                        <div className="relative w-12 h-12 flex-shrink-0">
-                            <Image
-                                src="/backgrounds/mail.png"
-                                alt="Email"
-                                fill
-                                className="object-contain"
-                            />
-                        </div>
-                        <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-blue-600 transition-colors" style={{ color: '#FFFFFF' }}>
-                            carlos.cordova.03
-                        </span>
-                    </motion.a>
+                        <motion.a
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5, delay: 1.1, ease: "easeOut" }}
+                            href="mailto:carlos.cordova.03@outlook.com"
+                            className="flex items-center gap-4 hover:scale-105 transition-transform duration-300 group w-full justify-start"
+                        >
+                            <div className="relative w-12 h-12 flex-shrink-0">
+                                <Image
+                                    src="/backgrounds/mail.png"
+                                    alt="Email"
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
+                            <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-blue-600 transition-colors" style={{ color: '#000000' }}>
+                                <TypewriterText text="carlos.cordova.03" delay={1.1} />
+                            </span>
+                        </motion.a>
 
-                    <motion.a
-                        variants={itemVariants}
-                        transition={{ duration: 0.5, ease: "easeOut" }}
-                        href="https://www.linkedin.com/in/carloscordova3"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-4 hover:scale-105 transition-transform duration-300 group w-full justify-start"
-                    >
-                        <div className="relative w-12 h-12 flex-shrink-0">
-                            <Image
-                                src="/backgrounds/linkedin.png"
-                                alt="LinkedIn"
-                                fill
-                                className="object-contain"
-                            />
-                        </div>
-                        <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-blue-700 transition-colors" style={{ color: '#FFFFFF' }}>
-                            carloscordova3
-                        </span>
-                    </motion.a>
+                        <motion.a
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.5, delay: 1.1, ease: "easeOut" }}
+                            href="https://www.linkedin.com/in/carloscordova3"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-4 hover:scale-105 transition-transform duration-300 group w-full justify-start"
+                        >
+                            <div className="relative w-12 h-12 flex-shrink-0">
+                                <Image
+                                    src="/backgrounds/linkedin.png"
+                                    alt="LinkedIn"
+                                    fill
+                                    className="object-contain"
+                                />
+                            </div>
+                            <span className="text-sm md:text-xl font-bold font-dogica group-hover:text-blue-700 transition-colors" style={{ color: '#000000' }}>
+                                <TypewriterText text="carloscordova3" delay={1.1} />
+                            </span>
+                        </motion.a>
                     </div>
                 </div>
+                </motion.div>
             </motion.div>
-
-            {/* ── BANNER ── */}
-            <div 
-                style={{
-                    width: '100%',
-                    height: '60px', // Adjust height as needed
-                    backgroundImage: 'url("/backgrounds/BANNER2.pn")',
-                    backgroundRepeat: 'repeat-x',
-                    backgroundPosition: 'bottom left',
-                    backgroundSize: 'auto 100%',
-                    // Prevents it from shrinking
-                    flexShrink: 0,
-                    // 👉 Edit the 'translateY' value below to move the BANNER vertically (up or down). E.g: 'translateY(-20px)' or 'translateY(10px)'
-                    transform: isMobile ? 'translateY(0px)' : 'translateY(0px)',
-                }}
-            />
-
-                        <div 
-                style={{
-                    width: '100%',
-                    height: '60px', // Adjust height as needed
-                    backgroundImage: 'url("/backgrounds/BANNER2.pn")',
-                    backgroundRepeat: 'repeat-x',
-                    backgroundPosition: 'bottom left',
-                    backgroundSize: 'auto 100%',
-                    // Prevents it from shrinking
-                    flexShrink: 0,
-                    // 👉 Edit the 'translateY' value below to move the BANNER vertically (up or down). E.g: 'translateY(-20px)' or 'translateY(10px)'
-                    transform: isMobile ? 'translateY(0px)' : 'translateY(-720px)',
-                }}
-            />
         </div>
     );
 }
