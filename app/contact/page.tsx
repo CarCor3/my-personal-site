@@ -2,23 +2,33 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 /*contact page title*/
 export default function Contact() {
+    const [isMobile, setIsMobile] = useState(false);
+
     useEffect(() => {
-        const currentIsMobile = window.innerWidth > 0 && window.innerWidth < 768;
-        if (currentIsMobile) {
-            document.documentElement.style.backgroundColor = '#8fa6b6';
-            document.body.style.backgroundColor = '#8fa6b6';
-            const meta = document.querySelector("meta[name='theme-color']");
-            if (meta) meta.setAttribute('content', '#8fa6b6');
-        } else {
-            document.documentElement.style.backgroundColor = '#8fa6b6';
-            document.body.style.backgroundColor = '#8fa6b6';
-        }
+        const handleResize = () => {
+            const currentIsMobile = window.innerWidth > 0 && window.innerWidth < 768;
+            setIsMobile(currentIsMobile);
+            
+            if (currentIsMobile) {
+                document.documentElement.style.backgroundColor = '#8fa6b6';
+                document.body.style.backgroundColor = '#8fa6b6';
+                const meta = document.querySelector("meta[name='theme-color']");
+                if (meta) meta.setAttribute('content', '#8fa6b6');
+            } else {
+                document.documentElement.style.backgroundColor = '#8fa6b6';
+                document.body.style.backgroundColor = '#8fa6b6';
+            }
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
 
         return () => {
+            window.removeEventListener('resize', handleResize);
             document.documentElement.style.backgroundColor = '';
             document.body.style.backgroundColor = '';
             const meta = document.querySelector("meta[name='theme-color']");
@@ -56,17 +66,21 @@ export default function Contact() {
                 className="pt-24 pb-12 md:py-20 flex-grow flex flex-col items-center justify-center md:items-center md:justify-center max-w-4xl mx-auto px-4 sm:px-6 lg:px-6"
             >
 
-                <motion.h1
-                    variants={{
-                        hidden: { opacity: 0, y: -20 },
-                        visible: { opacity: 1, y: 0 }
-                    }}
-                    transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="font-daydream text-4xl md:text-5xl font-bold mb-12 text-center leading-[1.5] md:leading-normal"
-                    style={{ color: '#000000' }}
+                <div
+                    style={isMobile ? {} : { transform: 'translate(0px, 60px)' }} //GET IN TOUCH location
                 >
-                    GET IN TOUCH
-                </motion.h1>
+                    <motion.h1
+                        variants={{
+                            hidden: { opacity: 0, y: -20 },
+                            visible: { opacity: 1, y: 0 }
+                        }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="font-daydream text-4xl md:text-5xl font-bold mb-12 text-center leading-[1.5] md:leading-normal"
+                        style={{ color: '#000000' }}
+                    >
+                        GET IN TOUCH
+                    </motion.h1>
+                </div>
 
                 {/* 
                       Links Container Alignment:
@@ -74,7 +88,10 @@ export default function Contact() {
                       - desktop: md:items-center (centered)
                       - Change 'md:items-center' to 'md:items-start' to align links to the left on desktop
                     */}
-                <div className="flex flex-col gap-6 items-center md:items-center w-full max-w-[300px] md:max-w-[400px]">
+                <div 
+                    style={isMobile ? {} : { transform: 'translate(0px, 60px)' }} //Social Media location
+                >
+                    <div className="flex flex-col gap-6 items-center md:items-center w-full max-w-[300px] md:max-w-[400px]">
                     <motion.a
                         variants={itemVariants}
                         transition={{ duration: 0.5, ease: "easeOut" }}
@@ -156,8 +173,40 @@ export default function Contact() {
                             carloscordova3
                         </span>
                     </motion.a>
+                    </div>
                 </div>
             </motion.div>
+
+            {/* ── BANNER ── */}
+            <div 
+                style={{
+                    width: '100%',
+                    height: '60px', // Adjust height as needed
+                    backgroundImage: 'url("/backgrounds/BANNER2.pn")',
+                    backgroundRepeat: 'repeat-x',
+                    backgroundPosition: 'bottom left',
+                    backgroundSize: 'auto 100%',
+                    // Prevents it from shrinking
+                    flexShrink: 0,
+                    // 👉 Edit the 'translateY' value below to move the BANNER vertically (up or down). E.g: 'translateY(-20px)' or 'translateY(10px)'
+                    transform: isMobile ? 'translateY(0px)' : 'translateY(0px)',
+                }}
+            />
+
+                        <div 
+                style={{
+                    width: '100%',
+                    height: '60px', // Adjust height as needed
+                    backgroundImage: 'url("/backgrounds/BANNER2.pn")',
+                    backgroundRepeat: 'repeat-x',
+                    backgroundPosition: 'bottom left',
+                    backgroundSize: 'auto 100%',
+                    // Prevents it from shrinking
+                    flexShrink: 0,
+                    // 👉 Edit the 'translateY' value below to move the BANNER vertically (up or down). E.g: 'translateY(-20px)' or 'translateY(10px)'
+                    transform: isMobile ? 'translateY(0px)' : 'translateY(-720px)',
+                }}
+            />
         </div>
     );
 }

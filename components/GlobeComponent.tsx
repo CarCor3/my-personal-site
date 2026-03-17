@@ -91,13 +91,13 @@ export default function GlobeComponent() {
                 backgroundColor="rgba(0,0,0,0)"
                 polygonsData={countries}
                 polygonCapColor={(d: any) =>
-                    d.properties?.name === 'Peru' ? 'rgba(230, 50, 50, 0.6)' : 'rgba(0,0,0,0.02)'
+                    d.properties?.name === 'Peru' ? '#c81e1ecc' : 'rgba(0,0,0,0.02)'
                 }
                 polygonSideColor={(d: any) =>
-                    d.properties?.name === 'Peru' ? 'rgba(200, 30, 30, 0.8)' : 'rgba(0,0,0,0)'
+                    d.properties?.name === 'Peru' ? '#c81e1ecc' : 'rgba(0,0,0,0)'
                 }
                 polygonStrokeColor={(d: any) =>
-                    d.properties?.name === 'Peru' ? 'rgba(255,255,255,1)' : 'rgba(255,255,255,0.3)'
+                    d.properties?.name === 'Peru' ? '#ffffffff' : 'rgba(255,255,255,0.3)'
                 }
                 polygonAltitude={(d: any) => d.properties?.name === 'Peru' ? 0.02 : 0.005}
                 polygonLabel={() => ''}

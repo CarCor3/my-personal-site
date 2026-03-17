@@ -51,6 +51,18 @@
   font-family: 'Dogica', monospace;
 }
 
+@font-face {
+  font-family: 'Dogica Pixel';
+  src: url('/fonts/dogicapixel.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-dogicapixel {
+  font-family: 'Dogica Pixel', monospace;
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

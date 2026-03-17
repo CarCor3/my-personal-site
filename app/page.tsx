@@ -342,7 +342,7 @@ export default function Home() {
                         <MagneticWord strength={0.4}>Hi, I'm</MagneticWord>
                     </p>
                     <h1 className="font-daydream font-bold tracking-tight" style={{
-                        color: '#FFF8DC', //CARLOS CORDOVA color
+                        color: '#fff8dcff', //CARLOS CORDOVA color
                         fontSize: isMobile ? '3rem' : '8rem', // ADJUST THESE: Font size for mobile and desktop
                         WebkitTextStroke: '0.0px #E76F51', // CARLOS CORDOVA outline color
                         textShadow: '0px 0px 0px rgba(3, 2, 2, 1)', // Optional: Extra Shadow drop
