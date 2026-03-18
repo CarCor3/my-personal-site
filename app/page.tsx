@@ -84,19 +84,19 @@ export default function Home() {
             <section id="home" className="h-[100dvh] w-full relative overflow-hidden">
 
                 {/* Background */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1.2 }}
+                <div
                     style={{
                         position: 'absolute',
                         inset: 0,
                         zIndex: 0,
-                        backgroundColor: '#8fa6b6ff',
+                        backgroundColor: '#ffffff',
                         overflow: 'hidden'
                     }}
                 >
-                    <video
+                    <motion.video
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 2, ease: "easeOut" }}
                         autoPlay
                         loop
                         muted
@@ -108,8 +108,8 @@ export default function Home() {
                         }}
                     >
                         <source src="/backgrounds/BEACH.MOV" />
-                    </video>
-                </motion.div>
+                    </motion.video>
+                </div>
 
                 {/* ── Title ── */}
                 <motion.div
@@ -118,19 +118,20 @@ export default function Home() {
                     transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.6 }}
                     style={{
                         position: 'absolute',
-                        top: '465px', //location of home title
+                        // Visually centers it in the remaining space below the desktop navbar (~90px)
+                        top: isMobile ? '50%' : 'calc(50dvh + 45px)',
                         left: '50%',
                         zIndex: 2,
                         textAlign: 'center',
                         width: isMobile ? '90%' : 'auto',
                     }}
                 >
-                    <p className="font-ari text-4xl md:text-8xl font-bold mb-4 md:mb-12" style={{ color: '#fdfdfdff' }}>
+                    <p className="font-ari text-4xl md:text-[clamp(3rem,6vw,6rem)] font-bold mb-4 md:mb-[0.5em]" style={{ color: '#fdfdfdff' }}>
                         <MagneticWord strength={0.4}>Hi, I'm</MagneticWord>
                     </p>
                     <h1 className="font-daydream font-bold tracking-tight" style={{
                         color: '#fff8dcff', //CARLOS CORDOVA color
-                        fontSize: isMobile ? '3rem' : '8rem', // ADJUST THESE: Font size for mobile and desktop
+                        fontSize: isMobile ? '3rem' : 'clamp(4rem, 8vw, 8rem)', // Responsive font size
                         WebkitTextStroke: '0px #E76F51', // CARLOS CORDOVA outline color
                         textShadow: '0px 0px 0px rgba(3, 2, 2, 1)', // Optional: Extra Shadow drop
                         lineHeight: '1.2'

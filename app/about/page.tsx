@@ -5,10 +5,21 @@ import { useEffect, useState } from 'react';
 
 export default function About() {
     const [isMobile, setIsMobile] = useState(false);
+    const [scaleFactor, setScaleFactor] = useState(1);
 
     useEffect(() => {
         const handleResize = () => {
-            setIsMobile(window.innerWidth > 0 && window.innerWidth < 768);
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            setIsMobile(w > 0 && w < 768);
+            
+            if (w >= 768) {
+                const heightScale = (h - 200) / 800;
+                const widthScale = (w - 100) / 1000;
+                setScaleFactor(Math.min(1.15, Math.max(0.4, Math.min(heightScale, widthScale))));
+            } else {
+                setScaleFactor(1);
+            }
         };
 
         // Set initial value
@@ -39,22 +50,23 @@ export default function About() {
 
     return (
         <section id="about"
-            className="min-h-screen md:h-screen overflow-hidden flex flex-col relative w-full" 
-            style={{ 
-                background: isMobile 
-                    ? '#ffffff' 
-                    : 'linear-gradient(to right, #375a7f 40%, #ffffff 33.33%)' 
+            className="min-h-screen md:h-screen overflow-hidden flex flex-col relative w-full"
+            style={{
+                background: isMobile
+                    ? '#ffffff'
+                    : 'linear-gradient(to right, #375a7f 40%, #ffffff 33.33%)'
             }}
         > {/*About background color*/}
-            {/* ── YO Pic ── */}
+
+            {/* ── YO Pic ── always fills 40vw (the blue section width), outside scale wrapper */}
             <div
                 style={{
                     display: isMobile ? 'none' : 'block',
                     position: 'absolute',
-                    top: isMobile ? '20%' : '35%', //Yo pic position
-                    left: isMobile ? '5%' : '-4%',
+                    top: '50%',
+                    left: 0,
                     zIndex: 5,
-                    width: isMobile ? '120px' : '900px', //Yo pic size
+                    width: '40vw',
                     transform: 'translateY(-50%)',
                     pointerEvents: 'none',
                 }}
@@ -71,6 +83,15 @@ export default function About() {
                     }}
                 />
             </div>
+
+            {/* Scale wrapper — only wraps text content */}
+            <div 
+                className="relative w-full flex-1 flex flex-col"
+                style={{
+                    transform: isMobile ? 'none' : `scale(${scaleFactor})`,
+                    transformOrigin: 'center center'
+                }}
+            >
             <motion.div
                 className="pt-12 pb-12 md:py-40 flex items-center justify-center flex-grow max-w-5xl mx-auto px-6 sm:px-6 lg:px-0 relative z-10"
                 variants={containerVariants}
@@ -89,8 +110,8 @@ export default function About() {
                             variants={textVariants}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             className="font-dogica font-bold mb-12"
-                            style={{ 
-                                color: '#000000', 
+                            style={{
+                                color: '#000000',
                                 fontSize: isMobile ? '16px' : '22px',//Font Size
                                 maxWidth: isMobile ? '100%' : '900px',// Words per line
                                 marginInline: isMobile ? 'auto' : '0'// Centers the text block gracefully on mobile when limited
@@ -102,7 +123,7 @@ export default function About() {
                             variants={textVariants}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             className="font-dogica font-bold mb-12"
-                            style={{ 
+                            style={{
                                 color: '#000000',
                                 fontSize: isMobile ? '16px' : '22px',//Edit 'fontSize' here to personalize the text size! E.g: '20px' or '1.5rem'
                                 maxWidth: isMobile ? '100%' : '900px',// Edit 'maxWidth' here to limit how many words fit per line! E.g: '400px'
@@ -115,7 +136,7 @@ export default function About() {
                             variants={textVariants}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             className="font-dogica font-bold"
-                            style={{ 
+                            style={{
                                 color: '#000000',
                                 fontSize: isMobile ? '16px' : '22px',//Edit 'fontSize' here to personalize the text size! E.g: '20px' or '1.5rem'
                                 maxWidth: isMobile ? '100%' : '900px',// Edit 'maxWidth' here to limit how many words fit per line! E.g: '400px'
@@ -127,6 +148,7 @@ export default function About() {
                     </div>
                 </div>
             </motion.div>
+            </div>
         </section>
     );
 }

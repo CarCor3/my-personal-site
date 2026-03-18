@@ -16,12 +16,7 @@ const allLinks = [
 export default function Navbar() {
     const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
-    const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 });
     const [activeHash, setActiveHash] = useState('#home');
-
-    const containerRef = useRef<HTMLDivElement>(null);
-    const linkRefs = useRef<(HTMLAnchorElement | null)[]>([]);
-    const isFirstRender = useRef(true);
 
     const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
         e.preventDefault();
@@ -54,90 +49,60 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    useEffect(() => {
-        const updatePill = () => {
-            const idx = allLinks.findIndex(l => l.path === activeHash);
-            const activeEl = idx !== -1 ? linkRefs.current[idx] : null;
-
-            if (activeEl && containerRef.current) {
-                const containerRect = containerRef.current.getBoundingClientRect();
-                const elRect = activeEl.getBoundingClientRect();
-                setPillStyle({
-                    left: elRect.left - containerRect.left,
-                    width: elRect.width,
-                    opacity: 1,
-                });
-            }
-        };
-
-        let timeoutId: NodeJS.Timeout;
-
-        if (isFirstRender.current) {
-            // Wait for framer-motion scale animations to complete on initial load
-            timeoutId = setTimeout(() => {
-                updatePill();
-                isFirstRender.current = false;
-            }, 900);
-        } else {
-            updatePill();
-            timeoutId = setTimeout(updatePill, 50); // Minor safety buffer
-        }
-
-        window.addEventListener('resize', updatePill);
-        return () => {
-            clearTimeout(timeoutId);
-            window.removeEventListener('resize', updatePill);
-        };
-    }, [activeHash]);
-
     return (
         <nav className="fixed top-2 md:top-6 left-0 right-0 z-[200] flex justify-center px-4 md:px-8 pointer-events-none">
             {/* macOS Dock style (Desktop only): rounded full, floating, frosted glass, subtle border and shadow */}
-            <div className="w-full max-w-6xl md:bg-white/10 md:backdrop-blur-md md:border md:border-white/20 md:shadow-[0_8px_32px_rgba(0,0,0,0.3)] md:rounded-full px-4 md:px-12 pointer-events-auto">
-                <div className="flex justify-between h-16 md:h-14 items-center relative w-full" ref={containerRef}>
-
-                    {/* Sliding pill (Hidden on mobile) */}
-                    <div className="hidden md:block" style={{
-                        position: 'absolute',
-                        top: '50%',
-                        transform: 'translateY(-50%)',
-                        left: pillStyle.left,
-                        width: pillStyle.width,
-                        height: '60px', // height of the active pill
-                        backgroundColor: 'rgba(255, 255, 255, 0.25)', // glassy active highlight
-                        border: '1px solid rgba(255, 255, 255, 0.3)',
-                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-                        borderRadius: '9999px',
-                        opacity: pillStyle.opacity,
-                        transition: 'left 0.35s cubic-bezier(0.4, 0, 0.2, 1), width 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease',
-                        pointerEvents: 'none',
-                        zIndex: 0,
-                    }} />
+            <motion.div 
+                initial={{ opacity: 0, scale: 0.95, y: -20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+                className="w-full max-w-6xl md:bg-white/10 md:backdrop-blur-md md:border md:border-white/20 md:shadow-[0_8px_32px_rgba(0,0,0,0.3)] md:rounded-full px-4 md:px-12 pointer-events-auto"
+            >
+                <div className="flex justify-between h-16 md:h-14 items-center relative w-full">
 
                     {/* All 4 links — desktop */}
                     <div className="hidden md:flex flex-grow justify-between items-center px-4 w-full">
-                        {allLinks.map((link, idx) => (
-                            <motion.div
-                                key={link.path}
-                                initial={{ opacity: 0, scale: 0.5 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{
-                                    duration: 0.8,
-                                    ease: [0.22, 1, 0.36, 1],
-                                    delay: 0.1 * idx + 0.5
-                                }}
-                            >
-                                <Link
-                                    ref={el => { linkRefs.current[idx] = el; }}
-                                    href={link.path}
-                                    onClick={(e) => handleLinkClick(e, link.path)}
-                                    className="font-daydream uppercase tracking-wide text-[22px] md:text-[26px] hover:opacity-70 px-6 py-2 rounded-full inline-block flex items-center justify-center"
-                                    style={{ color: '#000000', position: 'relative', zIndex: 1 }} //navbar titles color
+                        {allLinks.map((link, idx) => {
+                            const isActive = activeHash === link.path;
+                            return (
+                                <motion.div
+                                    key={link.path}
+                                    initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{
+                                        duration: 0.8,
+                                        ease: [0.22, 1, 0.36, 1],
+                                        delay: 0.1 * idx + 0.5
+                                    }}
+                                    style={{ position: 'relative' }}
+                                    className="flex items-center justify-center h-[60px]"
                                 >
-                                    {link.name}
-                                </Link>
-                            </motion.div>
-                        ))}
+                                    {isActive && (
+                                        <motion.div
+                                            layoutId="navPill"
+                                            transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                                            style={{
+                                                position: 'absolute',
+                                                inset: 0,
+                                                backgroundColor: 'rgba(255, 255, 255, 0.25)', // glassy active highlight
+                                                border: '1px solid rgba(255, 255, 255, 0.3)',
+                                                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                                                borderRadius: '9999px',
+                                                zIndex: 0,
+                                            }}
+                                        />
+                                    )}
+                                    <Link
+                                        href={link.path}
+                                        onClick={(e) => handleLinkClick(e, link.path)}
+                                        className="font-daydream uppercase tracking-wide text-[22px] md:text-[26px] hover:opacity-70 px-6 py-2 rounded-full relative z-10 flex items-center justify-center"
+                                        style={{ color: '#000000' }} //navbar titles color
+                                    >
+                                        {link.name}
+                                    </Link>
+                                </motion.div>
+                            );
+                        })}
                     </div>
 
                     {/* Mobile button */}
@@ -156,7 +121,7 @@ export default function Navbar() {
                         </button>
                     </div>
                 </div>
-            </div>
+            </motion.div>
 
             {/* Mobile menu - Full Screen */}
             <AnimatePresence>

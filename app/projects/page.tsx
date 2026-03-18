@@ -76,16 +76,37 @@ const projectImages = [
 
 export default function Projects() {
     const [cardOrder, setCardOrder] = useState([0, 1, 2, 3, 4, 5]); /*Number of cards on deck*/
-    const [isFlying, setIsFlying] = useState<number | null>(null);
+    const [flyingCard, setFlyingCard] = useState<{ id: number, direction: 'left' | 'right' } | null>(null);
     const [inspectedIndex, setInspectedIndex] = useState<number | null>(null);
     const [flippedCards, setFlippedCards] = useState<Record<number, boolean>>({});
     const [windowWidth, setWindowWidth] = useState(0);
+    const [scaleFactor, setScaleFactor] = useState(1);
 
     const draggedRef = useRef(false);
 
     useEffect(() => {
         setWindowWidth(window.innerWidth);
-        const handleResize = () => setWindowWidth(window.innerWidth);
+        const handleResize = () => {
+            const w = window.innerWidth;
+            const h = window.innerHeight;
+            setWindowWidth(w);
+            
+            if (w >= 768) {
+                // Calculate exactly against the deck's true ~650px height bounding box
+                const availableHeight = h - 200; // 100px for nav + 100px for bottom margin
+                const heightScale = availableHeight / 650; 
+                
+                const availableWidth = w - 200; // Left & right margins
+                const widthScale = availableWidth / 1000; 
+                
+                // Allow the deck to freely scale upwards to hit those margins nicely!
+                setScaleFactor(Math.max(0.4, Math.min(heightScale, widthScale)));
+            } else {
+                setScaleFactor(1);
+            }
+        };
+        
+        handleResize();
         window.addEventListener('resize', handleResize);
 
         return () => {
@@ -93,13 +114,13 @@ export default function Projects() {
         };
     }, []);
 
-    const isMobile = windowWidth < 768;
+    const isMobile = windowWidth > 0 && windowWidth < 768;
 
-    const handleNext = () => {
-        if (isFlying !== null || inspectedIndex !== null) return;
+    const handleNext = (direction: 'left' | 'right' = 'right') => {
+        if (flyingCard !== null || inspectedIndex !== null) return;
 
         const topCardIndex = cardOrder[cardOrder.length - 1];
-        setIsFlying(topCardIndex);
+        setFlyingCard({ id: topCardIndex, direction });
 
         setTimeout(() => {
             setCardOrder(prev => {
@@ -108,25 +129,40 @@ export default function Projects() {
                 next.unshift(topCard);
                 return next;
             });
-            setIsFlying(null);
+            setFlyingCard(null);
         }, 400);
     };
 
-    const handlePrev = () => {
-        if (isFlying !== null || inspectedIndex !== null) return;
+    const handlePrev = (direction: 'left' | 'right' = 'left') => {
+        if (flyingCard !== null || inspectedIndex !== null) return;
 
-        setCardOrder(prev => {
-            const next = [...prev];
-            const bottomCard = next.shift()!;
-            next.push(bottomCard);
-            return next;
-        });
+        const topCardIndex = cardOrder[cardOrder.length - 1];
+        setFlyingCard({ id: topCardIndex, direction });
+
+        setTimeout(() => {
+            setCardOrder(prev => {
+                const next = [...prev];
+                const bottomCard = next.shift()!;
+                next.push(bottomCard);
+                return next;
+            });
+            setFlyingCard(null);
+        }, 400);
     };
 
     const currentProject = inspectedIndex !== null ? projectImages[inspectedIndex] : null;
 
     return (
-        <section id="projects" className="min-h-screen py-10 md:py-48 flex flex-col items-center justify-center bg-[#8fa6b6ff] /*projects background color*/ transition-colors duration-500 overflow-hidden relative w-full">
+        <section id="projects" className="h-screen flex flex-col items-center justify-center bg-[#8fa6b6ff] /*projects background color*/ transition-colors duration-500 overflow-hidden relative w-full"
+            style={{ paddingTop: isMobile ? '0' : '90px' }} // offset for navbar on desktop
+        >
+            <div 
+                className="relative w-full flex-1 flex flex-col items-center justify-center"
+                style={{
+                    transform: isMobile ? 'none' : `scale(${scaleFactor})`,
+                    transformOrigin: 'center center'
+                }}
+            >
             <div className="relative w-full max-w-7xl flex flex-col items-center justify-center px-4 md:px-0">
                 {/* Deck/Inpection Area */}
                 {/* Deck/Inpection Area */}
@@ -143,7 +179,7 @@ export default function Projects() {
                                 initial={{ opacity: 0, x: -20 }}
                                 animate={{ opacity: 1, x: 0, y: isMobile ? 0 : 110 }}
                                 exit={{ opacity: 0, x: -20, y: isMobile ? 0 : 110 }}
-                                onClick={handlePrev}
+                                onClick={() => handlePrev()}
                                 className="absolute left-0 md:left-4 lg:left-10 z-[60] p-2 md:p-3 bg-white border-4 border-black hover:bg-gray-100 transition-colors cursor-pointer"
                                 aria-label="Previous project"
                             >
@@ -163,16 +199,17 @@ export default function Projects() {
                             const img = projectImages[originalIndex];
                             const isTop = displayIndex === cardOrder.length - 1;
                             const isVisible = inspectedIndex !== null ? (originalIndex === inspectedIndex) : (displayIndex >= cardOrder.length - 4);
-                            const isCardFlying = isFlying === originalIndex;
+                            const isCardFlying = flyingCard?.id === originalIndex;
+                            const flyDirection = flyingCard?.direction === 'left' ? -1 : 1;
                             const isBeingInspected = inspectedIndex === originalIndex;
 
                             return (
                                 <motion.div
                                     key={originalIndex}
                                     animate={{
-                                        x: isCardFlying ? (isMobile ? 800 : 1500) : (isBeingInspected ? (isMobile ? 0 : -280) : (isVisible ? img.x : 0)),
+                                        x: isCardFlying ? (isMobile ? 800 * flyDirection : 1500 * flyDirection) : (isBeingInspected ? (isMobile ? 0 : -280) : (isVisible ? img.x : 0)),
                                         y: isCardFlying ? -200 : (isBeingInspected ? (isMobile ? -100 : 0) : (isVisible ? img.y : 0)), /*inpect pic location*/
-                                        rotate: isCardFlying ? 45 : (isBeingInspected ? 0 : (isVisible ? img.rotation : 0)),
+                                        rotate: isCardFlying ? 45 * flyDirection : (isBeingInspected ? 0 : (isVisible ? img.rotation : 0)),
                                         opacity: isCardFlying ? 0 : (isVisible ? 1 : 0),
                                         zIndex: isCardFlying ? 100 : (isBeingInspected ? 150 : displayIndex),
                                         scale: isBeingInspected ? (isMobile ? 0.95 : 1.05) : 1
@@ -199,9 +236,9 @@ export default function Projects() {
                                     onDragEnd={(_, info) => {
                                         const threshold = isMobile ? 80 : 120;
                                         if (info.offset.x < -threshold) {
-                                            handleNext();
+                                            handleNext('left');
                                         } else if (info.offset.x > threshold) {
-                                            handlePrev();
+                                            handleNext('right');
                                         }
                                     }}
                                     onTap={() => {
@@ -310,7 +347,7 @@ export default function Projects() {
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0, y: isMobile ? 0 : 110 }}
                                 exit={{ opacity: 0, x: 20, y: isMobile ? 0 : 110 }}
-                                onClick={handleNext}
+                                onClick={() => handleNext()}
                                 className="absolute right-0 md:right-4 lg:right-10 z-[60] p-2 md:p-3 bg-white border-4 border-black hover:bg-gray-100 transition-colors cursor-pointer"
                                 aria-label="Next project"
                             >
@@ -325,6 +362,7 @@ export default function Projects() {
                 <p className="font-dogica text-[10px] md:text-[12px] text-white font-bold animate-pulse tracking-wide">
                     {inspectedIndex !== null ? 'USE X TO RETURN' : 'TAP TO INSPECT'}
                 </p>
+            </div>
             </div>
         </section>
     );
