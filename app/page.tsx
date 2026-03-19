@@ -107,7 +107,7 @@ export default function Home() {
                             objectFit: 'cover',
                         }}
                     >
-                        <source src="/backgrounds/BEACH.MOV" />
+                        <source src="/backgrounds/BEACH_local.mp4" />
                     </motion.video>
                 </div>
 
