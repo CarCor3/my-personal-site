@@ -84,7 +84,7 @@ export default function Home() {
     const isMobile = windowWidth > 0 && windowWidth < 768;
 
     return (
-        <main className="w-full relative bg-transparent overflow-x-hidden">
+        <main className="w-full relative bg-[#8fa6b6] overflow-x-hidden">
             <section id="home" className="h-[100dvh] w-full relative overflow-hidden">
 
                 {/* Background */}
@@ -124,7 +124,7 @@ export default function Home() {
                         position: 'absolute',
                         // Visually centers it in the remaining space below the desktop navbar (~90px)
                         top: isMobile ? '50%' : 'calc(50dvh + 45px)',
-                        left: '50%',
+                        left: '49%',
                         zIndex: 2,
                         textAlign: 'center',
                         width: isMobile ? '90%' : 'auto',
@@ -134,7 +134,7 @@ export default function Home() {
                         <MagneticWord strength={0.4}>Hi, I'm</MagneticWord>
                     </p>
                     <h1 className="font-daydream font-bold tracking-tight" style={{
-                        color: '#fff8dcff', //CARLOS CORDOVA color
+                        color: '#ffffffff', //CARLOS CORDOVA color fff8dcff
                         fontSize: isMobile ? '3rem' : 'clamp(4rem, 8vw, 8rem)', // Responsive font size
                         WebkitTextStroke: '0px #E76F51', // CARLOS CORDOVA outline color
                         textShadow: '0px 0px 0px rgba(3, 2, 2, 1)', // Optional: Extra Shadow drop
