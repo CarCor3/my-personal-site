@@ -84,7 +84,7 @@ export default function Home() {
     const isMobile = windowWidth > 0 && windowWidth < 768;
 
     return (
-        <main className="w-full relative bg-[#8fa6b6] overflow-x-hidden">
+        <main className="w-full relative bg-transparent overflow-x-hidden">
             <section id="home" className="h-[100dvh] w-full relative overflow-hidden">
 
                 {/* Background */}
