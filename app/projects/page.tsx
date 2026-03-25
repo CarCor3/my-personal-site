@@ -177,12 +177,13 @@ export default function Projects() {
                             animate={{ opacity: 1, y: 0, x: isMobile ? "-50%" : 0 }}
                             className="absolute z-[60] font-dogica text-[15px] md:text-[12px] text-white font-bold animate-pulse tracking-wide text-center"
                             style={{ 
-                                maxWidth: '100px',
+                                maxWidth: '160px',
+                                width: '100%',
                                 left: isMobile ? '50%' : '1.5rem',
                                 top: isMobile ? '-40px' : 'auto' //top location
                             }}
                         >
-                            {inspectedIndex !== null ? '' : 'DRAG TO SKIP'}
+                            {inspectedIndex !== null ? '' : <>DRAG TO<br/>SKIP</>}
                         </motion.p>
 
                         {/* The Cards Area */}
@@ -342,13 +343,14 @@ export default function Projects() {
                             animate={{ opacity: 1, y: 0, x: isMobile ? "-50%" : 0 }}
                             className="absolute z-[60] font-dogica text-[15px] md:text-[12px] text-white font-bold animate-pulse tracking-wide text-center"
                             style={{ 
-                                maxWidth: '100px',
+                                maxWidth: '160px',
+                                width: '100%',
                                 right: isMobile ? 'auto' : '1.5rem',
                                 left: isMobile ? '50%' : 'auto',
                                 bottom: isMobile ? '-30px' : 'auto' //bottom location
                             }}
                         >
-                            {inspectedIndex !== null ? '' : 'TAP TO INSPECT'}
+                            {inspectedIndex !== null ? '' : <>TAP TO<br/>INSPECT</>}
                         </motion.p>
 
                     </motion.div>
