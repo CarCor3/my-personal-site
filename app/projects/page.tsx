@@ -338,6 +338,15 @@ export default function Projects() {
                             )}
                         </AnimatePresence>
 
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="absolute right-0 md:right-6 z-[60] font-dogica text-[10px] md:text-[12px] text-white font-bold animate-pulse tracking-wide text-center"
+                            style={{ maxWidth: '80px' }}
+                        >
+                            {inspectedIndex !== null ? '' : 'TAP TO INSPECT'}
+                        </motion.p>
+
                     </motion.div>
                 </div>
             </div>
