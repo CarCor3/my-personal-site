@@ -176,7 +176,7 @@ export default function Projects() {
                             {inspectedIndex === null && (
                                 <motion.p
                                     initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1, y: isMobile ? 0 : 110 }}
+                                    animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0 }}
                                     className="absolute left-0 md:left-6 z-[60] font-dogica text-[10px] md:text-[12px] text-white font-bold animate-pulse tracking-wide text-center"
                                     style={{ maxWidth: '80px' }}
@@ -189,7 +189,7 @@ export default function Projects() {
                         {/* The Cards Area */}
                         <motion.div
                             initial={{ y: 100, opacity: 0 }}
-                            animate={{ y: isMobile ? 0 : 80, opacity: 1 }} /*60 pic deck location for desktop*/
+                            animate={{ y: 0, opacity: 1 }} /*deck location for desktop*/
                             transition={{ duration: 0.6, ease: "easeOut" }}
                             className="relative w-full h-full flex items-center justify-center"
                         >
@@ -309,8 +309,8 @@ export default function Projects() {
                                 <motion.div
                                     key={inspectedIndex}
                                     initial={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 50 }}
-                                    animate={{ opacity: 1, y: isMobile ? 40 : 110, x: isMobile ? 0 : 220 }} /*description box location*/
-                                    exit={{ opacity: 0, y: isMobile ? 40 : 110, x: isMobile ? 0 : 50 }}
+                                    animate={{ opacity: 1, y: isMobile ? 40 : 0, x: isMobile ? 0 : 220 }} /*description box location*/
+                                    exit={{ opacity: 0, y: isMobile ? 40 : 0, x: isMobile ? 0 : 50 }}
                                     transition={{ type: 'spring', stiffness: 200, damping: 25 }}
                                     className={`z-[120] ${isMobile ? 'absolute bottom-10 w-full max-w-[90vw]' : 'absolute w-full max-w-[450px] ml-12'}`}
                                 >
@@ -337,16 +337,6 @@ export default function Projects() {
                                 </motion.div>
                             )}
                         </AnimatePresence>
-
-                        {/* Right hint: TAP TO INSPECT / USE X TO RETURN */}
-                        <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1, y: isMobile ? 0 : 110 }}
-                            className="absolute right-0 md:right-6 z-[60] font-dogica text-[10px] md:text-[12px] text-white font-bold animate-pulse tracking-wide text-center"
-                            style={{ maxWidth: '80px' }}
-                        >
-                            {inspectedIndex !== null ? 'USE X TO RETURN' : 'TAP TO INSPECT'}
-                        </motion.p>
 
                     </motion.div>
                 </div>
