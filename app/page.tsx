@@ -69,8 +69,12 @@ export default function Home() {
         const handleResize = () => setWindowWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
 
-        document.documentElement.style.backgroundColor = '#8fa6b6';
+        document.documentElement.style.backgroundColor = '#ffffff';
         document.body.style.backgroundColor = '#8fa6b6';
+        document.body.style.backgroundImage = 'url("/backgrounds/DESK4.jpg")';
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center bottom';
+        document.body.style.backgroundAttachment = 'fixed';
 
         return () => {
             window.removeEventListener('resize', handleResize);
