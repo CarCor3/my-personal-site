@@ -124,7 +124,7 @@ export default function Home() {
                         position: 'absolute',
                         // Visually centers it in the remaining space below the desktop navbar (~90px)
                         top: isMobile ? '50%' : 'calc(50dvh + 45px)',
-                        left: '49%',
+                        left: '48%',
                         zIndex: 2,
                         textAlign: 'center',
                         width: isMobile ? '90%' : 'auto',
@@ -136,8 +136,8 @@ export default function Home() {
                     <h1 className="font-daydream font-bold tracking-tight" style={{
                         color: '#ffffffff', //CARLOS CORDOVA color fff8dcff
                         fontSize: isMobile ? '3rem' : 'clamp(4rem, 8vw, 8rem)', // Responsive font size
-                        WebkitTextStroke: '0px #E76F51', // CARLOS CORDOVA outline color
-                        textShadow: '0px 0px 0px rgba(3, 2, 2, 1)', // Optional: Extra Shadow drop
+                        WebkitTextStroke: isMobile ? 'none' : '0px #E76F51', // CARLOS CORDOVA outline color
+                        textShadow: isMobile ? 'none' : '0px 0px 0px rgba(3, 2, 2, 1)', // Optional: Extra Shadow drop
                         lineHeight: '1.2'
                     }}>
                         <MagneticWord strength={0.45} style={{ display: 'block', marginBottom: isMobile ? '20px' : '30px' }}>
