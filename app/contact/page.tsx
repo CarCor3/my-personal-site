@@ -109,11 +109,10 @@ export default function Contact() {
                     style={{ cursor: isDraggable ? 'grab' : 'default' }}
                     whileDrag={{ cursor: 'grabbing', scale: 1.02 }}
                 >
-                    {/* Responsive Desktop Scale Wrapper computing against innerHeight */}
                     <div
                         className="relative flex flex-col items-center justify-center w-full"
                         style={{
-                            transform: isMobile ? 'none' : `scale(${scaleFactor})`,
+                            transform: isMobile ? 'scale(0.8)' : `scale(${scaleFactor})`,
                             transformOrigin: 'center center'
                         }}
                     >
