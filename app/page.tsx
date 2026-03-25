@@ -166,6 +166,17 @@ export default function Home() {
             <ProjectsPage />
             <ContactPage />
 
+            {/* Bottom overscroll cushion — matches contact page background */}
+            <div
+                style={{
+                    height: '100px',
+                    marginBottom: '-100px',
+                    backgroundImage: 'url("/backgrounds/DESK4.jpg")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center bottom',
+                }}
+            />
+
         </main>
     );
 }
