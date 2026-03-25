@@ -12,17 +12,20 @@ function MagneticWord({
     strength = 0.35,
     className,
     style,
+    disabled = false,
 }: {
     children: React.ReactNode;
     strength?: number;
     className?: string;
     style?: React.CSSProperties;
+    disabled?: boolean;
 }) {
     const ref = useRef<HTMLSpanElement>(null);
     const [offset, setOffset] = useState({ x: 0, y: 0 });
     const raf = useRef<number>();
 
     const handleMouseMove = (e: React.MouseEvent) => {
+        if (disabled) return;
         const el = ref.current;
         if (!el) return;
         const rect = el.getBoundingClientRect();
@@ -37,6 +40,14 @@ function MagneticWord({
         if (raf.current) cancelAnimationFrame(raf.current);
         setOffset({ x: 0, y: 0 });
     };
+
+    if (disabled) {
+        return (
+            <span className={className} style={{ ...style, display: 'inline-block' }}>
+                {children}
+            </span>
+        );
+    }
 
     return (
         <span
@@ -131,7 +142,7 @@ export default function Home() {
                     }}
                 >
                     <p className="font-ari text-4xl md:text-[clamp(3rem,6vw,6rem)] font-bold mb-4 md:mb-[0.5em]" style={{ color: '#fdfdfdff' }}>
-                        <MagneticWord strength={0.4}>Hi, I'm</MagneticWord>
+                        <MagneticWord strength={0.4} disabled={isMobile}>Hi, I'm</MagneticWord>
                     </p>
                     <h1 className="font-daydream font-bold tracking-tight" style={{
                         color: '#ffffffff', //CARLOS CORDOVA color fff8dcff
@@ -140,10 +151,10 @@ export default function Home() {
                         textShadow: isMobile ? 'none' : '0px 0px 0px rgba(3, 2, 2, 1)', // Optional: Extra Shadow drop
                         lineHeight: '1.2'
                     }}>
-                        <MagneticWord strength={0.45} style={{ display: 'block', marginBottom: isMobile ? '20px' : '30px' }}>
+                        <MagneticWord strength={0.45} disabled={isMobile} style={{ display: 'block', marginBottom: isMobile ? '20px' : '30px' }}>
                             Carlos
                         </MagneticWord>
-                        <MagneticWord strength={0.45} style={{ display: 'block' }}>
+                        <MagneticWord strength={0.45} disabled={isMobile} style={{ display: 'block' }}>
                             Cordova
                         </MagneticWord>
                     </h1>

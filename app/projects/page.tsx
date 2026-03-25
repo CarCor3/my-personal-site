@@ -172,19 +172,18 @@ export default function Projects() {
                         className="relative w-full flex flex-col md:flex-row items-center justify-center"
                     >
                         {/* Left hint: DRAG TO SKIP */}
-                        <AnimatePresence>
-                            {inspectedIndex === null && (
-                                <motion.p
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0 }}
-                                    className="absolute left-0 md:left-6 z-[60] font-dogica text-[10px] md:text-[12px] text-white font-bold animate-pulse tracking-wide text-center"
-                                    style={{ maxWidth: '80px' }}
-                                >
-                                    DRAG TO SKIP
-                                </motion.p>
-                            )}
-                        </AnimatePresence>
+                        <motion.p
+                            initial={{ opacity: 0, x: isMobile ? "-50%" : 0 }}
+                            animate={{ opacity: 1, y: 0, x: isMobile ? "-50%" : 0 }}
+                            className="absolute z-[60] font-dogica text-[10px] md:text-[12px] text-white font-bold animate-pulse tracking-wide text-center"
+                            style={{ 
+                                maxWidth: '100px',
+                                left: isMobile ? '50%' : '1.5rem',
+                                top: isMobile ? '-20px' : 'auto' //top location
+                            }}
+                        >
+                            {inspectedIndex !== null ? '' : 'DRAG TO SKIP'}
+                        </motion.p>
 
                         {/* The Cards Area */}
                         <motion.div
@@ -339,10 +338,15 @@ export default function Projects() {
                         </AnimatePresence>
 
                         <motion.p
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            className="absolute right-0 md:right-6 z-[60] font-dogica text-[10px] md:text-[12px] text-white font-bold animate-pulse tracking-wide text-center"
-                            style={{ maxWidth: '80px' }}
+                            initial={{ opacity: 0, x: isMobile ? "-50%" : 0 }}
+                            animate={{ opacity: 1, y: 0, x: isMobile ? "-50%" : 0 }}
+                            className="absolute z-[60] font-dogica text-[10px] md:text-[12px] text-white font-bold animate-pulse tracking-wide text-center"
+                            style={{ 
+                                maxWidth: '100px',
+                                right: isMobile ? 'auto' : '1.5rem',
+                                left: isMobile ? '50%' : 'auto',
+                                bottom: isMobile ? '-20px' : 'auto' //bottom location
+                            }}
                         >
                             {inspectedIndex !== null ? '' : 'TAP TO INSPECT'}
                         </motion.p>
