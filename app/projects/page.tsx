@@ -175,11 +175,11 @@ export default function Projects() {
                         <motion.p
                             initial={{ opacity: 0, x: isMobile ? "-50%" : 0 }}
                             animate={{ opacity: 1, y: 0, x: isMobile ? "-50%" : 0 }}
-                            className="absolute z-[60] font-dogica text-[10px] md:text-[12px] text-white font-bold animate-pulse tracking-wide text-center"
+                            className="absolute z-[60] font-dogica text-[15px] md:text-[12px] text-white font-bold animate-pulse tracking-wide text-center"
                             style={{ 
                                 maxWidth: '100px',
                                 left: isMobile ? '50%' : '1.5rem',
-                                top: isMobile ? '-20px' : 'auto' //top location
+                                top: isMobile ? '-40px' : 'auto' //top location
                             }}
                         >
                             {inspectedIndex !== null ? '' : 'DRAG TO SKIP'}
@@ -340,12 +340,12 @@ export default function Projects() {
                         <motion.p
                             initial={{ opacity: 0, x: isMobile ? "-50%" : 0 }}
                             animate={{ opacity: 1, y: 0, x: isMobile ? "-50%" : 0 }}
-                            className="absolute z-[60] font-dogica text-[10px] md:text-[12px] text-white font-bold animate-pulse tracking-wide text-center"
+                            className="absolute z-[60] font-dogica text-[15px] md:text-[12px] text-white font-bold animate-pulse tracking-wide text-center"
                             style={{ 
                                 maxWidth: '100px',
                                 right: isMobile ? 'auto' : '1.5rem',
                                 left: isMobile ? '50%' : 'auto',
-                                bottom: isMobile ? '-20px' : 'auto' //bottom location
+                                bottom: isMobile ? '-30px' : 'auto' //bottom location
                             }}
                         >
                             {inspectedIndex !== null ? '' : 'TAP TO INSPECT'}
