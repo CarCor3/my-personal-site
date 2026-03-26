@@ -154,7 +154,7 @@ export default function Projects() {
 
     return (
         <section id="projects" className="h-screen flex flex-col items-center justify-center bg-[#8fa6b6ff] /*projects background color*/ transition-colors duration-500 overflow-hidden relative w-full"
-            style={{ paddingTop: isMobile ? '0' : '90px' }} // offset for navbar on desktop
+            style={{ paddingTop: isMobile ? '0' : '90px' }} // offset for navbar on desktop //8fa6b6ff projects background color
         >
             <div
                 className="relative w-full flex-1 flex flex-col items-center justify-center"
