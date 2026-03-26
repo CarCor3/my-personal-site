@@ -90,3 +90,9 @@ html {
   background-color: #ffffff;
   /* Allow scrolling */
 }
+
+@media (max-width: 768px) {
+  html, body {
+    background-color: #000000;
+  }
+}
