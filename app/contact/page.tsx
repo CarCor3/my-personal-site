@@ -83,7 +83,7 @@ export default function Contact() {
         <section id="contact"
             className="min-h-screen md:h-screen overflow-hidden flex flex-col relative w-full"
             style={{
-                backgroundColor: '#000000',
+                backgroundColor: '#ffffff', //NOTHING
                 backgroundImage: 'url("/backgrounds/DESK4.jpg")',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',

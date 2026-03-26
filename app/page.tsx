@@ -104,7 +104,7 @@ export default function Home() {
                         position: 'absolute',
                         inset: 0,
                         zIndex: 0,
-                        backgroundColor: '#ffffff',
+                        backgroundColor: '#000000',
                         overflow: 'hidden'
                     }}
                 >
