@@ -80,7 +80,7 @@ export default function Home() {
         const handleResize = () => setWindowWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
 
-        document.documentElement.style.backgroundColor = '#000000'; //NOTHING
+        document.documentElement.style.backgroundColor = '#000000'; //does something for top and bottom screen
         document.body.style.backgroundColor = '#000000';
         document.body.style.backgroundImage = 'url("/backgrounds/DESK4.jpg")';
         document.body.style.backgroundSize = 'cover';
@@ -96,7 +96,7 @@ export default function Home() {
 
     return (
         <main className="w-full relative bg-transparent overflow-x-hidden">
-            <section id="home" className="h-[100dvh] w-full relative overflow-hidden">
+            <section id="home" className="h-[100vh] w-full relative overflow-hidden">
 
                 {/* Background */}
                 <div
