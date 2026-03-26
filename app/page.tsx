@@ -80,7 +80,7 @@ export default function Home() {
         const handleResize = () => setWindowWidth(window.innerWidth);
         window.addEventListener('resize', handleResize);
 
-        document.documentElement.style.backgroundColor = '#ffffff';
+        document.documentElement.style.backgroundColor = '#000000';
         document.body.style.backgroundColor = '#ffffff';
         document.body.style.backgroundImage = 'url("/backgrounds/DESK4.jpg")';
         document.body.style.backgroundSize = 'cover';
@@ -104,7 +104,7 @@ export default function Home() {
                         position: 'absolute',
                         inset: 0,
                         zIndex: 0,
-                        backgroundColor: '#000000',
+                        backgroundColor: '#000000', //home page background color
                         overflow: 'hidden'
                     }}
                 >
