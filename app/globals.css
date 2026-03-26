@@ -79,7 +79,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background-color: #ffffff;
+  background-color: #000000;
   background-image: url("/backgrounds/DESK4.jpg");
   background-size: cover;
   background-position: center bottom;
@@ -87,6 +87,6 @@ body {
 }
 
 html {
-  background-color: #000000;
+  background-color: #ffffff;
   /* Allow scrolling */
 }
